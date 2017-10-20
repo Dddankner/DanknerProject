@@ -14,16 +14,18 @@ public class Members
     public int cityId { get; set; }
     public string memberGender { get; set; }
     public string memberHobies { get; set; }
-    public string memberNotes { get; set; }
+    
     public string memberPic { get; set; }
     public DateTime memberDate { get; set; }
     public string memberMail { get; set; }
+    public bool memberManager { get; set; }
+    public string MemberStatus { get; set; }
 
     public Members()
     {
         
     }
-    public Members(string f, string l, string p, int id, string g, string h, string n, string pic, DateTime d, string m)
+    public Members(string f, string l, string p, int id, string g, string h, string pic, DateTime d, string m)
     {
         this.memberFname = f;
         this.MemberLname = l;
@@ -31,9 +33,10 @@ public class Members
         this.cityId = id;
         this.memberGender = g;
         this.memberHobies = h;
-        this.memberNotes = n;
         this.memberPic = pic;
         this.memberDate = d;
         this.memberMail = m;
+        this.memberManager = false;
+        this.MemberStatus = "פעיל";
     }
 }

@@ -23,10 +23,10 @@ public partial class pages_LogIn : System.Web.UI.Page
         if(!ms.IsMailExist(m))
         {
             if(!ms.Login(m))
-            {                
-                string strSql = "SELECT * FROM Members WHERE MemberMail='" + m.memberMail.Trim() + "'";
-                DataSet ds = new DataSet();
-                ds = Connect.GetDataSet(strSql, "Members");
+            {
+                //string strSql = "SELECT * FROM Members WHERE MemberMail='" + m.memberMail.Trim() + "'";
+                DataSet ds = ms.ShowMember(m.memberMail.Trim());
+                //ds = Connect.GetDataSet(strSql, "Members");
                 m.memberFname = ds.Tables["Members"].Rows[0]["MemberFname"].ToString();
                 m.MemberLname = ds.Tables["Members"].Rows[0]["MemberLname"].ToString();
                 m.memberMail = ds.Tables["Members"].Rows[0]["MemberMail"].ToString();
@@ -34,8 +34,17 @@ public partial class pages_LogIn : System.Web.UI.Page
                 m.memberHobies = ds.Tables["Members"].Rows[0]["MemberHobbies"].ToString();
                 m.memberPass = ds.Tables["Members"].Rows[0]["MemberPass"].ToString();
                 m.memberPic  = ds.Tables["Members"].Rows[0]["MemberPic"].ToString();
-                Session["Member"] = m;
-                Response.Redirect("../pages/Main.aspx");
+                m.MemberStatus = ds.Tables["Members"].Rows[0]["MemberStatus"].ToString();
+                m.memberManager = bool.Parse(ds.Tables["Members"].Rows[0]["MemberManager"].ToString());
+                if(m.MemberStatus == "פעיל")
+                {
+                    Session["Member"] = m;
+                    Response.Redirect("../pages/Main.aspx");
+                }
+                else
+                {
+                    lblError.Text = "החשבון מושבת כרגע";
+                }
             }
             else
             {

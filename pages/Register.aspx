@@ -1,23 +1,26 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Register.aspx.cs" Inherits="Register" %>
-
+﻿<%@ Page Title="" Language="C#" Culture="en-GB" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Register.aspx.cs" Inherits="Register" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ocv1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <style type="text/css">
+   <%-- <style type="text/css">
         .reg td {
+            padding:7px;
             direction: rtl;
             height: auto;
         }
     </style>
     <style type="text/css">
         .txtBox{
-            border-top:hidden;
-            border-right-style:hidden;
-            border-left-style:hidden;
+            border:none;
+            border-bottom:2px solid #ccc;
+            outline:none;
         }
         .txtBox:focus{
-            border:none;
-            border-bottom-color:Highlight;
+            
+            border-bottom-color:blue;
         }
-    </style>
+    </style>--%>
+    <link href="../Style/Forms.css" rel="stylesheet" />
+    
     <script type="text/javascript" lang="ja">
 
         function ValidateHobbies(source, args) {
@@ -45,11 +48,12 @@
                 args.IsValid = true;
         }
     </script>
-    <link href="css/reg.css" rel="stylesheet" />
+    <%--<link href="css/reg.css" rel="stylesheet" />--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <center>
-    <table class="reg" style="margin-top:0%">
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+    <table class="tablePopUp">
 
             <tr>
                 <td>
@@ -59,7 +63,7 @@
                     <asp:Label runat="server" ID="lblFname" Text="שם פרטי"></asp:Label>
                 </td>
                 <td rowspan="9">
-                    <asp:ValidationSummary ID="ValidationSummary1" runat="server" />
+                    <asp:ValidationSummary ID="ValidationSummary1" runat="server" DisplayMode="BulletList" />
                     <asp:label ID="lblEror" runat="server"></asp:label>
                 </td>
             </tr>
@@ -105,7 +109,11 @@
             </tr>--%>
             <tr>
                 <td>
-                    <asp:TextBox runat="server" placeholder="תאריך לידה" ID="txtDate" CssClass="txtBox"></asp:TextBox>
+                    <%--<asp:TextBox runat="server" placeholder="תאריך לידה" ID="txtDate" CssClass="txtBox"></asp:TextBox>--%>
+                    
+                    <ocv1:CalendarExtender id="Cal" runat="server" TargetControlID="txtDate" PopupButtonID="btnDate" Format="dd/MM/yyyy"></ocv1:CalendarExtender>
+                    <asp:TextBox ID="txtDate" runat="server"></asp:TextBox>
+                    <asp:ImageButton ID="btnDate" ImageUrl="~/img/Calicon.png" runat="server" CausesValidation="false"></asp:ImageButton>
                 </td>
                 <td>
                     <asp:Label runat="server" ID="lblDate" Text="תאריך לידה"></asp:Label>
@@ -117,6 +125,8 @@
                         <asp:ListItem Text="זכר"></asp:ListItem>
                         <asp:ListItem Text="נקבה"></asp:ListItem>
                     </asp:RadioButtonList>
+                    
+
                 </td>
                 <td>
                     <asp:Label runat="server" ID="lblGender" Text="מגדר"></asp:Label>
@@ -150,14 +160,6 @@
                 </td>
                 <td>
                     <asp:Label runat="server" ID="lblCity" Text="עיר"></asp:Label>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <asp:TextBox runat="server" ID="txtNotes"></asp:TextBox>
-                </td>
-                <td>
-                    <asp:Label runat="server" ID="lblNote" Text="הערות"></asp:Label>
                 </td>
             </tr>
             <tr>
