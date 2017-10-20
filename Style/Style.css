@@ -1,0 +1,17 @@
+﻿.click{
+    background-color:blue;
+}
+li:hover:not(.click){
+    background-color:yellow;
+}
+ul{
+    background-color:#808080;
+     display:block;
+    
+}
+li{
+   
+    text-decoration:none;
+    list-style-type:none;
+    float:left;
+}
