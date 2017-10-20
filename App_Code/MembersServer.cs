@@ -60,6 +60,20 @@ public class MembersServer
         return ds;
     }
 
+    public static DataSet ShowMembersOnly()
+    {
+        string strSql = "SELECT * FROM Members WHERE MemberManager='" + false + "'";
+        DataSet ds = Connect.GetDataSet(strSql, "Members");
+        return ds;
+    }
+
+    public static DataSet ShowManagersOnly()
+    {
+        string strSql = "SELECT * FROM Members WHERE MemberManager='" + true + "'";
+        DataSet ds = Connect.GetDataSet(strSql, "Members");
+        return ds;
+    }
+
     public void UpdatePic(Members m)
     {
         string strSql = "UPDATE Members SET MemberFname='" + m.memberFname.Trim() + "', MemberLname='" + m.MemberLname.Trim() + "', MemberPass='" + m.memberPass.Trim() + "', CityId=" + m.cityId + ", MemberGender='" + m.memberGender.Trim() + "', MemberHobbies='" + m.memberHobies.Trim() + "', MemberPic='" + m.memberPic.Trim() + "', MemberDate='" + m.memberDate + "', MemberMail='" + m.memberMail.Trim() + "'";

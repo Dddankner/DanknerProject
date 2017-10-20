@@ -16,7 +16,7 @@
         </tr>
         <tr>
             <td>
-                <asp:TextBox ID="Pass" runat="server" CssClass="txtBox"></asp:TextBox>
+                <asp:TextBox ID="Pass" runat="server" CssClass="txtBox" TextMode="Password"></asp:TextBox>
             </td>
             <td>
                 <asp:Label ID="Passlbl" runat="server" Text="סיסמא"></asp:Label>
