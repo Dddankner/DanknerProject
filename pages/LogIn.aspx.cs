@@ -25,7 +25,7 @@ public partial class pages_LogIn : System.Web.UI.Page
             if(!ms.Login(m))
             {
                 //string strSql = "SELECT * FROM Members WHERE MemberMail='" + m.memberMail.Trim() + "'";
-                DataSet ds = ms.ShowMember(m.memberMail.Trim());
+                DataSet ds = ms.ShowMemberByMail(m.memberMail.Trim());
                 //ds = Connect.GetDataSet(strSql, "Members");
                 m.memberFname = ds.Tables["Members"].Rows[0]["MemberFname"].ToString();
                 m.MemberLname = ds.Tables["Members"].Rows[0]["MemberLname"].ToString();

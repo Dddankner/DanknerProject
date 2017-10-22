@@ -24,6 +24,8 @@ public partial class Register : System.Web.UI.Page
             string dateNow = DateTime.Today.ToShortDateString();
             //CheckDateValid.ValueToCompare = dateNow;
             Cal.EndDate = DateTime.Now.AddYears(-15);
+            Cal.StartDate = DateTime.Now.AddYears(-15);
+            txtDate.Attributes.Add("readonly", "true");
         }
         btnDate.Attributes.Add("style", "height:25px; width:25px");
     }

@@ -19,6 +19,13 @@
             border-bottom-color:blue;
         }
     </style>--%>
+    <style type="text/css">
+        .notes{
+            background-color:none;
+            color:red;
+            display:block;
+        }
+    </style>
     <link href="../Style/Forms.css" rel="stylesheet" />
     
     <script type="text/javascript" lang="ja">
@@ -63,7 +70,7 @@
                     <asp:Label runat="server" ID="lblFname" Text="שם פרטי"></asp:Label>
                 </td>
                 <td rowspan="9">
-                    <asp:ValidationSummary ID="ValidationSummary1" runat="server" DisplayMode="BulletList" />
+                    <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="notes" DisplayMode="List"/>
                     <asp:label ID="lblEror" runat="server"></asp:label>
                 </td>
             </tr>
@@ -179,10 +186,10 @@
         <asp:RequiredFieldValidator ID="validaterePass" ControlToValidate="txtRepass" runat="server" ErrorMessage="חובה למלא אימות סיסמא">&nbsp</asp:RequiredFieldValidator>
         <asp:RegularExpressionValidator ID="validaterePassLength" ControlToValidate="txtRepass" runat="server" ErrorMessage="אורך אימות סיסמא 6-10" ValidationExpression="\w{6,10}">&nbsp</asp:RegularExpressionValidator>
         <asp:CompareValidator ID="ComparePasses" ControlToCompare="txtPass" ControlToValidate="txtRepass" runat="server" ErrorMessage="סיסמא אינה זהה לאימות סיסמא">&nbsp</asp:CompareValidator>
+        <asp:RequiredFieldValidator ID="CheckDate" ControlToValidate="txtDate" runat="server" ErrorMessage="חובה למלא תאריך">&nbsp</asp:RequiredFieldValidator>
         <asp:RequiredFieldValidator ID="validateGender" ControlToValidate="rbtGender" runat="server" ErrorMessage="חובה למלא מגדר">&nbsp</asp:RequiredFieldValidator>
         <asp:CustomValidator runat="server" id="CustomHobbies" ErrorMessage="חובה למלא תחביב" ClientValidationFunction="ValidateHobbies">&nbsp</asp:CustomValidator>
         <asp:RequiredFieldValidator runat="server" ID="validateCiies" ControlToValidate="cities" InitialValue="-בחר עיר-" ErrorMessage="עיר לא מולאה">&nbsp</asp:RequiredFieldValidator>
-        <asp:RequiredFieldValidator ID="CheckDate" ControlToValidate="txtDate" runat="server" ErrorMessage="חובה למלא תאריך">&nbsp</asp:RequiredFieldValidator>
         <%--<asp:CompareValidator ID="CheckDateValid" ControlToValidate="txtDate" runat="server" Operator="LessThanEqual" Type="Date" ErrorMessage="תאריך צריך להיות dd/mm/yyyy">&nbsp</asp:CompareValidator>--%>
         <asp:RegularExpressionValidator ID="PhotoCheck" ControlToValidate="photoUpload" ValidationExpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))+(.gif|.GIF|.jpg|.JPG|.jpeg|.JPEG)$" runat="server" ErrorMessage="חייב להעלות תמונה">&nbsp</asp:RegularExpressionValidator>
     </center>

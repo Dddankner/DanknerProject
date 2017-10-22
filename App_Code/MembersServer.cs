@@ -32,6 +32,7 @@ public class MembersServer
         object obj = Connect.GetObject(strFind);
         return int.Parse(obj.ToString()) < 1;
     }
+
     public bool Login(Members m)
     {
         string strFind = "SELECT COUNT(MemberMail) FROM Members WHERE MemberPass ='" + m.memberPass.Trim() + "' AND MemberMail ='" + m.memberMail.Trim() + "'";
@@ -46,9 +47,16 @@ public class MembersServer
         return ds;
     }
 
-    public DataSet ShowMember(string memberMail)
+    public DataSet ShowMemberByMail(string memberMail)
     {
         string strSql = strSql = "SELECT * FROM Members,Cities WHERE Members.CityId=Cities.CityId AND MemberMail='" + memberMail + "'";
+        DataSet ds = Connect.GetDataSet(strSql, "Members");
+        return ds;
+    }
+
+    public DataSet ShowMemberById(int id)
+    {
+        string strSql = strSql = "SELECT * FROM Members,Cities WHERE Members.CityId=Cities.CityId AND MemberId='" + id + "'";
         DataSet ds = Connect.GetDataSet(strSql, "Members");
         return ds;
     }
@@ -93,6 +101,13 @@ public class MembersServer
     {
         string strSql = "UPDATE Members SET MemberStatus='לא פעיל' WHERE MemberMail='" + mail + "'";
         Connect.InsertUpdateDelete(strSql);
+    }
+
+    public static int GetMemberId(string mail)
+    {
+        string strSql = "SELECT * FROM Members WHERE MemberMail='" + mail + "'";
+        DataSet ds = Connect.GetDataSet(strSql, "Members");
+        return int.Parse(ds.Tables["Members"].Rows[0]["MemberId"].ToString());
     }
 
     

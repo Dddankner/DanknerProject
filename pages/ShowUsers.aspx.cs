@@ -46,7 +46,8 @@ public partial class pages_ShowUsers : System.Web.UI.Page
         {
             if (GridView1.Rows[i].Cells[10].FindControl("DeleteBtn") is Image)
             {
-                ((Image)GridView1.Rows[i].Cells[10].FindControl("DeleteBtn")).Attributes.Add("onclick", "DeleteRed('" + GridView1.Rows[i].Cells[2].Text + "')");
+                int id = MembersServer.GetMemberId(GridView1.Rows[i].Cells[2].Text.Trim());
+                ((Image)GridView1.Rows[i].Cells[10].FindControl("DeleteBtn")).Attributes.Add("onclick", "DeleteRed('" + id + "')");
             }
         }
 
@@ -56,7 +57,8 @@ public partial class pages_ShowUsers : System.Web.UI.Page
         {
             if (GridView1.Rows[i].Cells[9].FindControl("ImageUpdate") is Image)
             {
-                ((Image)GridView1.Rows[i].Cells[9].FindControl("ImageUpdate")).Attributes.Add("onclick", "UpdateRed('" + GridView1.Rows[i].Cells[2].Text.Trim() + "')");
+                int id = MembersServer.GetMemberId(GridView1.Rows[i].Cells[2].Text.Trim());
+                ((Image)GridView1.Rows[i].Cells[9].FindControl("ImageUpdate")).Attributes.Add("onclick", "UpdateRed('" + id + "')");
             }
         }
     }
@@ -73,7 +75,7 @@ public partial class pages_ShowUsers : System.Web.UI.Page
         }
         else
         {
-            ds = ms.ShowMember(m1.memberMail);
+            ds = ms.ShowMemberByMail(m1.memberMail);
         }
         return ds;
     }

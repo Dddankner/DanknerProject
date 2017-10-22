@@ -12,11 +12,11 @@ public partial class pages_Update : System.Web.UI.Page
     public static Members origin;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Request.QueryString["mail"] != null && Request.QueryString["mail"].ToString() != "")
+        if (Request.QueryString["id"] != null && Request.QueryString["id"].ToString() != "")
         {
-            string mail = Request.QueryString["mail"].ToString();
+            int id = int.Parse(Request.QueryString["mail"].ToString());
             if (!IsPostBack)
-                fill(mail);            
+                fill(id);            
             btnDate.Attributes.Add("style", "height:25px; width:25px");
             
             DataSet ds = new DataSet();
@@ -26,15 +26,16 @@ public partial class pages_Update : System.Web.UI.Page
             cities.DataValueField = "CityId";
             cities.DataBind();
             Cal.EndDate = DateTime.Now.AddYears(-15);
+            txtDate.Attributes.Add("readonly", "true");
             //cities.Items.Insert(0, new ListItem("-בחר עיר-"));
         }
         else
             Response.Write("אין לך גישה לדף זה");
     }
-    public void fill(string mail)
+    public void fill(int id)
     {
         MembersServer ms = new MembersServer();
-        DataSet ds = ms.ShowMember(mail);
+        DataSet ds = ms.ShowMemberById(id);
         Members m = CreateMember(ds);
         origin = m;
         txtfName.Text = m.memberFname.ToString().Trim();
@@ -50,7 +51,7 @@ public partial class pages_Update : System.Web.UI.Page
             rbtGender.Items[0].Selected = true;
         else
             rbtGender.Items[1].Selected = true;
-        string[] hobbies = HobbiesFill(mail);
+        string[] hobbies = HobbiesFill(id);
         for (int i = 0; i < cbxHobbies.Items.Count; i++)
         {
             for (int j = 0; j < hobbies.Length; j++)
@@ -76,7 +77,7 @@ public partial class pages_Update : System.Web.UI.Page
         lblEror.Text = m.cityId.ToString();
     }
 
-    public string[] HobbiesFill(string mail)
+    public string[] HobbiesFill(int id)
     {
         string[] hobbies = new string[cbxHobbies.Items.Count];
         for (int i = 0; i < hobbies.Length; i++)
@@ -84,7 +85,7 @@ public partial class pages_Update : System.Web.UI.Page
             hobbies[i] = "";
         }
         MembersServer ms = new MembersServer();
-        DataSet ds = ms.ShowMember(mail);
+        DataSet ds = ms.ShowMemberById(id);
         Members m = CreateMember(ds);
         string hobbie = m.memberHobies;
         string hobbieCount = "";

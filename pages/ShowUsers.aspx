@@ -22,12 +22,12 @@
             }
     </style>
     <script type="text/javascript" lang="ja">
-        function UpdateRed(mail) {
-            location.href = "../pages/Update.aspx?mail=" + mail + "";
+        function UpdateRed(id) {
+            location.href = "../pages/Update.aspx?id=" + id + "";
         }
-        function DeleteRed(mail)
+        function DeleteRed(id)
         {
-            location.href = "../pages/Delete.aspx?mail=" + mail + "";
+            location.href = "../pages/Delete.aspx?id=" + id + "";
         }
     </script>
 </asp:Content>
