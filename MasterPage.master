@@ -99,6 +99,7 @@
             <%}
             else
             { %>
+            <li><a href="../pages/Messages.aspx"> הודעות </a></li>
             <li>
                 <asp:Image ID="MemberPicture" runat="server" Style="float: left" />
             </li>

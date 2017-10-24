@@ -1,9 +1,16 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="LogIn.aspx.cs" Inherits="pages_LogIn" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <link href="../Style/Forms.css" rel="stylesheet" />
+    <style type="text/css">
+        .notes {
+            background-color: none;
+            color: red;
+            display: block;
+        }
+    </style>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <center>
     <table class="tablePopUp">
         <tr>
@@ -12,6 +19,9 @@
             </td>
             <td>
                 <asp:Label ID="MailLbl" runat="server" Text="מייל"></asp:Label>
+            </td>
+            <td rowspan="2">
+                <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="notes" DisplayMode="List"></asp:ValidationSummary>
             </td>
         </tr>
         <tr>
@@ -33,6 +43,10 @@
             </td>
         </tr>
     </table>
+        <asp:RequiredFieldValidator ID="validateMail" ControlToValidate="Mail" runat="server" ErrorMessage="חובה מלא מייל">&nbsp</asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator ID="validateValidMail" ControlToValidate="Mail" runat="server" ErrorMessage="מייל לא תקין" ValidationExpression="\w+\@\w+\.com">&nbsp</asp:RegularExpressionValidator>
+        <asp:RequiredFieldValidator ID="validatePass" ControlToValidate="Pass" runat="server" ErrorMessage="חובה למלא סיסמא">&nbsp</asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator ID="validatePassLength" ControlToValidate="Pass" runat="server" ErrorMessage="אורך סיסמא 6-10" ValidationExpression="\w{6,10}">&nbsp</asp:RegularExpressionValidator>
         </center>
 </asp:Content>
 

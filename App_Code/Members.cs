@@ -8,6 +8,7 @@ using System.Web;
 /// </summary>
 public class Members
 {
+    public int MemberId { get; set; }
     public string memberFname { get; set; }
     public string MemberLname { get; set; }
     public string memberPass { get; set; }

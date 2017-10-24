@@ -8,19 +8,11 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <label class="control control--radio">First radio
-      <input type="radio" name="radio" checked="checked"/>
-      <div class="control__indicator"></div>
-    </label>
-    <label class="control control--radio">Second radio
-      <input type="radio" name="radio"/>
-      <div class="control__indicator"></div>
-    </label>
-       <table border="1">
-           <tr>
-               <tb>dfd</tb>
-           </tr>
-       </table>
+        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+        <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click" />
+        <br />
+        <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+        <asp:GridView ID="GridView1" runat="server"></asp:GridView>
     </form>
 </body>
 </html>

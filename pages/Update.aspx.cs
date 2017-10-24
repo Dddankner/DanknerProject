@@ -10,11 +10,12 @@ using System.Data.OleDb;
 public partial class pages_Update : System.Web.UI.Page
 {
     public static Members origin;
+    public static int id = 0;
     protected void Page_Load(object sender, EventArgs e)
-    {
+    {       
         if (Request.QueryString["id"] != null && Request.QueryString["id"].ToString() != "")
         {
-            int id = int.Parse(Request.QueryString["mail"].ToString());
+            id = int.Parse(Request.QueryString["id"].ToString());
             if (!IsPostBack)
                 fill(id);            
             btnDate.Attributes.Add("style", "height:25px; width:25px");
@@ -35,9 +36,10 @@ public partial class pages_Update : System.Web.UI.Page
     public void fill(int id)
     {
         MembersServer ms = new MembersServer();
-        DataSet ds = ms.ShowMemberById(id);
+        DataSet ds = MembersServer.ShowMemberById(id);
         Members m = CreateMember(ds);
         origin = m;
+        m.MemberId = id;
         txtfName.Text = m.memberFname.ToString().Trim();
         txtlName.Text = m.MemberLname.ToString().Trim();
         txtMail.Text = m.memberMail.ToString().Trim();
@@ -85,7 +87,7 @@ public partial class pages_Update : System.Web.UI.Page
             hobbies[i] = "";
         }
         MembersServer ms = new MembersServer();
-        DataSet ds = ms.ShowMemberById(id);
+        DataSet ds = MembersServer.ShowMemberById(id);
         Members m = CreateMember(ds);
         string hobbie = m.memberHobies;
         string hobbieCount = "";
@@ -102,6 +104,7 @@ public partial class pages_Update : System.Web.UI.Page
                 hobbieCount = "";
             }
         }
+        hobbies[j] = hobbieCount;
         if (comaCount == 0)
             hobbies[j] = hobbie;
         return hobbies;
@@ -137,15 +140,21 @@ public partial class pages_Update : System.Web.UI.Page
         m.memberDate = date1;
         m.memberMail = txtMail.Text;
         MembersServer ms = new MembersServer();
-        if (photoUpload.HasFile)
+        if (ms.IsMailExist(m))
         {
-            photoUpload.SaveAs(Server.MapPath("../MembersImg/" + photoUpload.FileName));
-            m.memberPic = photoUpload.FileName;
+            if (photoUpload.HasFile)
+            {
+                photoUpload.SaveAs(Server.MapPath("../MembersImg/" + photoUpload.FileName));
+                m.memberPic = photoUpload.FileName;
+            }
+            else
+                m.memberPic = origin.memberPic;
+            ms.UpdatePic(m);
+            Session["Member"] = m;
+            Response.Redirect("../pages/ShowUsers.aspx");
         }
         else
-            m.memberPic = origin.memberPic;
-        ms.UpdatePic(m);
-        Response.Redirect("../pages/ShowUsers.aspx");
+            lblEror.Text = "המייל קיים במערכת";
     }
 
     public string CheckHobbies()

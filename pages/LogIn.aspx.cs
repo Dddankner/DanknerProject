@@ -20,12 +20,14 @@ public partial class pages_LogIn : System.Web.UI.Page
         MembersServer ms = new MembersServer();
         m.memberMail = Mail.Text.ToString();
         m.memberPass = Pass.Text.ToString();
-        if(!ms.IsMailExist(m))
+        DataSet ds = ms.ShowMemberByMail(m.memberMail.Trim());
+        m.MemberId = int.Parse(ds.Tables["Members"].Rows[0]["MemberId"].ToString());
+        if (!ms.IsMailExist(m))
         {
             if(!ms.Login(m))
             {
                 //string strSql = "SELECT * FROM Members WHERE MemberMail='" + m.memberMail.Trim() + "'";
-                DataSet ds = ms.ShowMemberByMail(m.memberMail.Trim());
+                
                 //ds = Connect.GetDataSet(strSql, "Members");
                 m.memberFname = ds.Tables["Members"].Rows[0]["MemberFname"].ToString();
                 m.MemberLname = ds.Tables["Members"].Rows[0]["MemberLname"].ToString();

@@ -1,7 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" Culture="en-GB" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Register.aspx.cs" Inherits="Register" %>
+
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ocv1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-   <%-- <style type="text/css">
+    <%-- <style type="text/css">
         .reg td {
             padding:7px;
             direction: rtl;
@@ -20,14 +21,14 @@
         }
     </style>--%>
     <style type="text/css">
-        .notes{
-            background-color:none;
-            color:red;
-            display:block;
+        .notes {
+            background-color: none;
+            color: red;
+            display: block;
         }
     </style>
     <link href="../Style/Forms.css" rel="stylesheet" />
-    
+
     <script type="text/javascript" lang="ja">
 
         function ValidateHobbies(source, args) {
@@ -42,8 +43,7 @@
 
             args.IsValid = false;
         }
-        function CheckPhoto(source, args)
-        {
+        function CheckPhoto(source, args) {
             if (document.getElementById("uploadBox").value != "") {
                 var type = "";
                 for (var i = document.getElementById("uploadBox").value.LastIndexOf("."); i < document.getElementById("uploadBox").value.length; i++) {
