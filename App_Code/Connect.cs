@@ -67,6 +67,11 @@ public class Connect
         return ds;
     }
 
+    public static string GetConnectionString()
+    {
+        return @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=|DataDirectory|\DataBase.accdb;Persist Security Info=True";
+    }
+
     public static object GetObject(string strSql)
     {
         //בניית מחרוזת התחברות

@@ -46,4 +46,23 @@ public partial class pages_Messages : System.Web.UI.Page
         }
         return names;
     }
+
+    public int GetReciver()
+    {
+        if (m1.memberManager)
+            return int.Parse(ddlMembers.SelectedValue);
+        else
+            return int.Parse(ddlManager.SelectedValue);
+    }
+
+    protected void btnSend_Click(object sender, EventArgs e)
+    {
+        Messages m = new Messages();
+        m.MessageSender = m1.MemberId;
+        m.MessageReciver = GetReciver();
+        m.MessageStatus = false;
+        m.MessageSentTime = DateTime.Now;
+        m.MessageContent = MessageContent.Text;
+        MessagesService.sendMessage(m);
+    }
 }

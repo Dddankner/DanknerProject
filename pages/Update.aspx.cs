@@ -14,12 +14,12 @@ public partial class pages_Update : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {       
         if (Request.QueryString["id"] != null && Request.QueryString["id"].ToString() != "")
-        {
+        { 
             id = int.Parse(Request.QueryString["id"].ToString());
             if (!IsPostBack)
                 fill(id);            
             btnDate.Attributes.Add("style", "height:25px; width:25px");
-            
+            FillDBCities();
             DataSet ds = new DataSet();
             ds = CitiesServer.GetCityList();
             cities.DataSource = ds;
@@ -182,6 +182,39 @@ public partial class pages_Update : System.Web.UI.Page
         int y = int.Parse(s.Substring(6));
         DateTime dt = new DateTime(y, m, d, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
         return dt;
+    }
+
+    public void FillDBCities()
+    {
+        IsraelCities.WebServiceCities myCities = new IsraelCities.WebServiceCities();
+        DataSet dsWS = myCities.GetAllCitiesFromIsrael();
+        string connection = Connect.GetConnectionString();
+        string strSearch = "SELECT * FROM Cities ORDER BY CityName";
+        DataSet dsDB = Connect.GetDataSet(strSearch, "Cities");
+        DataTable dtDB = dsDB.Tables[0];
+
+        OleDbConnection con = new OleDbConnection(connection);
+        con.Open();
+        OleDbCommand cmd = new OleDbCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "INSERT INTO Cities(CityName) VALUES(@CityName)";
+        cmd.Parameters.Add("@CityName", OleDbType.VarWChar, 255);
+        OleDbTransaction trans = con.BeginTransaction();
+        cmd.Transaction = trans;
+        for (int i = 0; i < dsWS.Tables[0].Rows.Count; i++)
+        {
+            string CityName = dsWS.Tables[0].Rows[i]["Heb"].ToString();
+            CityName.Replace(")", "");
+            CityName.Replace("(", "");
+            bool exist = dtDB.AsEnumerable().Where(c => c.Field<string>("CityName").Equals(CityName)).Count() > 0;
+            if (!exist)
+            {
+                cmd.Parameters[0].Value = CityName;
+                cmd.ExecuteNonQuery();
+            }
+        }
+        trans.Commit();
+        con.Close();
     }
 
     protected void btnReturn_Click(object sender, EventArgs e)

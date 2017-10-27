@@ -18,7 +18,7 @@ public class CitiesServer
 	}
     public static DataSet GetCityList()
     {
-        string strSql = "SELECT * FROM Cities";
+        string strSql = "SELECT * FROM Cities ORDER BY CityName";
         DataSet ds = new DataSet();
         ds = Connect.GetDataSet(strSql, "Cities");
         return ds;
