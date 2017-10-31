@@ -2,15 +2,19 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <link href="../Style/Forms.css" rel="stylesheet" />
+    <style type="text/css">
+        .selectDrop{
+
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <center>
     <table class="tablePopUp">
         <tr>            
-            <td> <%if (m1.memberManager)
-                     { %><asp:DropDownList ID="ddlMembers" runat="server"></asp:DropDownList><%} %> 
-                <%else
-    { %> <asp:DropDownList ID="ddlManager" runat="server"></asp:DropDownList><%} %>
+            <td><%--<asp:DropDownList ID="ddlMembers" runat="server"></asp:DropDownList>--%>
+                <%--<select runat="server" multiple="true" id="ddlMembers" ></select>--%>
+                <asp:CheckBoxList ID="ddlMembers" runat="server" OnSelectedIndexChanged="ddlMembers_SelectedIndexChanged"></asp:CheckBoxList>
             </td>
             <td> שלח אל </td>
         </tr>

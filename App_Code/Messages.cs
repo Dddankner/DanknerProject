@@ -14,6 +14,7 @@ public class Messages
     public int MessageDeletedBy { get; set; }
     public DateTime MessageSentTime { get; set; }
     public string MessageContent { get; set; }
+    public string MessageSubject { get; set; }
 	public Messages()
 	{
 		//

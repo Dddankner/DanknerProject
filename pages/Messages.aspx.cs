@@ -17,8 +17,9 @@ public partial class pages_Messages : System.Web.UI.Page
             FillddlManagers();
         else
             FillddlMembers();
+        ddlMembers.Items.Insert(0, "בחר את כולם");
     }
-    
+
     public void FillddlMembers()
     {
         DataSet ds = MembersServer.ShowAllButU(m1.MemberId);
@@ -31,10 +32,10 @@ public partial class pages_Messages : System.Web.UI.Page
     public void FillddlManagers()
     {
         DataSet ds = MembersServer.ShowManagersOnly();
-        ddlManager.DataSource = ds;
-        ddlManager.DataValueField = "Id";
-        ddlManager.DataTextField = "Name";
-        ddlManager.DataBind();
+        ddlMembers.DataSource = ds;
+        ddlMembers.DataValueField = "Id";
+        ddlMembers.DataTextField = "Name";
+        ddlMembers.DataBind();
     }
 
     public string[] MembersNames(DataSet ds)
@@ -47,22 +48,53 @@ public partial class pages_Messages : System.Web.UI.Page
         return names;
     }
 
-    public int GetReciver()
+    public int[] GetReciver()
     {
-        if (m1.memberManager)
-            return int.Parse(ddlMembers.SelectedValue);
-        else
-            return int.Parse(ddlManager.SelectedValue);
+        int[] idRec = new int[ddlMembers.Items.Count];
+        ZeroIdRec(idRec);
+        for (int i = 0; i < ddlMembers.Items.Count; i++)
+        {
+            if (ddlMembers.Items[i].Selected)
+                idRec[i] = int.Parse(ddlMembers.Items[i].Value.ToString());
+        }
+        return idRec;
+    }
+
+    public void ZeroIdRec(int[] n)
+    {
+        for (int i = 0; i < n.Length; i++)
+        {
+            n[i] = -1;
+        }
     }
 
     protected void btnSend_Click(object sender, EventArgs e)
     {
-        Messages m = new Messages();
-        m.MessageSender = m1.MemberId;
-        m.MessageReciver = GetReciver();
-        m.MessageStatus = false;
-        m.MessageSentTime = DateTime.Now;
-        m.MessageContent = MessageContent.Text;
-        MessagesService.sendMessage(m);
+        int[] idRec = GetReciver();
+        for (int i = 0; i < idRec.Length; i++)
+        {
+            if (idRec[i] != -1)
+            {
+                Messages m = new Messages();
+                m.MessageSender = m1.MemberId;
+                m.MessageReciver = idRec[i];
+                m.MessageStatus = false;
+                m.MessageSentTime = DateTime.Now;
+                m.MessageContent = MessageContent.Text;
+                m.MessageSubject = MessageSub.Text;
+                MessagesService.sendMessage(m);
+            }
+        }
+    }
+
+    protected void ddlMembers_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if(ddlMembers.SelectedIndex == 0)
+        {
+            for (int i = 0; i < ddlMembers.Items.Count; i++)
+            {
+                ddlMembers.Items[i].Selected = true;
+            }
+        }
     }
 }
