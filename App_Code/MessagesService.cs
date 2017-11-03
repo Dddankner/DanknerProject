@@ -19,9 +19,14 @@ public class MessagesService
 
     public static void sendMessage(Messages m)
     {
-        string strSql = "INSERT INTO Messages(MassegeSender, MessageReciver, MassageStatus, MessageSentTime, MessageContent, MessageSubject)";
-        strSql += "VALUES(" + m.MessageSender + ", " + m.MessageReciver + ", " + m.MessageStatus + ", " + m.MessageSentTime + ", '" + m.MessageContent + "', '" + m.MessageSubject + "')";
+        string strSql = "INSERT INTO Messages " +
+            "(MassegeSender, MessageReciver, MassageStatus, MessageDeletedBy, MessageSentTime, MessageContent, MessageSubject) " +
+            "VALUES " +
+            "(" + m.MessageSender + ", " + m.MessageReciver + ", " + m.MessageStatus + ", " + int.Parse("-1") + ", " +
+            "'" + m.MessageSentTime + "', '" + m.MessageContent + "', '" + m.MessageSubject + "')";
+        //strSql += "VALUES(" + m.MessageSender + ", " + m.MessageReciver + ", " + m.MessageStatus + ", " + int.Parse("-1") + ", " + m.MessageSentTime + ", '" + m.MessageContent + "', '" + m.MessageSubject + "')";
         Connect.InsertUpdateDelete(strSql);
+        //HttpContext.Current.Response.Write(strSql);
     }
 
     public static DataSet GetMessages()

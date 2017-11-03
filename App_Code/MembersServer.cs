@@ -56,7 +56,7 @@ public class MembersServer
 
     public static DataSet ShowMemberById(int id)
     {
-        string strSql = strSql = "SELECT * FROM Members,Cities WHERE Members.CityId=Cities.CityId AND MemberId='" + id + "'";
+        string strSql = strSql = "SELECT * FROM Members,Cities WHERE Members.CityId=Cities.CityId AND MemberId=" + id + "";
         DataSet ds = Connect.GetDataSet(strSql, "Members");
         return ds;
     }

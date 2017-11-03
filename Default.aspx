@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <link href="/css/Modal.css" rel="stylesheet" />
+    <link href="../css/Modal.css" rel="stylesheet" />
     <script src="/JavaScript/jquery-3.2.1.js"></script>
     <script type="text/javascript" lang="ja">
         // Get the modal
@@ -18,12 +18,12 @@
         var span = document.getElementsByClassName("close")[0];
 
         // When the user clicks on the button, open the modal 
-        btn.onclick = function () {
+        function openModal() {
             modal.style.display = "block";
         }
 
         // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
+        function CloseModal() {
             modal.style.display = "none";
         }
 
@@ -43,7 +43,7 @@
         <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
         <asp:GridView ID="GridView1" runat="server"></asp:GridView>--%>
         <!-- Trigger/Open The Modal -->
-        <button id="myBtn">Open Modal</button>
+        <button id="myBtn" onclick="openModal()">Open Modal</button>
 
         <!-- The Modal -->
         <div id="myModal" class="modal">
@@ -52,7 +52,7 @@
             <!-- Modal content -->
             <div class="modal-content">
                 <div class="modal-header">
-                    <span class="close">&times;</span>
+                    <span class="close" onclick="CloseModal()">&times;</span>
                     <h2>Modal Header</h2>
                 </div>
                 <div class="modal-body">
@@ -63,6 +63,7 @@
                     <h3>Modal Footer</h3>
                 </div>
             </div>
+        </div>
     </form>
 </body>
 </html>

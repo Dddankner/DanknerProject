@@ -43,10 +43,10 @@
             </td>
         </tr>
     </table>
-        <asp:RequiredFieldValidator ID="validateMail" ControlToValidate="Mail" runat="server" ErrorMessage="חובה מלא מייל">&nbsp</asp:RequiredFieldValidator>
-        <asp:RegularExpressionValidator ID="validateValidMail" ControlToValidate="Mail" runat="server" ErrorMessage="מייל לא תקין" ValidationExpression="\w+\@\w+\.com">&nbsp</asp:RegularExpressionValidator>
-        <asp:RequiredFieldValidator ID="validatePass" ControlToValidate="Pass" runat="server" ErrorMessage="חובה למלא סיסמא">&nbsp</asp:RequiredFieldValidator>
-        <asp:RegularExpressionValidator ID="validatePassLength" ControlToValidate="Pass" runat="server" ErrorMessage="אורך סיסמא 6-10" ValidationExpression="\w{6,10}">&nbsp</asp:RegularExpressionValidator>
+        <asp:RequiredFieldValidator ID="validateMail" ControlToValidate="Mail" runat="server" ErrorMessage="חובה מלא מייל" BorderColor="Red">&nbsp</asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator ID="validateValidMail" ControlToValidate="Mail" runat="server" ErrorMessage="מייל לא תקין" BorderColor="Red" ValidationExpression="\w+\@\w+\.com">&nbsp</asp:RegularExpressionValidator>
+        <asp:RequiredFieldValidator ID="validatePass" ControlToValidate="Pass" runat="server" ErrorMessage="חובה למלא סיסמא" BorderColor="Red">&nbsp</asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator ID="validatePassLength" ControlToValidate="Pass" runat="server" ErrorMessage="אורך סיסמא 6-10" BorderColor="Red" ValidationExpression="\w{6,10}">&nbsp</asp:RegularExpressionValidator>
         </center>
 </asp:Content>
 
