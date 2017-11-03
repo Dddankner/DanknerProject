@@ -16,7 +16,11 @@ public partial class pages_Messages : System.Web.UI.Page
             ddlMembers.Items.Insert(0, "בחר את כולם");
         m1 = (Members)Session["Member"];
         FillddlManagers();
-        FillddlMembers();        
+        FillddlMembers();
+        //DataSet ds = MessagesService.GetMessages();
+        //MessagesGrid.DataSource = ds;
+        //MessagesGrid.DataBind();
+        //MessagesGrid.Attributes.Add("style", "direcyion:rtl");
     }
 
     public void FillddlMembers()
@@ -86,7 +90,7 @@ public partial class pages_Messages : System.Web.UI.Page
         }
         Messages m = new Messages();
         m.MessageSender = m1.MemberId;
-        m.MessageReciver = int.Parse(ddlMembers.SelectedValue);
+        m.MessageReciver = int.Parse(ddlMembers.SelectedValue.ToString());
         m.MessageStatus = false;
         m.MessageSentTime = DateTime.Now;
         m.MessageContent = MessageContent.Text;

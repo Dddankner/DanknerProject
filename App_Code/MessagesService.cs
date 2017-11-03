@@ -31,8 +31,10 @@ public class MessagesService
 
     public static DataSet GetMessages()
     {
-        string strSql = "SELECT Messages.MessageId AS Code,Message";
-        DataSet ds = new DataSet();
+        string strSql = "SELECT Messages.MessageId AS Code,MessageDate AS Date,MessageContent AS Content, MessageSubject AS Subject" +
+            ",m1.MemberFname + '' + m1.MemberLname AS Sender,m2.MemberFname + '' + m2.MemberLname AS Reciver, MessageStatus AS status" +
+            "FROM Members AS m1.Members AS m2.Messages WHERE m1.MemberId=Messages.MessageSender AND m2.MemberId=Messages.";
+        DataSet ds = Connect.GetDataSet(strSql, "Messages");
         return ds;
     }
 }

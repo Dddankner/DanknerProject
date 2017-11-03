@@ -8,61 +8,35 @@
     <link href="../css/Modal.css" rel="stylesheet" />
     <script src="/JavaScript/jquery-3.2.1.js"></script>
     <script type="text/javascript" lang="ja">
-        // Get the modal
-        var modal = document.getElementById('myModal');
 
-        // Get the button that opens the modal
-        var btn = document.getElementById("myBtn");
+        $(document).ready(function () {
+            // Click function for show the Modal
 
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+            $(".show").click(function () {
+                $(".mask").addClass("active");
+            });
 
-        // When the user clicks on the button, open the modal 
-        function openModal() {
-            modal.style.display = "block";
-        }
+            // Call the closeModal function on the clicks/keyboard
 
-        // When the user clicks on <span> (x), close the modal
-        function CloseModal() {
-            modal.style.display = "none";
-        }
+            $(".close, .mask").click(function () {
+                $(".mask").removeClass("active");
+            });
+        });
 
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+        $(document).keyup(function (e) {
+            if (e.keyCode == 27) {
+                closeModal();
             }
-        }
+        });
     </script>
 </head>
 <body>
     <form id="form1" runat="server">
-        <%--<asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-        <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click" />
-        <br />
-        <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
-        <asp:GridView ID="GridView1" runat="server"></asp:GridView>--%>
-        <!-- Trigger/Open The Modal -->
-        <button id="myBtn" onclick="openModal()">Open Modal</button>
+        <a class="show" aria-haspopup="true">Show Modal</a>
 
-        <!-- The Modal -->
-        <div id="myModal" class="modal">
-
-            <!-- Modal content -->
-            <!-- Modal content -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <span class="close" onclick="CloseModal()">&times;</span>
-                    <h2>Modal Header</h2>
-                </div>
-                <div class="modal-body">
-                    <p>Some text in the Modal Body</p>
-                    <p>Some other text...</p>
-                </div>
-                <div class="modal-footer">
-                    <h3>Modal Footer</h3>
-                </div>
-            </div>
+        <div class="mask" role="dialog"></div>
+        <div class="modal" role="alert">
+            <a class="close" role="button">X</a>
         </div>
     </form>
 </body>
