@@ -17,10 +17,11 @@ public partial class pages_Messages : System.Web.UI.Page
         m1 = (Members)Session["Member"];
         FillddlManagers();
         FillddlMembers();
-        //DataSet ds = MessagesService.GetMessages();
-        //MessagesGrid.DataSource = ds;
-        //MessagesGrid.DataBind();
-        //MessagesGrid.Attributes.Add("style", "direcyion:rtl");
+        DataSet ds = MessagesService.GetInbox(m1.MemberId);
+        Inbox.DataSource = ds;
+        Inbox.DataBind();
+        Inbox.Attributes.Add("style", "direction:rtl");
+        DataSet ds1 = MessagesService.GetOutbox(m1.MemberId);
     }
 
     public void FillddlMembers()
@@ -51,7 +52,7 @@ public partial class pages_Messages : System.Web.UI.Page
         return names;
     }
 
-    public int[] GetReciver() 
+    public int[] GetReciver()
     {
         int[] idRec = new int[ddlMembers.Items.Count];
         ZeroIdRec(idRec);
@@ -100,5 +101,22 @@ public partial class pages_Messages : System.Web.UI.Page
         MessageContent.Text = "";
         MessageSub.Text = "";
         lblError.Text = "accd";
+    }
+
+
+
+    protected void MessagesGrid_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            GridViewRow r1 = e.Row;
+            r1.CssClass = "row";
+        }
+        if (e.Row.RowType == DataControlRowType.Header)
+        {
+            GridViewRow r1 = e.Row;
+            r1.BackColor = System.Drawing.Color.Black;
+            r1.ForeColor = System.Drawing.Color.White;
+        }
     }
 }

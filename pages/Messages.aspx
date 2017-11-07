@@ -24,6 +24,26 @@
             }
         });
     </script>
+    <style type="text/css">
+        .imgCss {
+            height: 30px;
+            width: 30px;
+        }
+
+            .imgCss:hover {
+                cursor: pointer;
+            }
+            .row{
+                background-color:white;
+            }
+            .row:hover{
+                background-color:gainsboro;
+                box-shadow: 5px 5px 10px #888888;
+            }
+            .grdView{
+                box-shadow: 5px 5px 10px #888888;
+            }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <center>
@@ -58,14 +78,19 @@
             <td colspan="2"> <asp:Button ID="btnSend" runat="server" Text="שלח" OnClick="btnSend_Click"></asp:Button> </td>
         </tr>
     </table>
-        </center>
-    <asp:GridView ID="MessagesGrid" runat="server">
+        <br /><br />
+        <asp:GridView ID="Inbox" runat="server" DataKeyNames="MessageId" OnRowDataBound="MessagesGrid_RowDataBound" AutoGenerateColumns="False">
         <Columns>
-            <asp:BoundField DataField="Sender" HeaderText="שולח" />
-            <asp:BoundField DataField="Reciver" HeaderText="מקבל" />
-            <asp:BoundField DataField="Date" HeaderText="תאריך" />
-            <asp:BoundField DataField="Status" HeaderText="סטטוס" />
+            <asp:BoundField DataField="SenderName" HeaderText="שולח" />
+            <asp:BoundField DataField="ReciverName" HeaderText="מקבל" />
+            <asp:BoundField DataField="MessageSentTime" HeaderText="תאריך" />
+            <asp:BoundField DataField="MassageStatus" HeaderText="סטטוס" />
+            <asp:ButtonField ButtonType="Button" HeaderText="קרא הודעה" Text="קרא הודעה" />
         </Columns>
     </asp:GridView>
+        <br /><br />
+        <asp:GridView ID="Outbox" runat="server"></asp:GridView>
+        </center>
+    
 </asp:Content>
 
