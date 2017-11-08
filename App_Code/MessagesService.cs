@@ -36,17 +36,9 @@ public class MessagesService
             "(rec.MemberFname & ' ' & rec.MemberLname) AS ReciverName " +
             "FROM Messages AS m1, " +
             "Members AS sen, Members AS rec " +
-            "WHERE sen.MemberId = m1.MassegeSender AND rec.MemberId = m1.MessageReciver AND rec.MemberId =" + id + "";
-        //string strSql = "SELECT Messages.MessageId AS Code, Messages.MessageSentTime AS Date, Messages.MessageContent AS Content, " +
-        //    "Messages.MessageSubject AS Subject" +
-        //    ", (m1.MemberFname & ' ' & m1.MemberLname) AS SenderName, (m2.MemberFname & ' ' & m2.MemberLname) AS ReciverName, Messages.MassageStatus AS status " +
-        //    "FROM Messages, Members AS m1, Members AS m2 WHERE m1.MemberId=Messages.MassegeSender AND m2.MemberId=Messages.MessageReciver " +
-        //    "AND Messages.MessageReciver =" + id + "";
-
-        //strSql = "SELECT Messages.MessageId, MessageSubject, MessageContent, MassageStatus , MessageSentTime, " +
-        //    "se.MemberFname + ' ' + se.MemberLname , re.MemberFname + ' ' + re.MemberLname " +
-        //    "FROM Members AS se, Members AS re, Messages " +
-        //    "WHERE Message = " + id +  "  se.MemberId=Messages.MassegeSender AND re.MemberId=Messages.MessageReciver ";
+            "WHERE sen.MemberId = m1.MassegeSender AND rec.MemberId = m1.MessageReciver " +
+            "AND rec.MemberId =" + id + "" +
+            "ORDER BY m1.MassageStatus DESC, m1.MessageSentTime DESC";
         DataSet ds = Connect.GetDataSet(strSql, "Messages");
         return ds;
     }
@@ -58,8 +50,22 @@ public class MessagesService
             "(rec.MemberFname & ' ' & rec.MemberLname) AS ReciverName " +
             "FROM Messages AS m1, " +
             "Members AS sen, Members AS rec " +
-            "WHERE sen.MemberId = m1.MassegeSender AND rec.MemberId = m1.MessageReciver AND sen.MemberId =" + id + "";
+            "WHERE sen.MemberId = m1.MassegeSender AND rec.MemberId = m1.MessageReciver " +
+            "AND sen.MemberId =" + id + "";
         DataSet ds = Connect.GetDataSet(strSql, "Messages");
         return ds;
+    }
+
+    public static void DeleteMessage(int id)
+    {
+
+    }
+
+    public static string GetMessageContent(int id)
+    {
+        string strSql = "SELECT Messages.MessageContent FROM Messages " +
+            "WHERE MessageId=" + id + "";
+        DataSet ds = Connect.GetDataSet(strSql, "Messages");
+        return ds.Tables[0].Rows[0]["MessageContent"].ToString();
     }
 }

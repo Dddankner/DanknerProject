@@ -22,6 +22,7 @@ public partial class pages_Messages : System.Web.UI.Page
         Inbox.DataBind();
         Inbox.Attributes.Add("style", "direction:rtl");
         DataSet ds1 = MessagesService.GetOutbox(m1.MemberId);
+        messageContentDiv.InnerText = "";
     }
 
     public void FillddlMembers()
@@ -117,6 +118,15 @@ public partial class pages_Messages : System.Web.UI.Page
             GridViewRow r1 = e.Row;
             r1.BackColor = System.Drawing.Color.Black;
             r1.ForeColor = System.Drawing.Color.White;
+        }
+    }
+
+    protected void Inbox_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int MessageID = (int)Inbox.DataKeys[(int)e.CommandArgument].Value;
+        if(e.CommandName == "GetID")
+        {
+            messageContentDiv.InnerText = MessagesService.GetMessageContent(MessageID);
         }
     }
 }

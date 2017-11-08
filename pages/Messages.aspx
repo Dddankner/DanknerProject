@@ -79,15 +79,19 @@
         </tr>
     </table>
         <br /><br />
-        <asp:GridView ID="Inbox" runat="server" DataKeyNames="MessageId" OnRowDataBound="MessagesGrid_RowDataBound" AutoGenerateColumns="False">
+        <asp:GridView ID="Inbox" runat="server" DataKeyNames="MessageId" OnRowCommand="Inbox_RowCommand" OnRowDataBound="MessagesGrid_RowDataBound" AutoGenerateColumns="False">
         <Columns>
             <asp:BoundField DataField="SenderName" HeaderText="שולח" />
             <asp:BoundField DataField="ReciverName" HeaderText="מקבל" />
             <asp:BoundField DataField="MessageSentTime" HeaderText="תאריך" />
             <asp:BoundField DataField="MassageStatus" HeaderText="סטטוס" />
-            <asp:ButtonField ButtonType="Button" HeaderText="קרא הודעה" Text="קרא הודעה" />
+            <asp:ButtonField ButtonType="Button" CommandName="GetID" HeaderText="קרא הודעה" Text="קרא הודעה" />
         </Columns>
     </asp:GridView>
+        <br />
+        <div id="messageContentDiv" runat="server">
+
+        </div>
         <br /><br />
         <asp:GridView ID="Outbox" runat="server"></asp:GridView>
         </center>
