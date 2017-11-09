@@ -51,16 +51,17 @@
         <tr>
             <td><%--<asp:DropDownList ID="ddlMembers" runat="server"></asp:DropDownList>--%>
                 <%--<select runat="server" multiple="true" id="ddlMembers" ></select>--%>
-                <a class="show" aria-haspopup="true">בחר משתמשים</a>
+                <%--<a class="show" aria-haspopup="true">בחר משתמשים</a>--%>
 
-        <div class="mask" role="dialog" runat="server">
+        <%--<div class="mask" role="dialog" runat="server">
             
         </div>
         <div class="modal" role="alert" runat="server">            
             <a class="close" role="button">X</a> 
-            <br /><br /><br />
+            <br /><br /><br />--%>
             <asp:CheckBoxList ID="ddlMembers" runat="server" ></asp:CheckBoxList>
-        </div>
+                <asp:Label runat="server" ID="lblManager"></asp:Label>
+       <%-- </div>--%>
                 <%--<asp:CheckBoxList ID="ddlMembers" runat="server" ></asp:CheckBoxList>--%>
             </td>
             <td> שלח אל </td>
@@ -81,10 +82,10 @@
         <br /><br />
         <asp:GridView ID="Inbox" runat="server" DataKeyNames="MessageId" OnRowCommand="Inbox_RowCommand" OnRowDataBound="MessagesGrid_RowDataBound" AutoGenerateColumns="False">
         <Columns>
+            <asp:BoundField DataField="MassageStatus" HeaderText="סטטוס" />
             <asp:BoundField DataField="SenderName" HeaderText="שולח" />
             <asp:BoundField DataField="ReciverName" HeaderText="מקבל" />
             <asp:BoundField DataField="MessageSentTime" HeaderText="תאריך" />
-            <asp:BoundField DataField="MassageStatus" HeaderText="סטטוס" />
             <asp:ButtonField ButtonType="Button" CommandName="GetID" HeaderText="קרא הודעה" Text="קרא הודעה" />
         </Columns>
     </asp:GridView>
@@ -93,7 +94,18 @@
 
         </div>
         <br /><br />
-        <asp:GridView ID="Outbox" runat="server"></asp:GridView>
+        <asp:GridView ID="Outbox" runat="server" DataKeyNames="MessageId" OnRowDataBound="Outbox_RowDataBound" OnRowCommand="Outbox_RowCommand" AutoGenerateColumns="False">
+            <Columns>
+                <asp:BoundField DataField="MassageStatus" HeaderText="סטטוס" />
+                <asp:BoundField DataField="SenderName" HeaderText="שולח" />
+                <asp:BoundField DataField="ReciverName" HeaderText="מקבל" />
+                <asp:BoundField DataField="MessageSentTime" HeaderText="תאריך" />
+                <asp:ButtonField ButtonType="Button" CommandName="Read" HeaderText="קרא הודעה" Text="קרא הודעה" />
+            </Columns>
+
+        </asp:GridView>
+        <br />
+        <div id="OutboxDiv" runat="server"></div>
         </center>
     
 </asp:Content>

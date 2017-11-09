@@ -15,14 +15,22 @@ public partial class pages_Messages : System.Web.UI.Page
         if (!IsPostBack)
             ddlMembers.Items.Insert(0, "בחר את כולם");
         m1 = (Members)Session["Member"];
-        FillddlManagers();
-        FillddlMembers();
+        if (m1.memberManager)
+            FillddlMembers();
+        else
+            lblManager.Text = "שולח למנהל";
+        //FillddlManagers();
+        //FillddlMembers();
         DataSet ds = MessagesService.GetInbox(m1.MemberId);
         Inbox.DataSource = ds;
         Inbox.DataBind();
         Inbox.Attributes.Add("style", "direction:rtl");
         DataSet ds1 = MessagesService.GetOutbox(m1.MemberId);
+        Outbox.DataSource = ds1;
+        Outbox.DataBind();
+        Outbox.Attributes.Add("style", "direction:rtl");
         messageContentDiv.InnerText = "";
+        OutboxDiv.InnerText = "";
     }
 
     public void FillddlMembers()
@@ -90,9 +98,14 @@ public partial class pages_Messages : System.Web.UI.Page
                 //MessagesService.sendMessage(m);
             }
         }
+        int recID = 0;
+        if (m1.memberManager)
+            recID = int.Parse(ddlMembers.SelectedValue.ToString());
+        else
+            recID = 1;
         Messages m = new Messages();
         m.MessageSender = m1.MemberId;
-        m.MessageReciver = int.Parse(ddlMembers.SelectedValue.ToString());
+        m.MessageReciver = recID;
         m.MessageStatus = false;
         m.MessageSentTime = DateTime.Now;
         m.MessageContent = MessageContent.Text;
@@ -123,10 +136,34 @@ public partial class pages_Messages : System.Web.UI.Page
 
     protected void Inbox_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        int MessageID = (int)Inbox.DataKeys[(int)e.CommandArgument].Value;
-        if(e.CommandName == "GetID")
+        int rowIndex = int.Parse(e.CommandArgument.ToString());
+        int MessageID = (int)Inbox.DataKeys[rowIndex].Value;
+        messageContentDiv.InnerText = MessagesService.GetMessageContent(MessageID);
+        MessagesService.ChangeStatus(MessageID);
+    }
+
+    protected void Outbox_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            messageContentDiv.InnerText = MessagesService.GetMessageContent(MessageID);
+            GridViewRow r1 = e.Row;
+            r1.CssClass = "row";
+        }
+        if (e.Row.RowType == DataControlRowType.Header)
+        {
+            GridViewRow r1 = e.Row;
+            r1.BackColor = System.Drawing.Color.Black;
+            r1.ForeColor = System.Drawing.Color.White;
+        }
+    }
+
+    protected void Outbox_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName.ToString() == "Read")
+        {
+            int rowIndex = int.Parse(e.CommandArgument.ToString());
+            int MessageID = (int)Outbox.DataKeys[rowIndex].Value;
+            OutboxDiv.InnerText = MessagesService.GetMessageContent(MessageID);
         }
     }
 }
