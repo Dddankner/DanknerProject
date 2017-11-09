@@ -29,6 +29,11 @@ public class MessagesService
         //HttpContext.Current.Response.Write(strSql);
     }
 
+    public static void SendToAll(Messages m)
+    {
+
+    }
+
     public static DataSet GetInbox(int id)
     {
         string strSql = "SELECT m1.MessageId, m1.MessageSubject, m1.MessageContent, m1.MassageStatus, m1.MessageSentTime, m1.MessageDeletedBy," +
@@ -60,6 +65,71 @@ public class MessagesService
     public static void DeleteMessage(int id)
     {
 
+    }
+
+    public static void SendList(List<Messages> msgs)
+    {
+        DataTable messages = new DataTable();
+        messages.Columns.Add("MessageSenderID");
+        messages.Columns.Add("MessageReciverID");
+        messages.Columns.Add("MessageSubject");
+        messages.Columns.Add("MessageContent");
+        messages.Columns.Add("MessageIsRead");
+        messages.Columns.Add("MessageSendDate");
+        messages.Columns.Add("MessageDeletedBy");
+
+        for (int i = 0; i < msgs.Count; i++)
+        {
+            DataRow dr = messages.NewRow();
+            dr["MessageSenderID"] = msgs[i].SenderID;
+            dr["MessageReciverID"] = msgs[i].ReciverID;
+            dr["MessageSubject"] = msgs[i].Subject;
+            dr["MessageContent"] = msgs[i].Content;
+            dr["MessageIsRead"] = false;
+            dr["MessageSendDate"] = DateTime.Now;
+            dr["MessageDeletedBy"] = -1;
+            messages.Rows.Add(dr);
+        }
+        InsertAllMessages(messages);
+    }
+
+    private static void InsertAllMessages(DataTable dt)
+    {
+        OleDbConnection con = new OleDbConnection(Connect.GetConnectionString());
+
+        OleDbCommand cmd = new OleDbCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "INSERT INTO Messages(MessageSenderID, MessageReciverID, MessageSubject, MessageContent, " +
+            "MessageIsRead, MessageSendDate, MessageDeletedBy) " +
+                "VALUES " +
+            "(@MessageSenderID, @MessageReciverID, @MessageSubject, @MessageContent, @MessageIsRead, " +
+            "@MessageSendDate, @MessageDeletedBy)";
+        cmd.Parameters.Add("@MessageSenderID", OleDbType.Integer);
+        cmd.Parameters.Add("@MessageReciverID", OleDbType.Integer);
+        cmd.Parameters.Add("@MessageSubject", OleDbType.WChar, 255);
+        cmd.Parameters.Add("@MessageContent", OleDbType.WChar, 255);
+        cmd.Parameters.Add("@MessageIsRead", OleDbType.Boolean, 2);
+        cmd.Parameters.Add("@MessageSendDate", OleDbType.Date);
+        cmd.Parameters.Add("@MessageDeletedBy", OleDbType.Integer);
+        con.Open();
+        cmd.Prepare();
+
+        for (int i = 0; i < dt.Rows.Count; i++)
+        {
+            cmd.Parameters[0].Value = int.Parse(dt.Rows[i]["MessageSenderID"].ToString());
+            cmd.Parameters[1].Value = int.Parse(dt.Rows[i]["MessageReciverID"].ToString());
+            cmd.Parameters[2].Value = dt.Rows[i]["MessageSubject"].ToString();
+            cmd.Parameters[3].Value = dt.Rows[i]["MessageContent"].ToString();
+            cmd.Parameters[4].Value = bool.Parse(dt.Rows[i]["MessageIsRead"].ToString());
+            cmd.Parameters[5].Value = DateTime.Parse(dt.Rows[i]["MessageSendDate"].ToString());
+            cmd.Parameters[6].Value = int.Parse(dt.Rows[i]["MessageDeletedBy"].ToString());
+            cmd.ExecuteNonQuery();
+        }
+
+        OleDbTransaction trance = con.BeginTransaction();
+        cmd.Transaction = trance;
+        trance.Commit();
+        con.Close();
     }
 
     public static string GetMessageContent(int id)

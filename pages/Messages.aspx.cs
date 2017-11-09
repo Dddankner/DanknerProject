@@ -13,31 +13,50 @@ public partial class pages_Messages : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
-            ddlMembers.Items.Insert(0, "בחר את כולם");
-        m1 = (Members)Session["Member"];
-        if (m1.memberManager)
-            FillddlMembers();
-        else
-            lblManager.Text = "שולח למנהל";
+        {
+            m1 = (Members)Session["Member"];
+            if (m1.memberManager)
+                FillddlMembers();
+            else
+                lblManager.Text = "שולח למנהל";
+        }
         //FillddlManagers();
         //FillddlMembers();
+        //DataSet ds = MessagesService.GetInbox(m1.MemberId);
+        //Inbox.DataSource = ds;
+        //Inbox.DataBind();
+        //Inbox.Attributes.Add("style", "direction:rtl");
+        //DataSet ds1 = MessagesService.GetOutbox(m1.MemberId);
+        //Outbox.DataSource = ds1;
+        //Outbox.DataBind();
+        //Outbox.Attributes.Add("style", "direction:rtl");
+        FillInbox();
+        FillOutbox();
+        messageContentDiv.InnerText = "";
+        OutboxDiv.InnerText = "";
+    }
+
+    public void FillInbox()
+    {
         DataSet ds = MessagesService.GetInbox(m1.MemberId);
         Inbox.DataSource = ds;
         Inbox.DataBind();
         Inbox.Attributes.Add("style", "direction:rtl");
+    }
+
+    public void FillOutbox()
+    {
         DataSet ds1 = MessagesService.GetOutbox(m1.MemberId);
         Outbox.DataSource = ds1;
         Outbox.DataBind();
         Outbox.Attributes.Add("style", "direction:rtl");
-        messageContentDiv.InnerText = "";
-        OutboxDiv.InnerText = "";
     }
 
     public void FillddlMembers()
     {
         DataSet ds = MembersServer.ShowAllButU(m1.MemberId);
         ddlMembers.DataSource = ds;
-        ddlMembers.DataValueField = "Id";
+        ddlMembers.DataValueField = "ID";
         ddlMembers.DataTextField = "Name";
         ddlMembers.DataBind();
     }
@@ -46,7 +65,7 @@ public partial class pages_Messages : System.Web.UI.Page
     {
         DataSet ds = MembersServer.ShowManagersOnly();
         ddlMembers.DataSource = ds;
-        ddlMembers.DataValueField = "Id";
+        ddlMembers.DataValueField = "ID";
         ddlMembers.DataTextField = "Name";
         ddlMembers.DataBind();
     }
@@ -61,14 +80,13 @@ public partial class pages_Messages : System.Web.UI.Page
         return names;
     }
 
-    public int[] GetReciver()
+    public List<int> GetReciver()
     {
-        int[] idRec = new int[ddlMembers.Items.Count];
-        ZeroIdRec(idRec);
+        List<int> idRec = new List<int>();
         for (int i = 0; i < ddlMembers.Items.Count; i++)
         {
             if (ddlMembers.Items[i].Selected)
-                idRec[i] = int.Parse(ddlMembers.Items[i].Value.ToString());
+                idRec.Add(int.Parse(ddlMembers.Items[i].Value.ToString()));
         }
         return idRec;
     }
@@ -83,38 +101,40 @@ public partial class pages_Messages : System.Web.UI.Page
 
     protected void btnSend_Click(object sender, EventArgs e)
     {
-        int[] idRec = GetReciver();
-        for (int i = 0; i < idRec.Length; i++)
-        {
-            if (idRec[i] > 0)
-            {
-                //Messages m = new Messages();
-                //m.MessageSender = m1.MemberId;
-                //m.MessageReciver = idRec[i];
-                //m.MessageStatus = false;
-                //m.MessageSentTime = DateTime.Now;
-                //m.MessageContent = MessageContent.Text;
-                //m.MessageSubject = MessageSub.Text;
-                //MessagesService.sendMessage(m);
-            }
-        }
-        int recID = 0;
+        List<int> idRec = GetReciver();
+        List<Messages> mes = new List<Messages>();
         if (m1.memberManager)
-            recID = int.Parse(ddlMembers.SelectedValue.ToString());
+        {
+            for (int i = 0; i < idRec.Count; i++)
+            {
+                Messages m2 = new Messages();
+                m2.MessageSender = m1.MemberId;
+                m2.MessageReciver = idRec[i];
+                m2.MessageStatus = false;
+                m2.MessageSentTime = DateTime.Now;
+                m2.MessageContent = MessageContent.Text;
+                m2.MessageSubject = MessageSub.Text;
+                mes.Add(m2);
+            }
+
+        }
         else
-            recID = 1;
-        Messages m = new Messages();
-        m.MessageSender = m1.MemberId;
-        m.MessageReciver = recID;
-        m.MessageStatus = false;
-        m.MessageSentTime = DateTime.Now;
-        m.MessageContent = MessageContent.Text;
-        m.MessageSubject = MessageSub.Text;
-        MessagesService.sendMessage(m);
+        {
+            Messages m = new Messages();
+            m.MessageSender = m1.MemberId;
+            m.MessageReciver = 1;
+            m.MessageStatus = false;
+            m.MessageSentTime = DateTime.Now;
+            m.MessageContent = MessageContent.Text;
+            m.MessageSubject = MessageSub.Text;
+            MessagesService.sendMessage(m);
+        }        
         //Response.Write(ddlMembers.SelectedValue);
         MessageContent.Text = "";
         MessageSub.Text = "";
-        lblError.Text = "accd";
+        //lblError.Text = "accd";
+        FillInbox();
+        FillOutbox();
     }
 
 
@@ -165,5 +185,22 @@ public partial class pages_Messages : System.Web.UI.Page
             int MessageID = (int)Outbox.DataKeys[rowIndex].Value;
             OutboxDiv.InnerText = MessagesService.GetMessageContent(MessageID);
         }
+    }
+
+    protected void SelectAll_CheckedChanged(object sender, EventArgs e)
+    {
+        if(SelectAll.Checked)
+        {
+            for (int i = 0; i < ddlMembers.Items.Count; i++)
+            {
+                ddlMembers.Items[i].Selected = true;
+                ddlMembers.Items[i].Enabled = false;
+            }
+        }
+    }
+
+    protected void ddlMembers_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
     }
 }

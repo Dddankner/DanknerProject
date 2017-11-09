@@ -59,6 +59,7 @@
         <div class="modal" role="alert" runat="server">            
             <a class="close" role="button">X</a> 
             <br /><br /><br />--%>
+                <asp:CheckBox runat="server" ID="SelectAll" Text="בחר את כולם" AutoPostBack="true" OnCheckedChanged="SelectAll_CheckedChanged" />
             <asp:CheckBoxList ID="ddlMembers" runat="server" ></asp:CheckBoxList>
                 <asp:Label runat="server" ID="lblManager"></asp:Label>
        <%-- </div>--%>

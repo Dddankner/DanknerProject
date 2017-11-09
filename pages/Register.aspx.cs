@@ -104,7 +104,6 @@ public partial class Register : System.Web.UI.Page
         string strSearch = "SELECT * FROM Cities ORDER BY CityName";
         DataSet dsDB = Connect.GetDataSet(strSearch, "Cities");
         DataTable dtDB = dsDB.Tables[0];
-
         OleDbConnection con = new OleDbConnection(connection);
         con.Open();
         OleDbCommand cmd = new OleDbCommand();
