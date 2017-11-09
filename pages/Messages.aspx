@@ -43,6 +43,11 @@
             .grdView{
                 box-shadow: 5px 5px 10px #888888;
             }
+            .notes {
+            background-color: none;
+            color: red;
+            display: block;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
@@ -59,14 +64,15 @@
         <div class="modal" role="alert" runat="server">            
             <a class="close" role="button">X</a> 
             <br /><br /><br />--%>
-                <asp:CheckBox runat="server" ID="SelectAll" Text="בחר את כולם" AutoPostBack="true" OnCheckedChanged="SelectAll_CheckedChanged" />
-            <asp:CheckBoxList ID="ddlMembers" runat="server" ></asp:CheckBoxList>
+                <%if (m1.memberManager)
+                    { %><asp:CheckBox runat="server" ID="SelectAll" Text="בחר את כולם" AutoPostBack="true" OnCheckedChanged="SelectAll_CheckedChanged" />
+            <asp:CheckBoxList ID="ddlMembers" runat="server" ></asp:CheckBoxList><%} %>
                 <asp:Label runat="server" ID="lblManager"></asp:Label>
        <%-- </div>--%>
                 <%--<asp:CheckBoxList ID="ddlMembers" runat="server" ></asp:CheckBoxList>--%>
             </td>
             <td> שלח אל </td>
-            <td> <asp:Label runat="server" ID="lblError"></asp:Label> </td>
+            <td rowspan="3"> <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="notes" DisplayMode="List"></asp:ValidationSummary> </td>
         </tr>
         <tr>
             <td> <asp:TextBox ID="MessageSub" runat="server"></asp:TextBox> </td>
@@ -80,8 +86,12 @@
             <td colspan="2"> <asp:Button ID="btnSend" runat="server" Text="שלח" OnClick="btnSend_Click"></asp:Button> </td>
         </tr>
     </table>
+        <asp:RequiredFieldValidator ID="SubjectValid" runat="server" ControlToValidate="MessageSub" ErrorMessage="חובה למלא נושא"></asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator ID="SubjectValidateLet" runat="server" ControlToValidate="MessageSub" ValidationExpression="[א-ת]{2,250}" ErrorMessage="הנושא חייב להיות בעברית ובאורך של עד 250 תווים"></asp:RegularExpressionValidator>
+        <asp:RequiredFieldValidator ID="ContentValidate" runat="server" ControlToValidate="MessageContent" ErrorMessage="חובה למלא תוכן"></asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator ID="ContentValidateLet" runat="server" ControlToValidate="MessageContent" ValidationExpression="[א-ת]{2,250}" ErrorMessage="התוכן חייב להיות בעברית ובאורך של עד 250 תווים"></asp:RegularExpressionValidator>
         <br /><br />
-        <asp:GridView ID="Inbox" runat="server" DataKeyNames="MessageId" OnRowCommand="Inbox_RowCommand" OnRowDataBound="MessagesGrid_RowDataBound" AutoGenerateColumns="False">
+        <asp:GridView ID="Inbox" runat="server" OnRowDeleting="Inbox_RowDeleting" DataKeyNames="MessageId" OnRowCommand="Inbox_RowCommand" OnRowDataBound="MessagesGrid_RowDataBound" AutoGenerateColumns="False">
         <Columns>
             <asp:BoundField DataField="MassageStatus" HeaderText="סטטוס" />
             <asp:BoundField DataField="SenderName" HeaderText="שולח" />
@@ -96,7 +106,7 @@
 
         </div>
         <br /><br />
-        <asp:GridView ID="Outbox" runat="server" DataKeyNames="MessageId" OnRowDataBound="Outbox_RowDataBound" OnRowCommand="Outbox_RowCommand" AutoGenerateColumns="False">
+        <asp:GridView ID="Outbox" OnRowDeleting="Outbox_RowDeleting" runat="server" DataKeyNames="MessageId" OnRowDataBound="Outbox_RowDataBound" OnRowCommand="Outbox_RowCommand" AutoGenerateColumns="False">
             <Columns>
                 <asp:BoundField DataField="MassageStatus" HeaderText="סטטוס" />
                 <asp:BoundField DataField="SenderName" HeaderText="שולח" />

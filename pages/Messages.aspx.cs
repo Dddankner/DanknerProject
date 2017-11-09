@@ -12,7 +12,7 @@ public partial class pages_Messages : System.Web.UI.Page
     public static Members m1;
     protected void Page_Load(object sender, EventArgs e)
     {
-<<<<<<< HEAD
+
         if (!IsPostBack)
         {
             m1 = (Members)Session["Member"];
@@ -21,17 +21,6 @@ public partial class pages_Messages : System.Web.UI.Page
             else
                 lblManager.Text = "שולח למנהל";
         }
-=======
-        m1 = (Members)Session["Member"];
-        if (m1.memberManager)
-        {
-            FillddlMembers();
-            if (!IsPostBack)
-                ddlMembers.Items.Insert(0, "בחר את כולם");
-        }
-        else
-            lblManager.Text = "שולח למנהל";
->>>>>>> b313cf7afaadb7be8e9d23b77ebde3dd8c6f71a6
         //FillddlManagers();
         //FillddlMembers();
         //DataSet ds = MessagesService.GetInbox(m1.MemberId);
@@ -128,7 +117,7 @@ public partial class pages_Messages : System.Web.UI.Page
                 m2.MessageSubject = MessageSub.Text;
                 mes.Add(m2);
             }
-
+            MessagesService.SendList(mes);
         }
         else
         {
@@ -222,8 +211,13 @@ public partial class pages_Messages : System.Web.UI.Page
         }
     }
 
-    protected void ddlMembers_SelectedIndexChanged(object sender, EventArgs e)
+    protected void Inbox_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
+        FillInbox();
+    }
 
+    protected void Outbox_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+        FillOutbox();
     }
 }
