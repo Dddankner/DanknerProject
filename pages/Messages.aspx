@@ -86,7 +86,8 @@
             <asp:BoundField DataField="SenderName" HeaderText="שולח" />
             <asp:BoundField DataField="ReciverName" HeaderText="מקבל" />
             <asp:BoundField DataField="MessageSentTime" HeaderText="תאריך" />
-            <asp:ButtonField ButtonType="Button" CommandName="GetID" HeaderText="קרא הודעה" Text="קרא הודעה" />
+            <asp:ButtonField ButtonType="Button" CommandName="Read" HeaderText="קרא הודעה" Text="קרא הודעה" />
+            <asp:ButtonField ButtonType="Button" CommandName="delete" HeaderText="מחק" Text="מחק" />
         </Columns>
     </asp:GridView>
         <br />
@@ -101,6 +102,7 @@
                 <asp:BoundField DataField="ReciverName" HeaderText="מקבל" />
                 <asp:BoundField DataField="MessageSentTime" HeaderText="תאריך" />
                 <asp:ButtonField ButtonType="Button" CommandName="Read" HeaderText="קרא הודעה" Text="קרא הודעה" />
+                <asp:ButtonField ButtonType="Button" CommandName="delete" HeaderText="מחק" Text="מחק" />
             </Columns>
 
         </asp:GridView>

@@ -12,11 +12,13 @@ public partial class pages_Messages : System.Web.UI.Page
     public static Members m1;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
-            ddlMembers.Items.Insert(0, "בחר את כולם");
         m1 = (Members)Session["Member"];
         if (m1.memberManager)
+        {
             FillddlMembers();
+            if (!IsPostBack)
+                ddlMembers.Items.Insert(0, "בחר את כולם");
+        }
         else
             lblManager.Text = "שולח למנהל";
         //FillddlManagers();
@@ -138,8 +140,15 @@ public partial class pages_Messages : System.Web.UI.Page
     {
         int rowIndex = int.Parse(e.CommandArgument.ToString());
         int MessageID = (int)Inbox.DataKeys[rowIndex].Value;
-        messageContentDiv.InnerText = MessagesService.GetMessageContent(MessageID);
-        MessagesService.ChangeStatus(MessageID);
+        if (e.CommandName.ToString() == "Read")
+        {
+            messageContentDiv.InnerText = MessagesService.GetMessageContent(MessageID);
+            MessagesService.ChangeStatus(MessageID);
+        }
+        if(e.CommandName.ToString() == "delete")
+        {
+            MessagesService.DeleteMessage(MessageID, m1.MemberId);
+        }
     }
 
     protected void Outbox_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -159,11 +168,15 @@ public partial class pages_Messages : System.Web.UI.Page
 
     protected void Outbox_RowCommand(object sender, GridViewCommandEventArgs e)
     {
+        int rowIndex = int.Parse(e.CommandArgument.ToString());
+        int MessageID = (int)Outbox.DataKeys[rowIndex].Value;
         if (e.CommandName.ToString() == "Read")
-        {
-            int rowIndex = int.Parse(e.CommandArgument.ToString());
-            int MessageID = (int)Outbox.DataKeys[rowIndex].Value;
+        {            
             OutboxDiv.InnerText = MessagesService.GetMessageContent(MessageID);
+        }
+        if (e.CommandName.ToString() == "delete")
+        {
+            MessagesService.DeleteMessage(MessageID, m1.MemberId);
         }
     }
 }
