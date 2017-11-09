@@ -163,6 +163,7 @@ public partial class pages_Messages : System.Web.UI.Page
         {
             messageContentDiv.InnerText = MessagesService.GetMessageContent(MessageID);
             MessagesService.ChangeStatus(MessageID);
+            FillInbox();
         }
         if(e.CommandName.ToString() == "delete")
         {
@@ -207,6 +208,14 @@ public partial class pages_Messages : System.Web.UI.Page
             {
                 ddlMembers.Items[i].Selected = true;
                 ddlMembers.Items[i].Enabled = false;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < ddlMembers.Items.Count; i++)
+            {
+                ddlMembers.Items[i].Selected = false;
+                ddlMembers.Items[i].Enabled = true;
             }
         }
     }

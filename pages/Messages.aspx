@@ -86,31 +86,35 @@
             <td colspan="2"> <asp:Button ID="btnSend" runat="server" Text="שלח" OnClick="btnSend_Click"></asp:Button> </td>
         </tr>
     </table>
-        <asp:RequiredFieldValidator ID="SubjectValid" runat="server" ControlToValidate="MessageSub" ErrorMessage="חובה למלא נושא"></asp:RequiredFieldValidator>
-        <asp:RegularExpressionValidator ID="SubjectValidateLet" runat="server" ControlToValidate="MessageSub" ValidationExpression="[א-ת]{2,250}" ErrorMessage="הנושא חייב להיות בעברית ובאורך של עד 250 תווים"></asp:RegularExpressionValidator>
-        <asp:RequiredFieldValidator ID="ContentValidate" runat="server" ControlToValidate="MessageContent" ErrorMessage="חובה למלא תוכן"></asp:RequiredFieldValidator>
-        <asp:RegularExpressionValidator ID="ContentValidateLet" runat="server" ControlToValidate="MessageContent" ValidationExpression="[א-ת]{2,250}" ErrorMessage="התוכן חייב להיות בעברית ובאורך של עד 250 תווים"></asp:RegularExpressionValidator>
+        <%--<asp:RequiredFieldValidator ID="SubjectValid" runat="server" ControlToValidate="MessageSub" ErrorMessage="חובה למלא נושא">&nbsp</asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator ID="SubjectValidateLet" runat="server" ControlToValidate="MessageSub" ValidationExpression="[א-ת]{2,250}" ErrorMessage="הנושא חייב להיות בעברית ובאורך של עד 250 תווים">&nbsp</asp:RegularExpressionValidator>
+        <asp:RequiredFieldValidator ID="ContentValidate" runat="server" ControlToValidate="MessageContent" ErrorMessage="חובה למלא תוכן">&nbsp</asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator ID="ContentValidateLet" runat="server" ControlToValidate="MessageContent" ValidationExpression="[א-ת]{2,250}" ErrorMessage="התוכן חייב להיות בעברית ובאורך של עד 250 תווים">&nbsp</asp:RegularExpressionValidator>--%>
         <br /><br />
+        <asp:Label ID="Label1" runat="server" Text="דואל נכנס"></asp:Label>
         <asp:GridView ID="Inbox" runat="server" OnRowDeleting="Inbox_RowDeleting" DataKeyNames="MessageId" OnRowCommand="Inbox_RowCommand" OnRowDataBound="MessagesGrid_RowDataBound" AutoGenerateColumns="False">
         <Columns>
             <asp:BoundField DataField="MassageStatus" HeaderText="סטטוס" />
             <asp:BoundField DataField="SenderName" HeaderText="שולח" />
             <asp:BoundField DataField="ReciverName" HeaderText="מקבל" />
+            <asp:BoundField DataField="MessageSubject" HeaderText="נושא" />
             <asp:BoundField DataField="MessageSentTime" HeaderText="תאריך" />
             <asp:ButtonField ButtonType="Button" CommandName="Read" HeaderText="קרא הודעה" Text="קרא הודעה" />
             <asp:ButtonField ButtonType="Button" CommandName="delete" HeaderText="מחק" Text="מחק" />
         </Columns>
     </asp:GridView>
         <br />
-        <div id="messageContentDiv" runat="server">
+        <div id="messageContentDiv" style="color:white; background-color:black" runat="server">
 
         </div>
         <br /><br />
+        <asp:Label ID="lblOutbox" runat="server" Text="דואל יוצא"></asp:Label>
         <asp:GridView ID="Outbox" OnRowDeleting="Outbox_RowDeleting" runat="server" DataKeyNames="MessageId" OnRowDataBound="Outbox_RowDataBound" OnRowCommand="Outbox_RowCommand" AutoGenerateColumns="False">
             <Columns>
                 <asp:BoundField DataField="MassageStatus" HeaderText="סטטוס" />
                 <asp:BoundField DataField="SenderName" HeaderText="שולח" />
                 <asp:BoundField DataField="ReciverName" HeaderText="מקבל" />
+                <asp:BoundField DataField="MessageSubject" HeaderText="נושא" />
                 <asp:BoundField DataField="MessageSentTime" HeaderText="תאריך" />
                 <asp:ButtonField ButtonType="Button" CommandName="Read" HeaderText="קרא הודעה" Text="קרא הודעה" />
                 <asp:ButtonField ButtonType="Button" CommandName="delete" HeaderText="מחק" Text="מחק" />
@@ -118,7 +122,7 @@
 
         </asp:GridView>
         <br />
-        <div id="OutboxDiv" runat="server"></div>
+        <div id="OutboxDiv" runat="server" style="color:white; background-color:black"></div>
         </center>
     
 </asp:Content>

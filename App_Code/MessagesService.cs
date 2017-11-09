@@ -42,7 +42,7 @@ public class MessagesService
             "FROM Messages AS m1, " +
             "Members AS sen, Members AS rec " +
             "WHERE sen.MemberId = m1.MassegeSender AND rec.MemberId = m1.MessageReciver " +
-            "AND rec.MemberId =" + id + " " +
+            "AND rec.MemberId =" + id + " AND m1.MessageDeletedBy<>" + id + " " +
             "ORDER BY m1.MassageStatus DESC, m1.MessageSentTime DESC";
         DataSet ds = Connect.GetDataSet(strSql, "Messages");
         return ds;
