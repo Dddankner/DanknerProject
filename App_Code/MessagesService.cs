@@ -62,9 +62,20 @@ public class MessagesService
         return ds;
     }
 
-    public static void DeleteMessage(int id)
+    public static void DeleteMessage(int mesID, int memID)
     {
-
+        string strSql = "SELECT MessageDeletedBy FROM Messages WHERE MessageId=" + mesID;
+        DataSet ds = Connect.GetDataSet(strSql, "Messages");
+        if(int.Parse(ds.Tables[0].Rows[0]["MessageDeletedBy"].ToString()) == -1)
+        {
+            string strSql1 = "UPDATE Messages SET MessageDeletedBy=" + memID + " WHERE MessageId=" + mesID;
+            Connect.InsertUpdateDelete(strSql1);
+        }
+        else if(int.Parse(ds.Tables[0].Rows[0]["MessageDeletedBy"].ToString()) != -1)
+        {
+            string strSql1 = "DELETE FROM Messages WHERE MessageId=" + mesID;
+            Connect.InsertUpdateDelete(strSql1);
+        }
     }
 
     public static void SendList(List<Messages> msgs)

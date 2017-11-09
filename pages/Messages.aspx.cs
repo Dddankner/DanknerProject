@@ -12,6 +12,7 @@ public partial class pages_Messages : System.Web.UI.Page
     public static Members m1;
     protected void Page_Load(object sender, EventArgs e)
     {
+<<<<<<< HEAD
         if (!IsPostBack)
         {
             m1 = (Members)Session["Member"];
@@ -20,6 +21,17 @@ public partial class pages_Messages : System.Web.UI.Page
             else
                 lblManager.Text = "שולח למנהל";
         }
+=======
+        m1 = (Members)Session["Member"];
+        if (m1.memberManager)
+        {
+            FillddlMembers();
+            if (!IsPostBack)
+                ddlMembers.Items.Insert(0, "בחר את כולם");
+        }
+        else
+            lblManager.Text = "שולח למנהל";
+>>>>>>> b313cf7afaadb7be8e9d23b77ebde3dd8c6f71a6
         //FillddlManagers();
         //FillddlMembers();
         //DataSet ds = MessagesService.GetInbox(m1.MemberId);
@@ -158,8 +170,15 @@ public partial class pages_Messages : System.Web.UI.Page
     {
         int rowIndex = int.Parse(e.CommandArgument.ToString());
         int MessageID = (int)Inbox.DataKeys[rowIndex].Value;
-        messageContentDiv.InnerText = MessagesService.GetMessageContent(MessageID);
-        MessagesService.ChangeStatus(MessageID);
+        if (e.CommandName.ToString() == "Read")
+        {
+            messageContentDiv.InnerText = MessagesService.GetMessageContent(MessageID);
+            MessagesService.ChangeStatus(MessageID);
+        }
+        if(e.CommandName.ToString() == "delete")
+        {
+            MessagesService.DeleteMessage(MessageID, m1.MemberId);
+        }
     }
 
     protected void Outbox_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -179,11 +198,15 @@ public partial class pages_Messages : System.Web.UI.Page
 
     protected void Outbox_RowCommand(object sender, GridViewCommandEventArgs e)
     {
+        int rowIndex = int.Parse(e.CommandArgument.ToString());
+        int MessageID = (int)Outbox.DataKeys[rowIndex].Value;
         if (e.CommandName.ToString() == "Read")
-        {
-            int rowIndex = int.Parse(e.CommandArgument.ToString());
-            int MessageID = (int)Outbox.DataKeys[rowIndex].Value;
+        {            
             OutboxDiv.InnerText = MessagesService.GetMessageContent(MessageID);
+        }
+        if (e.CommandName.ToString() == "delete")
+        {
+            MessagesService.DeleteMessage(MessageID, m1.MemberId);
         }
     }
 
