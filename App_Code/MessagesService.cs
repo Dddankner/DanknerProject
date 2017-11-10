@@ -78,6 +78,14 @@ public class MessagesService
         }
     }
 
+    public static string GetSub(int id)
+    {
+        string strSql = "SELECT Messages.MessageSubject FROM Messages " +
+            "WHERE MessageId=" + id + "";
+        DataSet ds = Connect.GetDataSet(strSql, "Messages");
+        return ds.Tables[0].Rows[0]["MessageSubject"].ToString();
+    }
+
     public static void SendList(List<Messages> msgs)
     {
         DataTable messages = new DataTable();
@@ -155,5 +163,12 @@ public class MessagesService
     {
         string strSql = "UPDATE Messages SET MassageStatus=True WHERE MessageId=" + id + "";
         Connect.InsertUpdateDelete(strSql);
+    }
+
+    public static DataSet GetMessage(int id)
+    {
+        string strSql = "SELECT * FROM Messages WHERE MessageId=" + id;
+        DataSet ds = Connect.GetDataSet(strSql, "Messages");
+        return ds;
     }
 }

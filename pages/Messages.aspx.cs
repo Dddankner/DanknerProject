@@ -33,8 +33,8 @@ public partial class pages_Messages : System.Web.UI.Page
         //Outbox.Attributes.Add("style", "direction:rtl");
         FillInbox();
         FillOutbox();
-        messageContentDiv.InnerText = "";
-        OutboxDiv.InnerText = "";
+        //messageContentDiv.InnerText = "";
+        //OutboxDiv.InnerText = "";
     }
 
     public void FillInbox()
@@ -136,6 +136,11 @@ public partial class pages_Messages : System.Web.UI.Page
         //lblError.Text = "accd";
         FillInbox();
         FillOutbox();
+        for (int i = 0; i < ddlMembers.Items.Count; i++)
+        {
+            ddlMembers.Items[i].Selected = false;
+            ddlMembers.Items[i].Enabled = true;
+        }
     }
 
 
@@ -146,6 +151,8 @@ public partial class pages_Messages : System.Web.UI.Page
         {
             GridViewRow r1 = e.Row;
             r1.CssClass = "row";
+            if (bool.Parse(r1.Cells[0].Text.ToString()))
+                r1.BackColor = System.Drawing.Color.Green;
         }
         if (e.Row.RowType == DataControlRowType.Header)
         {
@@ -161,8 +168,12 @@ public partial class pages_Messages : System.Web.UI.Page
         int MessageID = (int)Inbox.DataKeys[rowIndex].Value;
         if (e.CommandName.ToString() == "Read")
         {
-            messageContentDiv.InnerText = MessagesService.GetMessageContent(MessageID);
-            MessagesService.ChangeStatus(MessageID);
+            DataSet ds = MessagesService.GetMessage(MessageID);
+            lblMesSender.Text = ds.Tables[0].Rows[0]["MassegeSender"].ToString();
+            lblMesReciver.Text = ds.Tables[0].Rows[0]["MessageReciver"].ToString();
+            lblMesSubject.Text = ds.Tables[0].Rows[0]["MessageSubject"].ToString();
+            lblMesContent.Text = ds.Tables[0].Rows[0]["MessageContent"].ToString();
+            tblMessage.Attributes.Add("style", "display:normal");
             FillInbox();
         }
         if(e.CommandName.ToString() == "delete")
@@ -177,6 +188,8 @@ public partial class pages_Messages : System.Web.UI.Page
         {
             GridViewRow r1 = e.Row;
             r1.CssClass = "row";
+            if (bool.Parse(r1.Cells[0].Text.ToString()))
+                r1.BackColor = System.Drawing.Color.Green;
         }
         if (e.Row.RowType == DataControlRowType.Header)
         {
@@ -191,8 +204,13 @@ public partial class pages_Messages : System.Web.UI.Page
         int rowIndex = int.Parse(e.CommandArgument.ToString());
         int MessageID = (int)Outbox.DataKeys[rowIndex].Value;
         if (e.CommandName.ToString() == "Read")
-        {            
-            OutboxDiv.InnerText = MessagesService.GetMessageContent(MessageID);
+        {
+            DataSet ds = MessagesService.GetMessage(MessageID);
+            lblMesSender.Text = ds.Tables[0].Rows[0]["MassegeSender"].ToString();
+            lblMesReciver.Text = ds.Tables[0].Rows[0]["MessageReciver"].ToString();
+            lblMesSubject.Text = ds.Tables[0].Rows[0]["MessageSubject"].ToString();
+            lblMesContent.Text = ds.Tables[0].Rows[0]["MessageContent"].ToString();
+            tblMessage.Attributes.Add("style", "display:normal");
         }
         if (e.CommandName.ToString() == "delete")
         {

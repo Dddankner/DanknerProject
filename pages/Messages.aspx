@@ -23,6 +23,19 @@
                 closeModal();
             }
         });
+
+        function ValidateRecivers(source, args) {
+            var chkListModules = document.getElementById('<%= ddlMembers.ClientID %>');
+            var chkListinputs = chkListModules.getElementsByTagName("input");
+            for (var i = 0; i < chkListinputs.length; i++) {
+                if (chkListinputs[i].checked) {
+                    args.IsValid = true;
+                    return;
+                }
+            }
+
+            args.IsValid = false;
+        }
     </script>
     <style type="text/css">
         .imgCss {
@@ -33,17 +46,21 @@
             .imgCss:hover {
                 cursor: pointer;
             }
-            .row{
-                background-color:white;
-            }
-            .row:hover{
-                background-color:gainsboro;
+
+        .row {
+            background-color: white;
+        }
+
+            .row:hover {
+                background-color: gainsboro;
                 box-shadow: 5px 5px 10px #888888;
             }
-            .grdView{
-                box-shadow: 5px 5px 10px #888888;
-            }
-            .notes {
+
+        .grdView {
+            box-shadow: 5px 5px 10px #888888;
+        }
+
+        .notes {
             background-color: none;
             color: red;
             display: block;
@@ -86,11 +103,17 @@
             <td colspan="2"> <asp:Button ID="btnSend" runat="server" Text="שלח" OnClick="btnSend_Click"></asp:Button> </td>
         </tr>
     </table>
-        <%--<asp:RequiredFieldValidator ID="SubjectValid" runat="server" ControlToValidate="MessageSub" ErrorMessage="חובה למלא נושא">&nbsp</asp:RequiredFieldValidator>
+        <%if (m1.memberManager)
+            { %>
+        <asp:CustomValidator runat="server" id="checkReciverCbx" ErrorMessage="חובה לבחור נמענים" ClientValidationFunction="ValidateRecivers">&nbsp</asp:CustomValidator>
+        <%--<asp:CustomValidator ID="checkReciverCbxv" runat="server" ClientValidationFunction="ValidateReciversn" ControlToValidate="ddlMembers" ErrorMessage="חובה לבחור נמענים">&nbsp</asp:CustomValidator>--%>
+        <%} %>
+        <asp:RequiredFieldValidator ID="SubjectValid" runat="server" ControlToValidate="MessageSub" ErrorMessage="חובה למלא נושא">&nbsp</asp:RequiredFieldValidator>
         <asp:RegularExpressionValidator ID="SubjectValidateLet" runat="server" ControlToValidate="MessageSub" ValidationExpression="[א-ת]{2,250}" ErrorMessage="הנושא חייב להיות בעברית ובאורך של עד 250 תווים">&nbsp</asp:RegularExpressionValidator>
         <asp:RequiredFieldValidator ID="ContentValidate" runat="server" ControlToValidate="MessageContent" ErrorMessage="חובה למלא תוכן">&nbsp</asp:RequiredFieldValidator>
-        <asp:RegularExpressionValidator ID="ContentValidateLet" runat="server" ControlToValidate="MessageContent" ValidationExpression="[א-ת]{2,250}" ErrorMessage="התוכן חייב להיות בעברית ובאורך של עד 250 תווים">&nbsp</asp:RegularExpressionValidator>--%>
+        <asp:RegularExpressionValidator ID="ContentValidateLet" runat="server" ControlToValidate="MessageContent" ValidationExpression="[א-ת]{2,250}" ErrorMessage="התוכן חייב להיות בעברית ובאורך של עד 250 תווים">&nbsp</asp:RegularExpressionValidator>
         <br /><br />
+        <div runat="server" style="height:auto; width:auto">
         <asp:Label ID="Label1" runat="server" Text="דואל נכנס"></asp:Label>
         <asp:GridView ID="Inbox" runat="server" OnRowDeleting="Inbox_RowDeleting" DataKeyNames="MessageId" OnRowCommand="Inbox_RowCommand" OnRowDataBound="MessagesGrid_RowDataBound" AutoGenerateColumns="False">
         <Columns>
@@ -103,11 +126,13 @@
             <asp:ButtonField ButtonType="Button" CommandName="delete" HeaderText="מחק" Text="מחק" />
         </Columns>
     </asp:GridView>
+        
         <br />
-        <div id="messageContentDiv" style="color:white; background-color:black" runat="server">
-
+        <%--<div id="messageContentDiv" style="color:white; background-color:black" runat="server">
+            </div>--%>
         </div>
         <br /><br />
+        <div runat="server" style="height:auto; width:auto">
         <asp:Label ID="lblOutbox" runat="server" Text="דואל יוצא"></asp:Label>
         <asp:GridView ID="Outbox" OnRowDeleting="Outbox_RowDeleting" runat="server" DataKeyNames="MessageId" OnRowDataBound="Outbox_RowDataBound" OnRowCommand="Outbox_RowCommand" AutoGenerateColumns="False">
             <Columns>
@@ -119,11 +144,32 @@
                 <asp:ButtonField ButtonType="Button" CommandName="Read" HeaderText="קרא הודעה" Text="קרא הודעה" />
                 <asp:ButtonField ButtonType="Button" CommandName="delete" HeaderText="מחק" Text="מחק" />
             </Columns>
-
         </asp:GridView>
         <br />
-        <div id="OutboxDiv" runat="server" style="color:white; background-color:black"></div>
+       <%-- <div id="OutboxDiv" runat="server" style="color:white; background-color:black; width:50px; height:auto">
+            <div style="border-bottom:1px solid black; direction:rtl"><a runat="server" id="SenderName" style="border-right:1px solid #000000; direction:rtl"></a><a>שולח  </a></div>
+            <br /><p runat="server" id="MesContent" style="direction:rtl"></p>
+        </div>--%>
+            </div>
+        <table border="1" class="tablePopUp" style="display:none; direction:rtl" id="tblMessage" runat="server">
+            <tr>
+                <td> <asp:Label ID="lblMesSender" runat="server"></asp:Label> </td>
+                <td> שולח </td>
+            </tr>
+            <tr> 
+                <td> <asp:Label ID="lblMesReciver" runat="server"></asp:Label> </td> 
+                <td> מקבל </td>
+            </tr>
+            <tr>
+                <td> <asp:Label ID="lblMesSubject" runat="server" ></asp:Label> </td>
+                <td> נושא </td>
+            </tr>
+            <tr>
+                <td> <asp:Label ID="lblMesContent" runat="server"></asp:Label> </td>
+                <td> תוכן </td>
+            </tr>
+        </table>
         </center>
-    
+
 </asp:Content>
 
