@@ -15,12 +15,17 @@
 
             $(".close, .mask").click(function () {
                 $(".mask").removeClass("active");
+                var cbx = document.getElementById("ddlMembers")
+                for (var i = 0; i < ; i++) {
+                    
+                }
             });
         });
 
         $(document).keyup(function (e) {
             if (e.keyCode == 27) {
                 closeModal();
+                <%InsertLblRecText(); %>
             }
         });
 
@@ -73,23 +78,31 @@
         <tr>
             <td><%--<asp:DropDownList ID="ddlMembers" runat="server"></asp:DropDownList>--%>
                 <%--<select runat="server" multiple="true" id="ddlMembers" ></select>--%>
-                <%--<a class="show" aria-haspopup="true">בחר משתמשים</a>--%>
+                
+                <%if (m1.memberManager)
+                    { %>
+                <a class="show" aria-haspopup="true">בחר משתמשים</a>
 
-        <%--<div class="mask" role="dialog" runat="server">
+        <div class="mask" role="dialog" runat="server">
             
         </div>
         <div class="modal" role="alert" runat="server">            
             <a class="close" role="button">X</a> 
-            <br /><br /><br />--%>
-                <%if (m1.memberManager)
-                    { %><asp:CheckBox runat="server" ID="SelectAll" Text="בחר את כולם" AutoPostBack="true" OnCheckedChanged="SelectAll_CheckedChanged" />
-            <asp:CheckBoxList ID="ddlMembers" runat="server" ></asp:CheckBoxList><%} %>
+            <br /><br /><br />
+                <asp:CheckBox runat="server" ID="SelectAll" Text="בחר את כולם" AutoPostBack="true" OnCheckedChanged="SelectAll_CheckedChanged" />
+            <asp:CheckBoxList ID="ddlMembers" runat="server" ></asp:CheckBoxList>
+            </div><%} %>
                 <asp:Label runat="server" ID="lblManager"></asp:Label>
-       <%-- </div>--%>
+        
                 <%--<asp:CheckBoxList ID="ddlMembers" runat="server" ></asp:CheckBoxList>--%>
             </td>
             <td> שלח אל </td>
             <td rowspan="3"> <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="notes" DisplayMode="List"></asp:ValidationSummary> </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label runat="server" ID="ReciverNames"></asp:Label>
+            </td>
         </tr>
         <tr>
             <td> <asp:TextBox ID="MessageSub" runat="server"></asp:TextBox> </td>

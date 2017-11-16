@@ -10,6 +10,7 @@ using System.Data.OleDb;
 public partial class pages_Messages : System.Web.UI.Page
 {
     public static Members m1;
+    public static string recivers = "";
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -33,6 +34,7 @@ public partial class pages_Messages : System.Web.UI.Page
         //Outbox.Attributes.Add("style", "direction:rtl");
         FillInbox();
         FillOutbox();
+        InsertLblRecText();
         //messageContentDiv.InnerText = "";
         //OutboxDiv.InnerText = "";
     }
@@ -246,5 +248,18 @@ public partial class pages_Messages : System.Web.UI.Page
     protected void Outbox_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
         FillOutbox();
+    }
+
+    protected void InsertLblRecText()
+    {
+        recivers = "";
+        for (int i = 0; i < ddlMembers.Items.Count; i++)
+        {
+            if(ddlMembers.Items[i].Selected)
+            {
+                recivers += ", " + ddlMembers.Items[i].Text;
+            }
+        }
+        ReciverNames.Text = recivers;
     }
 }
