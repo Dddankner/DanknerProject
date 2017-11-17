@@ -84,8 +84,8 @@
             <li><a href="../pages/Main.aspx">ראשי </a></li>
             <%if (Session["Member"] == null)
                 { %>
-            <li><a href="../pages/Register.aspx">הרשמה </a></li>
-            <li><a href="../pages/LogIn.aspx">התחברות </a></li>
+            <li><a href="../pages/MembersSystem/Register.aspx">הרשמה </a></li>
+            <li><a href="../pages/MembersSystem/LogIn.aspx">התחברות </a></li>
             <%} %>
             <%--<%if (Session["Member"] != null)
                 { %><li><a href="../pages/LogOut.aspx"> התנתק </a></li><%} %>
@@ -107,8 +107,8 @@
             <li style="float: left" class="dropdown"><a href="javascript:void(0)" class="dropbtn">שלום <%= m.memberFname.ToString().Trim() +" "+ m.MemberLname.ToString().Trim()%> </a><%} %>
                 <div class="dropdown-content">
                     <%--<a href="../pages/Update.aspx">עדכן </a>--%>
-                    <a href="../pages/ShowUsers.aspx">הצג נתונים </a>
-                    <a href="../pages/LogOut.aspx">התנתק </a>
+                    <a href="../pages/MembersSystem/ShowUsers.aspx">הצג נתונים </a>
+                    <a href="../pages/MembersSystem/LogOut.aspx">התנתק </a>
                 </div>
             </li>
         </ul>

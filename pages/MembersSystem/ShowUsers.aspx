@@ -23,11 +23,11 @@
     </style>
     <script type="text/javascript" lang="ja">
         function UpdateRed(id) {
-            location.href = "../pages/Update.aspx?id=" + id + "";
+            location.href = "../pages/MembersSystem/Update.aspx?id=" + id + "";
         }
         function DeleteRed(id)
         {
-            location.href = "../pages/Delete.aspx?id=" + id + "";
+            location.href = "../pages/MembersSystem/Delete.aspx?id=" + id + "";
         }
     </script>
 </asp:Content>

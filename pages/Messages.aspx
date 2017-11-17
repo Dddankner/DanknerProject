@@ -16,9 +16,9 @@
             $(".close, .mask").click(function () {
                 $(".mask").removeClass("active");
                 var cbx = document.getElementById("ddlMembers")
-                for (var i = 0; i < ; i++) {
+                //for (var i = 0; i < ; i++) {
                     
-                }
+                //}
             });
         });
 
@@ -91,6 +91,7 @@
             <br /><br /><br />
                 <asp:CheckBox runat="server" ID="SelectAll" Text="בחר את כולם" AutoPostBack="true" OnCheckedChanged="SelectAll_CheckedChanged" />
             <asp:CheckBoxList ID="ddlMembers" runat="server" ></asp:CheckBoxList>
+            <button id=""></button>
             </div><%} %>
                 <asp:Label runat="server" ID="lblManager"></asp:Label>
         

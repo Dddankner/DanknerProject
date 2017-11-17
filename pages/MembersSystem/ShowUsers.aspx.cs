@@ -79,12 +79,10 @@ public partial class pages_ShowUsers : System.Web.UI.Page
         }
         return ds;
     }
-
-
-    
+            
     protected void UpdateBtn_Click(object sender, ImageClickEventArgs e)
     {
-        Response.Redirect("../pages/Update.aspx");
+        Response.Redirect("../pages/MembersSystem/Update.aspx");
     }
 
     protected void DeleteBtn_Click(object sender, ImageClickEventArgs e)

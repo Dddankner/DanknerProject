@@ -21,8 +21,11 @@ public class MembersServer
 
     public void Register(Members m)
     {
-        string strSql = "INSERT INTO Members(MemberFname, MemberLname, MemberPass, CityId, MemberGender, MemberHobbies, MemberPic, MemberDate, MemberMail, MemberManager, MemberStatus)";
-        strSql += "VALUES('" + m.memberFname.Trim() + "', '" + m.MemberLname.Trim() + "', '" + m.memberPass.Trim() + "'," + m.cityId + ",'" + m.memberGender.Trim() + "','" + m.memberHobies.Trim() + "','" + m.memberPic.Trim() + "','" + m.memberDate + "','" + m.memberMail + "'," + false + ",'פעיל')";
+        string strSql = "INSERT INTO Members(MemberFname, MemberLname, MemberPass, CityId, MemberGender, MemberHobbies, MemberPic, " +
+            "MemberDate, MemberMail, MemberManager, MemberStatus)";
+        strSql += "VALUES('" + m.memberFname.Trim() + "', '" + m.MemberLname.Trim() + "', '" + m.memberPass.Trim() + "'," + m.cityId + "," +
+            "'" + m.memberGender.Trim() + "','" + m.memberHobies.Trim() + "','" + m.memberPic.Trim() + "','" + m.memberDate + "'," +
+            "'" + m.memberMail + "'," + false + ",'פעיל')";
         Connect.InsertUpdateDelete(strSql);
     }
 
@@ -35,7 +38,8 @@ public class MembersServer
 
     public bool Login(Members m)
     {
-        string strFind = "SELECT COUNT(MemberMail) FROM Members WHERE MemberPass ='" + m.memberPass.Trim() + "' AND MemberMail ='" + m.memberMail.Trim() + "'";
+        string strFind = "SELECT COUNT(MemberMail) FROM Members WHERE MemberPass ='" + m.memberPass.Trim() + "' " +
+            "AND MemberMail ='" + m.memberMail.Trim() + "'";
         object obj = Connect.GetObject(strFind);
         return int.Parse(obj.ToString()) < 1;
     }
@@ -70,21 +74,26 @@ public class MembersServer
 
     public static DataSet ShowAllButU(int id)
     {
-        string strSql = "SELECT MemberId AS ID, (MemberFname & ' ' & MemberLname) AS Name FROM Members WHERE MemberId<>" + id + " AND MemberStatus='פעיל'";
+        string strSql = "SELECT MemberId AS ID, (MemberFname & ' ' & MemberLname) AS Name FROM Members " +
+            "WHERE MemberId<>" + id + " AND MemberStatus='פעיל'";
         DataSet ds = Connect.GetDataSet(strSql, "Members");
         return ds;
     }
 
     public static DataSet ShowManagersOnly()
     {
-        string strSql = "SELECT MemberId AS ID, (MemberFname & ' ' & MemberLname) AS Name FROM Members WHERE MemberManager=True AND MemberStatus='פעיל'";
+        string strSql = "SELECT MemberId AS ID, (MemberFname & ' ' & MemberLname) AS Name FROM Members " +
+            "WHERE MemberManager=True AND MemberStatus='פעיל'";
         DataSet ds = Connect.GetDataSet(strSql, "Members");
         return ds;
     }
 
     public void UpdatePic(Members m)
     {
-        string strSql = "UPDATE Members SET MemberFname='" + m.memberFname.Trim() + "', MemberLname='" + m.MemberLname.Trim() + "', MemberPass='" + m.memberPass.Trim() + "', CityId=" + m.cityId + ", MemberGender='" + m.memberGender.Trim() + "', MemberHobbies='" + m.memberHobies.Trim() + "', MemberPic='" + m.memberPic.Trim() + "', MemberDate='" + m.memberDate + "', MemberMail='" + m.memberMail.Trim() + "'";
+        string strSql = "UPDATE Members SET MemberFname='" + m.memberFname.Trim() + "', MemberLname='" + m.MemberLname.Trim() + "', " +
+            "MemberPass='" + m.memberPass.Trim() + "', CityId=" + m.cityId + ", MemberGender='" + m.memberGender.Trim() + "', " +
+            "MemberHobbies='" + m.memberHobies.Trim() + "', MemberPic='" + m.memberPic.Trim() + "', MemberDate='" + m.memberDate + "', " +
+            "MemberMail='" + m.memberMail.Trim() + "'";
         strSql += "WHERE MemberId='" + m.MemberId + "'";
         Connect.InsertUpdateDelete(strSql);
     }

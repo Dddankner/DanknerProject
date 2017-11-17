@@ -14,6 +14,6 @@ public partial class pages_Delete : System.Web.UI.Page
         if (m.memberManager)
             Response.Redirect("../pages/Main.aspx");
         else
-            Response.Redirect("../pages/LogOut.aspx");
+            Response.Redirect("../pages/MembersSystem/LogOut.aspx");
     }
 }
