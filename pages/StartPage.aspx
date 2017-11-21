@@ -54,6 +54,19 @@
             display: none;
         }
 
+        .logInForm {
+            height: 100vh;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin-top: 10vh;
+            background-color: #27ae60;
+        }
+
+
         a.back {
             font-family: 'Lato';
             font-size: 20px;
@@ -65,7 +78,7 @@
             display: block;
         }
 
-        a.mainlink, a.nextlink, a.logShow {
+        a.mainlink, a.nextlink, a.logShow, a.backLog {
             font-family: 'Lato';
             color: #fff;
             border: 3px solid #fff;
@@ -80,9 +93,34 @@
             font-weight: 500;
         }
 
-            a.mainlink:hover, a.nextlink:hover, a.logShow:hover {
+
+            a.mainlink:hover, a.nextlink:hover, a.logShow:hover, a.backLog:hover {
                 background: #fff;
                 color: #575757;
+            }
+
+        .logInTable {
+            background-color: #27ae60;
+            height: 14vh;
+            width: 34vh;
+            text-align: center;
+        }
+
+        .logInTxt {
+            font-family: Arial;
+            border: none;
+            text-align: left;
+            color: black;
+            background-color: #27ae60;
+            height: 5vh;
+            width: 34vh;
+            outline: none;
+            border-bottom: 2px solid #242222;
+            transition: 0.5s;
+        }
+
+            .logInTxt:focus {
+                border-bottom-color: white;
             }
     </style>
     <script type="text/javascript" lang="ja">
@@ -194,14 +232,18 @@
                     );
                 }, 1400);
             });
+            $(".logShow").on("click", function () {
+                $(".nextcontent").fadeOut();
+                $(".logInForm").fadeIn(300);
+            });
+            $(".backLog").on("click", function () {
+                $(".logInForm").fadeOut();
+                $(".nextcontent").fadeIn(300);
+            })
         });
-        $(".logShow").on("click", function () {
-            $(".nextcontent").fadeOut();
-            $(".nextcontent").css("display", "none")
-            $(".logInForm").fadeIn();
-        })
+
     </script>
-    
+
 </head>
 <body>
     <form id="form1" runat="server">
@@ -216,16 +258,27 @@
         <div id="next-page">
             <div class="nextcontent">
                 <h1>Great! You're in the 2nd Page!</h1>
-                <a class="logShow"> להתחברות </a>
+                <a class="logShow">להתחברות </a>
                 <a class="nextlink">חזור &rarr;</a>
             </div>
             <div class="logInForm">
-                <a> עובד!!!!!! יש </a>
-            </div>
-        </div>
-        <div id="logInDiv">
-            <div class="logInForm">
-                <a> עובד!!!!!! יש </a>
+                <center>
+                <h1> התחבר </h1>
+                <table class="logInTable">
+                <tr>
+                    <td>
+                        <asp:TextBox ID="txtName" runat="server" placeholder="username" CssClass="logInTxt"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:TextBox ID="txtPass" runat="server" placeholder="password" CssClass="logInTxt"></asp:TextBox>
+                    </td>
+                </tr>
+                            
+            </table>
+                    <a class="backLog"> חזור &rarr;</a>
+                    </center>
             </div>
         </div>
     </form>

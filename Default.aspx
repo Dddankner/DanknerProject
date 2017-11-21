@@ -28,12 +28,17 @@
                 closeModal();
             }
         });
+
+        $(".logShow").on("click", function () {
+            $("#ShowLog")
+        })
     </script>
     <style type="text/css">
         body{
             background-color:#27ae60;
         }
         .logInTable{
+            display:none;
             background-color:#27ae60;
             height:14vh;
             width:34vh;
@@ -53,6 +58,25 @@
         .logInTxt:focus{
             border-bottom-color:white;
         }
+        a.logShow {
+            font-family: 'Lato';
+            color: #fff;
+            border: 3px solid #fff;
+            padding: 15px 10px;
+            display: block;
+            text-align: center;
+            margin: 25px auto;
+            width: 13%;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+             a.logShow:hover {
+                background: #fff;
+                color: #575757;
+            }
     </style>
 </head>
 <body>
@@ -71,8 +95,10 @@
             <asp:TextBox ID="txtPass" runat="server" CssClass="LogIn"></asp:TextBox>
         </center>--%>
         <center>
-        <div>
-            
+            <div id="ShowLog">
+                <a class="logShow">&larr; עבור לטופס הרשמה </a>
+            </div>
+        <div id="formLog">
             <table class="logInTable">
                 <tr>
                     <td>
