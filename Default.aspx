@@ -21,6 +21,11 @@
             $(".close, .mask").click(function () {
                 $(".mask").removeClass("active");
             });
+
+            $(".logShow").on("click", function () {
+                $(".ShowLog").fadeout();
+                $(".formLog").fadein();
+            })
         });
 
         $(document).keyup(function (e) {
@@ -29,35 +34,51 @@
             }
         });
 
-        $(".logShow").on("click", function () {
-            $("#ShowLog")
-        })
+
     </script>
     <style type="text/css">
-        body{
-            background-color:#27ae60;
+        body {
+            background-color: #27ae60;
         }
-        .logInTable{
-            display:none;
-            background-color:#27ae60;
-            height:14vh;
-            width:34vh;
+
+        .logInTable {
+            background-color: #27ae60;
+            height: 14vh;
+            width: 34vh;
+            direction: rtl;
         }
-        .logInTxt{
-            font-family:Arial;
-            border:none;
-            text-align:left;
-            color:black;
-            background-color:#27ae60;
-            height:5vh;
-            width:34vh;
-            outline:none;
-            border-bottom:2px solid #242222;
-            transition:0.5s;
+
+        .logInTxt {
+            font-family: Arial;
+            border: none;
+            text-align: right;
+            direction: rtl;
+            color: black;
+            background-color: #27ae60;
+            height: 5vh;
+            width: 34vh;
+            outline: none;
+            border-bottom: 2px solid #242222;
+            transition: 0.5s;
         }
-        .logInTxt:focus{
-            border-bottom-color:white;
+
+        .regTxt {
+            font-family: Arial;
+            border: none;
+            text-align: left;
+            color: black;
+            background-color: #27ae60;
+            height: 5vh;
+            width: 34vh;
+            outline: none;
+            border-bottom: 2px solid #242222;
+            transition: 0.5s;
         }
+
+        .logInTxt:focus, .regTxt:focus {
+            border-bottom-color: white;
+        }
+
         a.logShow {
             font-family: 'Lato';
             color: #fff;
@@ -73,10 +94,53 @@
             font-weight: 500;
         }
 
-             a.logShow:hover {
+            a.logShow:hover {
                 background: #fff;
                 color: #575757;
             }
+
+        input::placeholder {
+            color: black;
+            transition: 0.5s;
+            text-align: right;
+            direction: rtl;
+        }
+
+        input:focus::placeholder {
+            color: white;
+        }
+
+        .ShowLog, .formLog {
+            background-color: #27ae60;
+        }
+
+        input[type="checkbox"] {
+            content: "\f096";
+            font-family: "FontAwesome";
+            font-weight: normal;
+            width: 3vh;
+            height: 3vh;
+        }
+
+            input[type="checkbox"]:checked {
+                content: "\f14a";
+                color: #00c853;
+                animation: pop 180ms ease-in;
+            }
+
+        @keyframes pop {
+            0% {
+                transform: scale(0);
+            }
+
+            90% {
+                transform: scale(1.4);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
     </style>
 </head>
 <body>
@@ -95,19 +159,39 @@
             <asp:TextBox ID="txtPass" runat="server" CssClass="LogIn"></asp:TextBox>
         </center>--%>
         <center>
-            <div id="ShowLog">
-                <a class="logShow">&larr; עבור לטופס הרשמה </a>
-            </div>
-        <div id="formLog">
+        <div class="formLog">
             <table class="logInTable">
                 <tr>
                     <td>
-                        <asp:TextBox ID="txtName" runat="server" placeholder="username" CssClass="logInTxt"></asp:TextBox>
+                        <asp:TextBox runat="server" ID="txtFname" placeholder="שם פרטי" CssClass="logInTxt"></asp:TextBox>
+                    </td>
+                    <td>
+                        <asp:TextBox runat="server" ID="Lname" placeholder="שם משפחה" CssClass="logInTxt"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <asp:TextBox ID="txtPass" runat="server" placeholder="password" CssClass="logInTxt"></asp:TextBox>
+                        <asp:TextBox runat="server" ID="txtMail" placeholder="מייל" CssClass="regTxt"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:TextBox runat="server" ID="txtPass" placeholder="סיסמא" CssClass="regTxt"></asp:TextBox>
+                    </td>
+                    <td>
+                        <asp:TextBox runat="server" ID="txtRePass" placeholder="אימות סיסמא" CssClass="regTxt"></asp:TextBox>
+                    </td>
+                </tr>
+                <td>
+                    <asp:Label runat="server" ID="lblHobbies" Text="תחביבים"></asp:Label>
+                </td>
+                <tr>
+                    <td>
+                        <asp:CheckBoxList runat="server" ID="cbxGenres" Font-Size="Medium">
+                            <asp:ListItem Text="קומדיה" Value="קומדיה"></asp:ListItem>
+                            <asp:ListItem Text="אקשן" Value="אקשו"></asp:ListItem>
+                            <asp:ListItem Text="אימה" Value="אימה"></asp:ListItem>
+                        </asp:CheckBoxList>
                     </td>
                 </tr>
             </table>

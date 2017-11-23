@@ -49,7 +49,7 @@
             display: none;
         }
 
-        .maincontent, .nextcontent, .logInForm {
+        .maincontent, .nextcontent, .logInForm, .regForm {
             padding-top: 40px;
             display: none;
         }
@@ -62,10 +62,21 @@
             bottom: 0;
             left: 0;
             right: 0;
-            margin-top: 10vh;
-            background-color: #27ae60;
+            margin-top: 2vh;
+            background-color: #e74c3c;
         }
 
+        .regForm{
+            height: 100vh;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin-top: 2vh;
+            background-color: #27ae60;
+        }
 
         a.back {
             font-family: 'Lato';
@@ -78,7 +89,7 @@
             display: block;
         }
 
-        a.mainlink, a.nextlink, a.logShow, a.backLog {
+        a.mainlink, a.nextlink, a.logShow, a.backLog, a.continue, a.regBtn, a.backReg {
             font-family: 'Lato';
             color: #fff;
             border: 3px solid #fff;
@@ -93,14 +104,47 @@
             font-weight: 500;
         }
 
+        .sendBn{
+            font-family: 'Lato';
+            color: #fff;
+            border: 3px solid #fff;
+            padding: 15px 10px;
+            display: block;
+            text-align: center;
+            margin: 25px auto;
+            width: 13%;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: 500;
+            background-color: #e74c3c;
+        }
 
-            a.mainlink:hover, a.nextlink:hover, a.logShow:hover, a.backLog:hover {
+        .regBn{
+            font-family: 'Lato';
+            color: #fff;
+            border: 3px solid #fff;
+            padding: 15px 10px;
+            display: block;
+            text-align: center;
+            margin: 25px auto;
+            width: 13%;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: 500;
+            background-color: #27ae60;
+        }
+
+
+            a.mainlink:hover, a.nextlink:hover, a.logShow:hover, a.backLog:hover, 
+            .sendBn:hover, a.regBtn:hover, a.continue:hover, a.backReg:hover, .regBn:hover {
                 background: #fff;
                 color: #575757;
             }
 
         .logInTable {
-            background-color: #27ae60;
+            background-color: #e74c3c;
             height: 14vh;
             width: 34vh;
             text-align: center;
@@ -111,7 +155,7 @@
             border: none;
             text-align: left;
             color: black;
-            background-color: #27ae60;
+            background-color: #e74c3c;
             height: 5vh;
             width: 34vh;
             outline: none;
@@ -121,6 +165,13 @@
 
             .logInTxt:focus {
                 border-bottom-color: white;
+            }
+            input::placeholder{
+                color:black;
+                transition:0.5s;
+            }
+            input:focus::placeholder{
+                color:white;
             }
     </style>
     <script type="text/javascript" lang="ja">
@@ -233,15 +284,26 @@
                 }, 1400);
             });
             $(".logShow").on("click", function () {
-                $(".nextcontent").fadeOut();
-                $(".logInForm").fadeIn(300);
+                $(".maincontent").fadeOut(500);
+                $(".logInForm").fadeIn(1500);
             });
             $(".backLog").on("click", function () {
-                $(".logInForm").fadeOut();
-                $(".nextcontent").fadeIn(300);
-            })
+                $(".logInForm").fadeOut(500);
+                $(".maincontent").fadeIn(1500);
+            });
+            $(".regBtn").on("click", function () {
+                $(".nextcontent").fadeOut(500);
+                $(".regForm").fadeIn(1500);
+            });
+            $(".backReg").on("click", function () {
+                $(".regForm").fadeOut(500);
+                $(".nextcontent").fadeIn(1500);
+            });
         });
-
+        function loginClick() {
+            $("#main-page").fadeOut();
+            <%logIn_Click(); %>;
+        }
     </script>
 
 </head>
@@ -250,16 +312,9 @@
         <div id="main-page">
             <div class="maincontent">
                 <h1>ברוכים הבאים לקולנוע של דניאל </h1>
-                <a class="mainlink">&larr; המשך </a>
-
-            </div>
-        </div>
-
-        <div id="next-page">
-            <div class="nextcontent">
-                <h1>Great! You're in the 2nd Page!</h1>
-                <a class="logShow">להתחברות </a>
-                <a class="nextlink">חזור &rarr;</a>
+                <a class="logShow">&larr; להתחברות </a>
+                <h1>&darr; לא רשומים? הירשמו </h1>
+                <a class="mainlink">&larr; המשך להרשמה </a>
             </div>
             <div class="logInForm">
                 <center>
@@ -267,18 +322,41 @@
                 <table class="logInTable">
                 <tr>
                     <td>
-                        <asp:TextBox ID="txtName" runat="server" placeholder="username" CssClass="logInTxt"></asp:TextBox>
+                        <asp:TextBox ID="txtMail" runat="server" placeholder="Mail" CssClass="logInTxt"></asp:TextBox>
+                    </td>
+                    <td>
+                        <asp:Label runat="server" ID="lblError"></asp:Label>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <asp:TextBox ID="txtPass" runat="server" placeholder="password" CssClass="logInTxt"></asp:TextBox>
+                        <asp:TextBox ID="txtPass" runat="server" placeholder="Password" CssClass="logInTxt"></asp:TextBox>
                     </td>
                 </tr>
                             
             </table>
+                    <asp:Button runat="server" ID="logIn" Text="התחבר" CssClass="sendBn" OnClick="logIn_Click1" />
                     <a class="backLog"> חזור &rarr;</a>
                     </center>
+            </div>
+            
+        </div>
+
+        <div id="next-page">
+            <div class="nextcontent">
+                <a class="regBtn">&larr; להרשמה </a>
+                <%--<%if (Session["Member"] == null)
+                    { %>
+                <h1>&darr; כבר יש לך חשבון? לחץ כדי להתחבר </h1>
+                <a class="logShow">&larr; להתחברות </a>
+                <a class="nextlink">חזור &rarr;</a><%} %>--%>
+                <a class="nextlink">חזור &rarr;</a>
+                <a href="Main.aspx" class="continue">&larr; הכנס כאורח </a>
+            </div>
+            <div class="regForm">
+                <h1> הרשמה </h1>
+                <asp:Button runat="server" ID="btnReg" CssClass="regBn" Text="הירשם" OnClick="btnReg_Click" />
+                <a class="backReg"> חזור &rarr;</a>
             </div>
         </div>
     </form>
