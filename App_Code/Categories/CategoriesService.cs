@@ -28,4 +28,9 @@ public class CategoriesService
         DataSet ds = Connect.GetDataSet(strSql, "Categories");
         return int.Parse(ds.Tables[0].Rows[0]["CategoryId"].ToString());
     }
+    public static DataSet GetCategories()
+    {
+        string strSql = "SELECT * FROM Categories";
+        return Connect.GetDataSet(strSql, "Categories");
+    }
 }

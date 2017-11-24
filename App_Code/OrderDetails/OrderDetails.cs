@@ -13,6 +13,7 @@ public class OrderDetails
     public int MovieSeatPrice { get; set; }
     public string MovieSeats { get; set; }
     public int MovieSeatAmount { get; set; }
+    public int TheaterId { get; set; }
     public OrderDetails()
     {
         //

@@ -18,15 +18,21 @@ public class TheatersService
 
     public static void CreateTheater(Theaters t)
     {
-        string strSql = "INSERT INTO Theaters(TheaterId, CityId) VALUES(" + t.TheaterId + ", " + t.CityId + ")";
+        string strSql = "INSERT INTO Theaters(CityId) VALUES(" + t.CityId + ")";
         Connect.InsertUpdateDelete(strSql);
     }
 
     public static string GetTheaterCity(int theaterID)
     {
-        string strSql = "SELECT CityName FROM Cities WHERE Theaters.TheaterId=" + theaterID + " " +
+        string strSql = "SELECT * FROM Theaters,Cities WHERE Theaters.TheaterId=" + theaterID + " " +
             "AND Theaters.CityId=Cities.CityId";
         DataSet ds = Connect.GetDataSet(strSql, "Cities");
         return ds.Tables[0].Rows[0]["CityName"].ToString();
+    }
+
+    public static DataSet GetTheaters()
+    {
+        string strSql = "SELECT * FROM Theaters, Cities WHERE Theaters.CityId=Cities.CityId";
+        return Connect.GetDataSet(strSql, "Theaters");
     }
 }
