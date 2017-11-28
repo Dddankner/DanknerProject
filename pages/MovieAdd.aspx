@@ -109,6 +109,14 @@
             </td>
         </tr>
         <tr>
+            <td>
+                <asp:TextBox ID="txtTrailer" runat="server" CssClass="txtBox"></asp:TextBox>  
+            </td>
+            <td>
+                <asp:Label ID="lblTrailer" runat="server" Text="טריילר"></asp:Label>
+            </td>
+        </tr>
+        <tr>
             <td colspan="2">
                 <asp:Button ID="btnAdd" runat="server" Text="הוסף סרט" OnClick="btnAdd_Click"></asp:Button>
             </td>

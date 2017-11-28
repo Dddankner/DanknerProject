@@ -4,12 +4,18 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data;
 
 public partial class pages_catalog : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        DataSet ds = MoviesService.GetMovies();
+        DataList1.DataSource = ds;
+        DataList1.DataKeyField = "MovieId";
+        DataList1.DataBind();
         PanelFill();
+        theaterPrev.Attributes.Add("style", "display:none");
     }
 
     public void PanelFill()
@@ -51,6 +57,11 @@ public partial class pages_catalog : System.Web.UI.Page
 
     }
 
+    public void CreateCatalog()
+    {
+
+    }
+
     public void CreateRow(TableRow[] r)
     {
         for (int i = 0; i < r.Length; i++)
@@ -64,5 +75,13 @@ public partial class pages_catalog : System.Web.UI.Page
         ImageButton img = (ImageButton)sender;
         img.ImageUrl = "~/img/seat-black.png";
         img.Attributes.Add("style", "height:3vh; width:3vh");
+    }
+
+    protected void movieImg_Click(object sender, ImageClickEventArgs e)
+    {
+        string pic = ((ImageButton)sender).ImageUrl;
+        DataSet ds = MoviesService.GetMovieByPic(pic);
+        lblName.Text = ds.Tables[0].Rows[0]["MovieName"].ToString();
+        des.Attributes.Add("style", "display:none");
     }
 }
