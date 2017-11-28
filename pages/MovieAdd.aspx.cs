@@ -18,24 +18,42 @@ public partial class pages_MovieAdd : System.Web.UI.Page
             ddlCity.DataValueField = "TheaterId";
             ddlCity.DataTextField = "CityName";
             ddlCity.DataBind();
+            ddlCity.Items.Insert(0, new ListItem("-בחר עיר-"));
             FillDBCities();
             DataSet ds1 = CitiesServer.GetCityList();
             ddlAllCities.DataSource = ds1;
             ddlAllCities.DataValueField = "CityId";
             ddlAllCities.DataTextField = "CityName";
             ddlAllCities.DataBind();
+            ddlAllCities.Items.Insert(0, new ListItem("-בחר עיר-"));
             DataSet ds2 = CategoriesService.GetCategories();
             ddlCategory.DataSource = ds2;
             ddlCategory.DataValueField = "CategoryId";
             ddlCategory.DataTextField = "categoryName";
             ddlCategory.DataBind();
+            ddlCategory.Items.Insert(0, new ListItem("-בחר קטגוריה-"));
         }
         
     }
 
     protected void btnAdd_Click(object sender, EventArgs e)
     {
-
+        Movies m = new Movies();
+        m.MovieName = txtName.Text;
+        m.MovieSeatNum = int.Parse(txtNumSeats.Text);
+        m.MovieSeatPrice = int.Parse(txtPrice.Text);
+        m.CategoryId = int.Parse(ddlCategory.SelectedItem.Value);
+        m.MovieTrailer = txtTrailer.Text;
+        string photoName = "";
+        fuPic.SaveAs(Server.MapPath("/moviesImg/" + fuPic.FileName));
+        photoName = "/moviesImg/" + fuPic.FileName;
+        m.MoviePic = photoName;
+        MoviesService.AddMovie(m);
+        txtTrailer.Text = "";
+        txtPrice.Text = "";
+        txtNumSeats.Text = "";
+        txtName.Text = "";
+        ddlCategory.SelectedIndex = 0;
     }
 
     protected void btnAddTheater_Click(object sender, EventArgs e)
@@ -48,6 +66,7 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         ddlCity.DataValueField = "TheaterId";
         ddlCity.DataTextField = "CityName";
         ddlCity.DataBind();
+        ddlAllCities.SelectedIndex = 0;
     }
 
     public void FillDBCities()
@@ -92,5 +111,7 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         ddlCategory.DataValueField = "CategoryId";
         ddlCategory.DataTextField = "categoryName";
         ddlCategory.DataBind();
+        ddlCategory.SelectedIndex = 0;
+        txtCategoryName.Text = "";
     }
 }

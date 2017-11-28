@@ -14,6 +14,7 @@ public class Movies
     public int MovieSeatPrice { get; set; }
     public string MoviePic { get; set; }
     public int CategoryId { get; set; }
+    public string MovieTrailer { get; set; }
     public Movies()
     {
         //
