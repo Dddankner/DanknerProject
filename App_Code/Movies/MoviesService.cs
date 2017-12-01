@@ -30,6 +30,13 @@ public class MoviesService
         return Connect.GetDataSet(strSql, "Movies");
     }
 
+    public static string GetMoviePic(int id)
+    {
+        string strSql = "SELECT MoviePic FROM Movies WHERE MovieName=" + id;
+        DataSet ds = Connect.GetDataSet(strSql, "Movies");
+        return ds.Tables[0].Rows[0]["MoviePic"].ToString();
+    }
+
     public static DataSet GetMovies()
     {
         string strSql = "SELECT * FROM Movies,Categories WHERE Categories.CategoryId=Movies.CategoryId";
@@ -56,4 +63,11 @@ public class MoviesService
             "WHERE MovieId=" + m.MovieId;
         Connect.InsertUpdateDelete(strSql);
     }
+
+    //public static bool IsExist(int id)
+    //{
+    //    string strFind = "SELECT COUNT(MemberId) FROM Members WHERE MemberMail ='" + m.memberMail.Trim() + "'";
+    //    object obj = Connect.GetObject(strFind);
+    //    return int.Parse(obj.ToString()) < 1;
+    //}
 }

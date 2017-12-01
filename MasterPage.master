@@ -7,6 +7,8 @@
 <head runat="server">
     <title></title>
     <script src="/JavaScript/jquery-3.2.1.js"></script>
+    <%--<script src="/Content/js/materialize.js"></script>
+    <link href="/Content/css/materialize.css" rel="stylesheet" />--%>
     <style type="text/css">
         body{
             background-color:#f1f1f1;
@@ -86,6 +88,7 @@
                 { %>
             <li><a href="../pages/MembersSystem/Register.aspx">הרשמה </a></li>
             <li><a href="../pages/MembersSystem/LogIn.aspx">התחברות </a></li>
+            <li> <a href="/pages/MovieAdd.aspx"> הוסף </a> </li>
             <%} %>
             <%--<%if (Session["Member"] != null)
                 { %><li><a href="../pages/LogOut.aspx"> התנתק </a></li><%} %>

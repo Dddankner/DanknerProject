@@ -30,9 +30,22 @@ public class TheatersService
         return ds.Tables[0].Rows[0]["CityName"].ToString();
     }
 
+    public static void UpdateTheater(Theaters t)
+    {
+        string strSql = "UPDATE Theaters SET CityId=" + t.CityId + " WHERE TheaterId=" + t.TheaterId;
+        Connect.InsertUpdateDelete(strSql);
+    }
+
     public static DataSet GetTheaters()
     {
         string strSql = "SELECT * FROM Theaters, Cities WHERE Theaters.CityId=Cities.CityId";
         return Connect.GetDataSet(strSql, "Theaters");
+    }
+
+    public static bool isExist(int cityId)
+    {
+        string strFind = "SELECT COUNT(TheaterId) FROM Theaters WHERE CityId=" + cityId + "";
+        object obj = Connect.GetObject(strFind);
+        return int.Parse(obj.ToString()) < 1;
     }
 }

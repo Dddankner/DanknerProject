@@ -11,7 +11,7 @@ public partial class pages_MovieAdd : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if(!IsPostBack)
+        if (!IsPostBack)
         {
             DataSet ds = TheatersService.GetTheaters();
             ddlCity.DataSource = ds;
@@ -19,6 +19,8 @@ public partial class pages_MovieAdd : System.Web.UI.Page
             ddlCity.DataTextField = "CityName";
             ddlCity.DataBind();
             ddlCity.Items.Insert(0, new ListItem("-בחר עיר-"));
+            theaterGrd.DataSource = ds;
+            theaterGrd.DataBind();
             FillDBCities();
             DataSet ds1 = CitiesServer.GetCityList();
             ddlAllCities.DataSource = ds1;
@@ -32,8 +34,13 @@ public partial class pages_MovieAdd : System.Web.UI.Page
             ddlCategory.DataTextField = "categoryName";
             ddlCategory.DataBind();
             ddlCategory.Items.Insert(0, new ListItem("-בחר קטגוריה-"));
+            categoryGrd.DataSource = ds2;
+            categoryGrd.DataBind();
+            DataSet dsMov = MoviesService.GetMovies();
+            MoviesGrd.DataSource = dsMov;
+            MoviesGrd.DataBind();
         }
-        
+
     }
 
     protected void btnAdd_Click(object sender, EventArgs e)
@@ -49,6 +56,7 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         photoName = "/moviesImg/" + fuPic.FileName;
         m.MoviePic = photoName;
         MoviesService.AddMovie(m);
+        TheaterMovies tm = new TheaterMovies();
         txtTrailer.Text = "";
         txtPrice.Text = "";
         txtNumSeats.Text = "";
@@ -60,13 +68,23 @@ public partial class pages_MovieAdd : System.Web.UI.Page
     {
         Theaters t = new Theaters();
         t.CityId = int.Parse(ddlAllCities.SelectedItem.Value);
-        TheatersService.CreateTheater(t);
-        DataSet ds = TheatersService.GetTheaters();
-        ddlCity.DataSource = ds;
-        ddlCity.DataValueField = "TheaterId";
-        ddlCity.DataTextField = "CityName";
-        ddlCity.DataBind();
-        ddlAllCities.SelectedIndex = 0;
+        if (TheatersService.isExist(t.CityId))
+        {
+            TheatersService.CreateTheater(t);
+            DataSet ds = TheatersService.GetTheaters();
+            ddlCity.DataSource = ds;
+            ddlCity.DataValueField = "TheaterId";
+            ddlCity.DataTextField = "CityName";
+            ddlCity.DataBind();
+            ddlAllCities.SelectedIndex = 0;
+            theaterGrd.DataSource = ds;
+            theaterGrd.DataBind();
+        }
+        else
+        {
+            errorThea.Text = "הקולנוע כבר קיים";
+        }
+        
     }
 
     public void FillDBCities()
@@ -105,13 +123,56 @@ public partial class pages_MovieAdd : System.Web.UI.Page
     {
         Categories c = new Categories();
         c.CategoryName = txtCategoryName.Text.ToString();
-        CategoriesService.AddCategory(c);
-        DataSet ds2 = CategoriesService.GetCategories();
-        ddlCategory.DataSource = ds2;
-        ddlCategory.DataValueField = "CategoryId";
-        ddlCategory.DataTextField = "categoryName";
-        ddlCategory.DataBind();
-        ddlCategory.SelectedIndex = 0;
-        txtCategoryName.Text = "";
+        if (CategoriesService.IsExist(c.CategoryName))
+        {
+            CategoriesService.AddCategory(c);
+            DataSet ds2 = CategoriesService.GetCategories();
+            ddlCategory.DataSource = ds2;
+            ddlCategory.DataValueField = "CategoryId";
+            ddlCategory.DataTextField = "categoryName";
+            ddlCategory.DataBind();
+            ddlCategory.SelectedIndex = 0;
+            txtCategoryName.Text = "";
+            categoryGrd.DataSource = ds2;
+            categoryGrd.DataBind();
+        } 
+        else
+        {
+            ErrorCat.Text = "הקטגויה כבר קיימת";
+        }
+
+      
+    }
+
+    protected void theaterGrd_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        GridViewRow r1 = e.Row;
+        r1.CssClass = "row";
+    }
+
+    protected void categoryGrd_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        GridViewRow r1 = e.Row;
+        r1.CssClass = "row";
+    }
+
+    protected void MoviesGrd_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        GridViewRow r1 = e.Row;
+        r1.CssClass = "row";
+        if (r1.RowType == DataControlRowType.DataRow)
+        {
+            //int id = int.Parse(MoviesGrd.DataKeys[r1.RowIndex].ToString());
+            //string pic = MoviesService.GetMoviePic(id);
+            //((Image)r1.FindControl("MemberImage")).ImageUrl = "../MoviesImg/" + pic + "";
+        }
+    }
+
+    protected void theaterGrd_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if(e.CommandName == "update")
+        {
+            hidID.val
+        }
     }
 }
