@@ -172,7 +172,7 @@ public partial class pages_MovieAdd : System.Web.UI.Page
     {
         if(e.CommandName == "update")
         {
-            hidID.val
+
         }
     }
 }
