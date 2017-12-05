@@ -139,9 +139,7 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         else
         {
             ErrorCat.Text = "הקטגויה כבר קיימת";
-        }
-
-      
+        }      
     }
 
     protected void theaterGrd_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -172,7 +170,23 @@ public partial class pages_MovieAdd : System.Web.UI.Page
     {
         if(e.CommandName == "update")
         {
-
+            
         }
+    }
+
+    protected void categoryGrd_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if(e.CommandName == "update")
+        {
+            
+        }
+    }
+
+    protected void categoryGrd_RowEditing(object sender, GridViewEditEventArgs e)
+    {
+        tblCatUpdate.Attributes.Add("style", "display:normal");
+        hidID.Text = categoryGrd.Rows[e.NewEditIndex].Cells[0].Text;
+        txtUpdateCat.Text = categoryGrd.Rows[e.NewEditIndex].Cells[1].Text;
+        e.NewEditIndex = -1;
     }
 }

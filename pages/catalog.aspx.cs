@@ -10,13 +10,24 @@ public partial class pages_catalog : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        if(!IsPostBack)
+        {
+            FillDataList();
+        }
+      
+       // PanelFill();
+       // theaterPrev.Attributes.Add("style", "display:none");
+    }
+
+
+    public void FillDataList()
+    {
         DataSet ds = MoviesService.GetMovies();
         DataList1.DataSource = ds;
         DataList1.DataKeyField = "MovieId";
         DataList1.DataBind();
-        PanelFill();
-        theaterPrev.Attributes.Add("style", "display:none");
     }
+
 
     public void PanelFill()
     {
@@ -77,11 +88,24 @@ public partial class pages_catalog : System.Web.UI.Page
         img.Attributes.Add("style", "height:3vh; width:3vh");
     }
 
-    protected void movieImg_Click(object sender, ImageClickEventArgs e)
+  
+
+    protected void DataList1_ItemDataBound(object sender, DataListItemEventArgs e)
     {
-        string pic = ((ImageButton)sender).ImageUrl;
-        DataSet ds = MoviesService.GetMovieByPic(pic);
-        lblName.Text = ds.Tables[0].Rows[0]["MovieName"].ToString();
-        des.Attributes.Add("style", "display:none");
+        HyperLink link1 = (HyperLink)FindControl("HyperLink1");
+        string movieId = DataList1.DataKeys[e.Item.ItemIndex].ToString();
+        //link1.NavigateUrl = "/pages/Insvitations.aspx?MovieId=" + movieId;
+    }
+
+
+
+    protected void ButtonInvite_Click(object sender, EventArgs e)
+    {
+
+         int Movieid =  int.Parse(((Button)sender).ToolTip);
+          Response.Redirect("/pages/Insvitations.aspx?MovieId=" + Movieid);
+
+        
+
     }
 }

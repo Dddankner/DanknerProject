@@ -82,6 +82,30 @@
         <a class="showAddMov"> הוסף סרט </a>
         <a class="showAddTheater"> הוסף קולנוע </a>
         <a class="addCategory"> הוסף קטגוריה </a>
+            <asp:GridView runat="server" ID="categoryGrd" AutoGenerateColumns="False" CssClass="grdView" OnRowEditing="categoryGrd_RowEditing" OnRowCommand="categoryGrd_RowCommand" OnRowDataBound="categoryGrd_RowDataBound">
+                <Columns>
+                    <asp:CommandField ButtonType="Button" DeleteText="מחק" HeaderText="מחק" ShowDeleteButton="True" />
+                    <asp:CommandField ButtonType="Button" EditText="עדכן" HeaderText="עדכן" ShowEditButton="True" />
+                    <asp:BoundField DataField="CategoryName" HeaderText="שם קטגוריה" />
+                    <asp:BoundField DataField="CategoryId" HeaderText="מספר סידורי" />
+                </Columns>
+            </asp:GridView>
+            <table runat="server" id="tblCatUpdate" style="display:none; direction:rtl">
+                <tr>
+                    <td>
+                        <asp:TextBox runat="server" ID="txtUpdateCat" placeholder="שם קטגוריה" CssClass="txtBox"></asp:TextBox>
+                        
+                    </td>
+                    <td>
+                        <asp:Label runat="server" ID="hidID"></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <asp:Button runat="server" ID="upCat" Text="עדכן" />
+                    </td>
+                </tr>
+            </table>
         </div>
         <div id="addMovie" style="display:none"> 
     <table class="tablePopUp" id="addMovie1" style="position:absolute; ">
@@ -193,7 +217,7 @@
                 </td>
             </tr>
         </table>
-            <asp:GridView runat="server" ID="theaterGrd" AutoGenerateColumns="False" CssClass="grdView" OnRowCommand="theaterGrd_RowCommand" OnRowDataBound="theaterGrd_RowDataBound">
+            <asp:GridView runat="server" ID="theaterGrd" AutoGenerateColumns="False" DataKeyNames="" CssClass="grdView" OnRowCommand="theaterGrd_RowCommand" OnRowDataBound="theaterGrd_RowDataBound">
                 <Columns>
                     <asp:ButtonField ButtonType="Button" CommandName="delete" HeaderText="מחק" Text="מחק" />
                     <asp:ButtonField ButtonType="Button" CommandName="update" HeaderText="ערוך" Text="ערוך" />
@@ -201,20 +225,6 @@
                     <asp:BoundField DataField="TheaterId" HeaderText="מספר סידורי" />
                 </Columns>
             </asp:GridView>
-            <table style="display:none">
-                <tr>
-                    <td>
-                        <asp:TextBox runat="server" ID="txtUpdateCat" placeholder="שם קטגוריה"></asp:TextBox>
-                        <asp:Label runat="server" ID="hidID"></asp:Label>
-                    </td>
-                    
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Button runat="server" ID="upCat" Text="עדכן" />
-                    </td>
-                </tr>
-            </table>
             </div>
         <div id="addCategory" style="display:none">
         <table class="tablePopUp" id="addCategory1" >
@@ -242,13 +252,6 @@
                 </td>
             </tr>
         </table>
-            <asp:GridView runat="server" ID="categoryGrd" AutoGenerateColumns="False" CssClass="grdView" OnRowDataBound="categoryGrd_RowDataBound">
-                <Columns>
-                    <asp:BoundField DataField="CategoryName" HeaderText="שם קטגוריה" />
-                    <asp:BoundField DataField="CategoryId" HeaderText="מספר סידורי" />
-                </Columns>
-
-            </asp:GridView>
             </div>
         </center>
 </asp:Content>
