@@ -31,19 +31,27 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
     <center>
-    <asp:DataList ID="DataList1" runat="server" DataKeyField="MovieId" CssClass="marg" RepeatColumns="4" OnItemDataBound="DataList1_ItemDataBound">
+    <asp:DataList ID="DataList1" runat="server" DataKeyField="MovieId" RepeatColumns="3" CellSpacing="0" CellPadding="0" OnItemDataBound="DataList1_ItemDataBound">
         <ItemTemplate>
-            <div class="card" style="width:25vh;">
+            <div class="card" style="width:25vh; margin-left:5vh;">
     <div class="card-image waves-effect waves-block waves-light">
       <asp:Image runat="server" ID="movieImg" ImageUrl='<%#Eval("MoviePic") %>' CssClass="img activator" />
     </div>
     <div class="card-content" style="direction:rtl">
-      <span class="card-title activator grey-text text-darken-4"><i class="material-icons right">more_vert</i><%#Eval("MovieName") %></span><p style="text-align:right"><asp:HyperLink ID="HyperLink1" runat="server">הזמן כרטיסים</asp:HyperLink></p>
+      <span class="card-title activator grey-text text-darken-4"><i class="material-icons right">more_vert</i><%#Eval("MovieName") %></span>
+        <p style="text-align:right"><asp:HyperLink ID="HyperLink1" runat="server" ToolTip='<%#Eval("MovieId") %>'>הזמן כרטיסים</asp:HyperLink></p>
     </div>
-    <div class="card-reveal" style="direction:rtl">
-      <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i><%#Eval("MovieName") %></span><p>Here is some more information about this product that is only revealed once clicked on.</p>
+    <div class="card-reveal" style="direction:rtl;">
+      <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i><%#Eval("MovieName") %></span>
+        <p style="text-align:right">
+            <label> קטגוריה: <%#Eval("CategoryName") %> </label>
+            <br />
+            <a href='<%#Eval("MovieTrailer") %>' target="_blank"> לטריילר </a>
+
+        </p>
     </div>
   </div>
+            
             <%--<div class="row">
         <div class="col s12 m7">
           <div class="card">

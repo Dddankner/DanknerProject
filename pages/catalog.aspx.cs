@@ -92,9 +92,10 @@ public partial class pages_catalog : System.Web.UI.Page
 
     protected void DataList1_ItemDataBound(object sender, DataListItemEventArgs e)
     {
-        HyperLink link1 = (HyperLink)FindControl("HyperLink1");
-        string movieId = DataList1.DataKeys[e.Item.ItemIndex].ToString();
-        //link1.NavigateUrl = "/pages/Insvitations.aspx?MovieId=" + movieId;
+        //(HyperLink)FindControl("HyperLink1")
+        HyperLink link1 = (HyperLink)e.Item.FindControl("HyperLink1");
+        //string movieId = DataList1.DataKeys[e.Item.ItemIndex].ToString();
+        link1.NavigateUrl = "Insvitations.aspx?MovieId=" + link1.ToolTip;
     }
 
 
