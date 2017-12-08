@@ -10,6 +10,7 @@ public class TheaterMovies
 {
     public int TheaterId { get; set; }
     public int MovieId { get; set; }
+    public int TheaterMovieSeatNum { get; set; }
     public TheaterMovies()
     {
         //

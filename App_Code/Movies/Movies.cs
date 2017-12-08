@@ -10,7 +10,6 @@ public class Movies
 {
     public int MovieId { get; set; }
     public string MovieName { get; set; }
-    public int MovieSeatNum { get; set; }
     public int MovieSeatPrice { get; set; }
     public string MoviePic { get; set; }
     public int CategoryId { get; set; }

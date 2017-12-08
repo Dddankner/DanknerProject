@@ -12,13 +12,12 @@
             width: 18vh;
         }
 
-        td {
-            width: 10vh;
-            height: 5vh;
-        }
-
         table {
             margin-left: 5vh;
+        }
+
+        .pad td{
+            width:25vh;
         }
 
         .marg {
@@ -31,9 +30,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
     <center>
-    <asp:DataList ID="DataList1" runat="server" DataKeyField="MovieId" RepeatColumns="3" CellSpacing="0" CellPadding="0" OnItemDataBound="DataList1_ItemDataBound">
+    <asp:DataList ID="DataList1" runat="server" CssClass="pad" DataKeyField="MovieId" RepeatColumns="3" OnItemDataBound="DataList1_ItemDataBound">
         <ItemTemplate>
-            <div class="card" style="width:25vh; margin-left:5vh;">
+            <div class="card" style="width:23vh;">
     <div class="card-image waves-effect waves-block waves-light">
       <asp:Image runat="server" ID="movieImg" ImageUrl='<%#Eval("MoviePic") %>' CssClass="img activator" />
     </div>
@@ -96,10 +95,23 @@
             </table>--%>
         </ItemTemplate>
     </asp:DataList>
-        <div style="display:none" id="des" runat="server">
-          <asp:Label ID="lblName" runat="server"></asp:Label>
-        </div>
-    <asp:Panel runat="server" ID="theaterPrev"></asp:Panel>
+        <%--<div id="pager" class="row" runat="server">
+          <asp:Label ID="lblPage" runat="server"></asp:Label>
+        </div>--%>
+        <table>
+            <tr>
+                <td>
+                    <asp:Button runat="server" ID="next" OnClick="next_Click" Text="דף הבא" />
+                </td>
+                <td>
+                    <asp:Label runat="server" ID="lblShowPage"></asp:Label>
+                </td>
+                <td>
+                    <asp:Button runat="server" ID="prev" OnClick="prev_Click" Text="דף הקודם" />
+                </td>
+            </tr>
+        </table>
+    
         </center>
 </asp:Content>
 

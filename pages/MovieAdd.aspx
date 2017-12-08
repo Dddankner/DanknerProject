@@ -42,6 +42,7 @@
             box-shadow: 5px 5px 10px #888888;
             direction: rtl;
         }
+
         .imgCss {
             height: 30px;
             width: 30px;
@@ -135,7 +136,8 @@
         </tr>
         <tr>
             <td>
-                <asp:DropDownList ID="ddlCity" runat="server"></asp:DropDownList>
+                <%--<asp:DropDownList ID="ddlCity" runat="server"></asp:DropDownList>--%>
+                <asp:CheckBoxList ID="ddlCity" runat="server"></asp:CheckBoxList>
             </td>
             <td>
                 <asp:Label ID="lblCity" runat="server" Text="קולנוע"></asp:Label>
@@ -185,7 +187,7 @@
             </asp:TemplateField>
                     <asp:BoundField DataField="MovieName" HeaderText="שם סרט" />
                     <asp:BoundField DataField="CategoryName" HeaderText="קטגוריה" />
-                    <asp:BoundField DataField="MovieSeatNum" HeaderText="מספר כיסאות" />
+                    <%--<asp:BoundField DataField="MovieSeatNum" HeaderText="מספר כיסאות" />--%>
                     <asp:BoundField DataField="MovieSeatPrice" HeaderText="מחיר לכיסא" />
                     <asp:BoundField />
                 </Columns>

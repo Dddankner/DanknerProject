@@ -11,43 +11,73 @@ public partial class pages_MovieAdd : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        if (Session["Member"] != null && Session["Member"].ToString() != "")
         {
-            DataSet ds = TheatersService.GetTheaters();
-            ddlCity.DataSource = ds;
-            ddlCity.DataValueField = "TheaterId";
-            ddlCity.DataTextField = "CityName";
-            ddlCity.DataBind();
-            ddlCity.Items.Insert(0, new ListItem("-בחר עיר-"));
-            theaterGrd.DataSource = ds;
-            theaterGrd.DataBind();
-            FillDBCities();
-            DataSet ds1 = CitiesServer.GetCityList();
-            ddlAllCities.DataSource = ds1;
-            ddlAllCities.DataValueField = "CityId";
-            ddlAllCities.DataTextField = "CityName";
-            ddlAllCities.DataBind();
-            ddlAllCities.Items.Insert(0, new ListItem("-בחר עיר-"));
-            DataSet ds2 = CategoriesService.GetCategories();
-            ddlCategory.DataSource = ds2;
-            ddlCategory.DataValueField = "CategoryId";
-            ddlCategory.DataTextField = "categoryName";
-            ddlCategory.DataBind();
-            ddlCategory.Items.Insert(0, new ListItem("-בחר קטגוריה-"));
-            categoryGrd.DataSource = ds2;
-            categoryGrd.DataBind();
-            DataSet dsMov = MoviesService.GetMovies();
-            MoviesGrd.DataSource = dsMov;
-            MoviesGrd.DataBind();
+            if (((Members)Session["Member"]).memberManager)
+            {
+                if (!IsPostBack)
+                {
+                    FillDdl();
+                }
+            }
+            else
+            {
+                Response.Redirect("../pages/Main.aspx");
+            }
+        }
+        else
+        {
+            Response.Redirect("../pages/Main.aspx");
         }
 
+    }
+
+    public void FillDdl()
+    {
+        DataSet ds = TheatersService.GetTheaters();
+        ddlCity.DataSource = ds;
+        ddlCity.DataValueField = "TheaterId";
+        ddlCity.DataTextField = "CityName";
+        ddlCity.DataBind();
+        //ddlCity.Items.Insert(0, new ListItem("-בחר עיר-"));
+        theaterGrd.DataSource = ds;
+        theaterGrd.DataBind();
+        FillDBCities();
+        DataSet ds1 = CitiesServer.GetCityList();
+        ddlAllCities.DataSource = ds1;
+        ddlAllCities.DataValueField = "CityId";
+        ddlAllCities.DataTextField = "CityName";
+        ddlAllCities.DataBind();
+        ddlAllCities.Items.Insert(0, new ListItem("-בחר עיר-"));
+        DataSet ds2 = CategoriesService.GetCategories();
+        ddlCategory.DataSource = ds2;
+        ddlCategory.DataValueField = "CategoryId";
+        ddlCategory.DataTextField = "categoryName";
+        ddlCategory.DataBind();
+        ddlCategory.Items.Insert(0, new ListItem("-בחר קטגוריה-"));
+        categoryGrd.DataSource = ds2;
+        categoryGrd.DataBind();
+        DataSet dsMov = MoviesService.GetMovies();
+        MoviesGrd.DataSource = dsMov;
+        MoviesGrd.DataBind();
+    }
+
+    public List<int> GetTheaters()
+    {
+        List<int> idThe = new List<int>();
+        for (int i = 0; i < ddlCity.Items.Count; i++)
+        {
+            if (ddlCity.Items[i].Selected)
+                idThe.Add(int.Parse(ddlCity.Items[i].Value.ToString()));
+        }
+        return idThe;
     }
 
     protected void btnAdd_Click(object sender, EventArgs e)
     {
         Movies m = new Movies();
         m.MovieName = txtName.Text;
-        m.MovieSeatNum = int.Parse(txtNumSeats.Text);
+        //m.MovieSeatNum = int.Parse(txtNumSeats.Text);
         m.MovieSeatPrice = int.Parse(txtPrice.Text);
         m.CategoryId = int.Parse(ddlCategory.SelectedItem.Value);
         m.MovieTrailer = txtTrailer.Text;
@@ -56,7 +86,17 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         photoName = "/moviesImg/" + fuPic.FileName;
         m.MoviePic = photoName;
         MoviesService.AddMovie(m);
-        TheaterMovies tm = new TheaterMovies();
+        List<int> idThe = GetTheaters();
+        List<TheaterMovies> tms = new List<TheaterMovies>();
+        for (int i = 0; i < idThe.Count; i++)
+        {
+            TheaterMovies tm = new TheaterMovies();
+            tm.MovieId = MoviesService.GetMaxID();
+            tm.TheaterId = idThe[i];
+            tm.TheaterMovieSeatNum = int.Parse(txtNumSeats.Text);
+            tms.Add(tm);
+        }
+        TheaterMoviesService.AddList(tms);
         txtTrailer.Text = "";
         txtPrice.Text = "";
         txtNumSeats.Text = "";
@@ -86,6 +126,8 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         }
         
     }
+
+    
 
     public void FillDBCities()
     {

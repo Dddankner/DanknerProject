@@ -43,11 +43,11 @@
                     color: white;
                 }
 
-            li.dropdown {
+            li.dropdownMy {
                 display: inline-block;
             }
 
-        .dropdown-content {
+        .dropdown-contentMy {
             display: none;
             position: absolute;
             background-color: #f9f9f9;
@@ -56,7 +56,7 @@
             z-index: 1;
         }
 
-            .dropdown-content a {
+            .dropdown-contentMy a {
                 color: black;
                 padding: 12px 16px;
                 text-decoration: none;
@@ -64,11 +64,11 @@
                 text-align: right;
             }
 
-                .dropdown-content a:hover {
+                .dropdown-contentMy a:hover {
                     background-color: #f1f1f1
                 }
 
-        .dropdown:hover .dropdown-content {
+        .dropdownMy:hover .dropdown-contentMy {
             display: block;
         }
     </style>
@@ -86,9 +86,8 @@
             <li><a href="../pages/Main.aspx">ראשי </a></li>
             <%if (Session["Member"] == null)
                 { %>
-            <li><a href="../pages/MembersSystem/Register.aspx">הרשמה </a></li>
-            <li><a href="../pages/MembersSystem/LogIn.aspx">התחברות </a></li>
-            <li> <a href="/pages/MovieAdd.aspx"> הוסף </a> </li>
+            <li><a href="../pages/Register.aspx">הרשמה </a></li>
+            <li><a href="../pages/LogIn.aspx">התחברות </a></li>
             <%} %>
             <%--<%if (Session["Member"] != null)
                 { %><li><a href="../pages/LogOut.aspx"> התנתק </a></li><%} %>
@@ -101,19 +100,38 @@
             <li style="float: left"><%if (Session["Member"] == null)
                                         { %> <a>שלום אורח </a></li>
             <%}
-            else
-            { %>
+    else
+    { %>
             <li><a href="../pages/Messages.aspx"> הודעות </a></li>
+            <li><a href="../pages/catalog.aspx"> חנות </a></li>
+            <%if (m.memberManager)
+    { %>
+            <li> <a href="../pages/MovieAdd.aspx"> דף ניהול </a> </li>
+            <%} %>
             <li>
                 <asp:Image ID="MemberPicture" runat="server" Style="float: left" />
             </li>
-            <li style="float: left" class="dropdown"><a href="javascript:void(0)" class="dropbtn">שלום <%= m.memberFname.ToString().Trim() +" "+ m.MemberLname.ToString().Trim()%> </a><%} %>
-                <div class="dropdown-content">
+            <%if (!m.memberManager)
+    { %>
+            <li style="float: left" class="dropdownMy"><a href="javascript:void(0)" class="dropbtn">שלום <%= m.memberFname.ToString().Trim() + " " + m.MemberLname.ToString().Trim()%></a>
+                <div class="dropdown-contentMy">
                     <%--<a href="../pages/Update.aspx">עדכן </a>--%>
-                    <a href="../pages/MembersSystem/ShowUsers.aspx">הצג נתונים </a>
-                    <a href="../pages/MembersSystem/LogOut.aspx">התנתק </a>
+                    <a href="../pages/ShowUsers.aspx">הצג נתונים </a>
+                    <a href="../pages/LogOut.aspx">התנתק </a>
+                </div>
+            </li><%}
+    else
+    {%>
+                <li style="float: left" class="dropdownMy"><a href="javascript:void(0)" class="dropbtn">שלום <%= m.memberFname.ToString().Trim() + " " + m.MemberLname.ToString().Trim() + " - מנהל"%></a>
+                <%}
+    } %>
+                <div class="dropdown-contentMy">
+                    <%--<a href="../pages/Update.aspx">עדכן </a>--%>
+                    <a href="../pages/ShowUsers.aspx">הצג נתונים </a>
+                    <a href="../pages/LogOut.aspx">התנתק </a>
                 </div>
             </li>
+                
         </ul>
 
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

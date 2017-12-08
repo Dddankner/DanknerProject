@@ -18,8 +18,8 @@ public class MoviesService
 
     public static void AddMovie(Movies m)
     {
-        string strSql = "INSERT INTO Movies(MovieName, MovieSeatNum, MovieSeatPrice, MoviePic, CategoryId, MovieTrailer) " +
-            "VALUES('" + m.MovieName + "', " + m.MovieSeatNum + ", " + m.MovieSeatPrice + ", '" + m.MoviePic + "', " + m.CategoryId + ", '" + m.MovieTrailer + "')";
+        string strSql = "INSERT INTO Movies(MovieName,  MovieSeatPrice, MoviePic, CategoryId, MovieTrailer) " +
+            "VALUES('" + m.MovieName + "', " + m.MovieSeatPrice + ", '" + m.MoviePic + "', " + m.CategoryId + ", '" + m.MovieTrailer.Trim() + "')";
         Connect.InsertUpdateDelete(strSql);
     }
 
@@ -56,9 +56,16 @@ public class MoviesService
         return Connect.GetDataSet(strSql, "Movies");
     }
 
+    public static int GetMaxID()
+    {
+        string strSql = "SELECT MAX(MovieId) FROM Movies";
+        object obj = Connect.GetObject(strSql);
+        return int.Parse(obj.ToString());
+    }
+
     public static void UpdateMovie(Movies m)
     {
-        string strSql = "UPDATE Movies SET MovieName='" + m.MovieName + "', MovieSeatNum=" + m.MovieSeatNum + ", " +
+        string strSql = "UPDATE Movies SET MovieName='" + m.MovieName + "', " +
             "MovieSeatPrice='" + m.MovieSeatPrice + "', MoviePic='" + m.MoviePic + "', CategoryId=" + m.CategoryId + " " +
             "WHERE MovieId=" + m.MovieId;
         Connect.InsertUpdateDelete(strSql);
