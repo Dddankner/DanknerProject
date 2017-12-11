@@ -15,6 +15,11 @@ public partial class _Default : System.Web.UI.Page
         //DataSet ds = cit.GetAllCitiesFromIsrael();
         //GridView1.DataSource = ds;
         //GridView1.DataBind();
+        if(!IsPostBack)
+        {
+            fillDDL();
+        }
+        
     }
 
     protected void Button1_Click(object sender, EventArgs e)
@@ -23,5 +28,11 @@ public partial class _Default : System.Web.UI.Page
         //string date = TextBox1.Text;
         //string result = st.GetAgeByDate(date);
         //TextBox2.Text = result;
+    }
+    public void fillDDL()
+    {
+        DataSet ds2 = CategoriesService.GetCategories();
+        categoryGrd.DataSource = ds2;
+        categoryGrd.DataBind();
     }
 }

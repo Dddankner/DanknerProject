@@ -39,6 +39,10 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         ddlCity.DataValueField = "TheaterId";
         ddlCity.DataTextField = "CityName";
         ddlCity.DataBind();
+        ddlTheatersUpdate.DataSource = ds;
+        ddlTheatersUpdate.DataValueField = "TheaterId";
+        ddlTheatersUpdate.DataTextField = "CityName";
+        ddlTheatersUpdate.DataBind();
         //ddlCity.Items.Insert(0, new ListItem("-בחר עיר-"));
         theaterGrd.DataSource = ds;
         theaterGrd.DataBind();
@@ -55,9 +59,22 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         ddlCategory.DataTextField = "categoryName";
         ddlCategory.DataBind();
         ddlCategory.Items.Insert(0, new ListItem("-בחר קטגוריה-"));
+        ddlCategoruUpdate.DataSource = ds2;
+        ddlCategoruUpdate.DataValueField = "CategoryId";
+        ddlCategoruUpdate.DataTextField = "categoryName";
+        ddlCategoruUpdate.DataBind();
+        ddlUpdateCategory.DataSource = ds2;
+        ddlUpdateCategory.DataValueField = "CategoryId";
+        ddlUpdateCategory.DataTextField = "categoryName";
+        ddlUpdateCategory.DataBind();
+        ddlUpdateCategory.Items.Insert(0, new ListItem("-בחר קטגוריה-"));
         categoryGrd.DataSource = ds2;
         categoryGrd.DataBind();
         DataSet dsMov = MoviesService.GetMovies();
+        ddlMovies.DataSource = dsMov;
+        ddlMovies.DataValueField = "MovieId";
+        ddlMovies.DataTextField = "MovieName";
+        ddlMovies.DataBind();
         MoviesGrd.DataSource = dsMov;
         MoviesGrd.DataBind();
     }
@@ -76,9 +93,9 @@ public partial class pages_MovieAdd : System.Web.UI.Page
     protected void btnAdd_Click(object sender, EventArgs e)
     {
         Movies m = new Movies();
-        m.MovieName = txtName.Text;
+        m.MovieName = txtMovieName.Text;
         //m.MovieSeatNum = int.Parse(txtNumSeats.Text);
-        m.MovieSeatPrice = int.Parse(txtPrice.Text);
+        m.MovieSeatPrice = int.Parse(txtMovieSeatPrice.Text);
         m.CategoryId = int.Parse(ddlCategory.SelectedItem.Value);
         m.MovieTrailer = txtTrailer.Text;
         string photoName = "";
@@ -98,9 +115,9 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         }
         TheaterMoviesService.AddList(tms);
         txtTrailer.Text = "";
-        txtPrice.Text = "";
+        txtMovieSeatPrice.Text = "";
         txtNumSeats.Text = "";
-        txtName.Text = "";
+        txtMovieName.Text = "";
         ddlCategory.SelectedIndex = 0;
     }
 
@@ -122,7 +139,7 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         }
         else
         {
-            errorThea.Text = "הקולנוע כבר קיים";
+            //errorThea.Text = "הקולנוע כבר קיים";
         }
         
     }
@@ -180,7 +197,7 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         } 
         else
         {
-            ErrorCat.Text = "הקטגויה כבר קיימת";
+            //ErrorCat.Text = "הקטגויה כבר קיימת";
         }      
     }
 
@@ -193,7 +210,7 @@ public partial class pages_MovieAdd : System.Web.UI.Page
     protected void categoryGrd_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         GridViewRow r1 = e.Row;
-        r1.CssClass = "row";
+        r1.CssClass = "highlight";
     }
 
     protected void MoviesGrd_RowDataBound(object sender, GridViewRowEventArgs e)

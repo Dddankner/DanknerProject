@@ -27,7 +27,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <ul id="slide-out" class="side-nav right-align right-aligned">
+        <%--<ul id="slide-out" class="side-nav right-align right-aligned">
             <li>
                 <div class="user-view">
                     <div class="background">
@@ -47,7 +47,7 @@
             <li><a class="subheader">Subheader</a></li>
             <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
         </ul>
-        <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+        <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>--%>
         <center>
         <div class="card" style="width:50vh">
             <div class="card-content">

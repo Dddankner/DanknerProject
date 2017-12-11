@@ -13,7 +13,7 @@
         body{
             background-color:#f1f1f1;
         }
-        ul {
+        ul.navbarMy{
             list-style-type: none;
             margin: 0;
             padding: 0;
@@ -21,16 +21,16 @@
             background-color: #454343;
         }
 
-        li {
+        li.navbarMy{
             float: right;
             border-right: 1px solid #bbb;
         }
 
-            li:last-child {
+            li:last-child.navbarMy{
                 border-right: none;
             }
 
-            li a {
+            li a.navbarMy{
                 display: block;
                 color: white;
                 text-align: center;
@@ -38,7 +38,7 @@
                 text-decoration: none;
             }
 
-                li a:hover:not(.active) {
+                li a:hover:not(.active).navbarMy{
                     background-color: #555;
                     color: white;
                 }
@@ -82,12 +82,12 @@
 </head>
 <body style="margin: 0%">
     <form id="form1" runat="server">
-        <ul>
-            <li><a href="../pages/Main.aspx">ראשי </a></li>
+        <ul class="navbarMy">
+            <li class="navbarMy"><a href="../pages/Main.aspx" class="navbarMy">ראשי </a></li>
             <%if (Session["Member"] == null)
                 { %>
-            <li><a href="../pages/Register.aspx">הרשמה </a></li>
-            <li><a href="../pages/LogIn.aspx">התחברות </a></li>
+            <li class="navbarMy"><a href="../pages/Register.aspx" class="navbarMy">הרשמה </a></li>
+            <li class="navbarMy"><a href="../pages/LogIn.aspx" class="navbarMy">התחברות </a></li>
             <%} %>
             <%--<%if (Session["Member"] != null)
                 { %><li><a href="../pages/LogOut.aspx"> התנתק </a></li><%} %>
@@ -97,23 +97,23 @@
             <%if (Session["Member"] != null)
                 { %>
             <li> <a href="../pages/ShowUsers.aspx"> הצג נתונים </a> </li><%} %>--%>
-            <li style="float: left"><%if (Session["Member"] == null)
-                                        { %> <a>שלום אורח </a></li>
+            <li style="float: left" class="navbarMy"><%if (Session["Member"] == null)
+                                        { %> <a class="navbarMy">שלום אורח </a></li>
             <%}
     else
     { %>
-            <li><a href="../pages/Messages.aspx"> הודעות </a></li>
-            <li><a href="../pages/catalog.aspx"> חנות </a></li>
+            <li class="navbarMy"><a href="../pages/Messages.aspx" class="navbarMy"> הודעות </a></li>
+            <li class="navbarMy"><a href="../pages/catalog.aspx" class="navbarMy"> חנות </a></li>
             <%if (m.memberManager)
     { %>
-            <li> <a href="../pages/MovieAdd.aspx"> דף ניהול </a> </li>
+            <li class="navbarMy"> <a href="../pages/MovieAdd.aspx" class="navbarMy"> דף ניהול </a> </li>
             <%} %>
-            <li>
+            <li class="navbarMy">
                 <asp:Image ID="MemberPicture" runat="server" Style="float: left" />
             </li>
             <%if (!m.memberManager)
     { %>
-            <li style="float: left" class="dropdownMy"><a href="javascript:void(0)" class="dropbtn">שלום <%= m.memberFname.ToString().Trim() + " " + m.MemberLname.ToString().Trim()%></a>
+            <li style="float: left" class="dropdownMy navbarMy"><a href="javascript:void(0)" class="dropbtn navbarMy">שלום <%= m.memberFname.ToString().Trim() + " " + m.MemberLname.ToString().Trim()%></a>
                 <div class="dropdown-contentMy">
                     <%--<a href="../pages/Update.aspx">עדכן </a>--%>
                     <a href="../pages/ShowUsers.aspx">הצג נתונים </a>
@@ -122,7 +122,7 @@
             </li><%}
     else
     {%>
-                <li style="float: left" class="dropdownMy"><a href="javascript:void(0)" class="dropbtn">שלום <%= m.memberFname.ToString().Trim() + " " + m.MemberLname.ToString().Trim() + " - מנהל"%></a>
+                <li style="float: left" class="dropdownMy navbarMy"><a href="javascript:void(0)" class="dropbtn navbarMy">שלום <%= m.memberFname.ToString().Trim() + " " + m.MemberLname.ToString().Trim() + " - מנהל"%></a>
                 <%}
     } %>
                 <div class="dropdown-contentMy">

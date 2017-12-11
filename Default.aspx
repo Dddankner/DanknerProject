@@ -7,139 +7,36 @@
     <title></title>
     <link href="../css/Modal.css" rel="stylesheet" />
     <script src="/JavaScript/jquery-3.2.1.js"></script>
+    <link href="Content/css/materialize.css" rel="stylesheet" />
+    <script src="Content/js/materialize.js"></script>
     <script type="text/javascript" lang="ja">
 
         $(document).ready(function () {
-            // Click function for show the Modal
-
-            $(".show").click(function () {
-                $(".mask").addClass("active");
-            });
-
-            // Call the closeModal function on the clicks/keyboard
-
-            $(".close, .mask").click(function () {
-                $(".mask").removeClass("active");
-            });
-
-            $(".logShow").on("click", function () {
-                $(".ShowLog").fadeout();
-                $(".formLog").fadein();
-            })
-        });
-
-        $(document).keyup(function (e) {
-            if (e.keyCode == 27) {
-                closeModal();
-            }
+            $('select').material_select();
         });
 
 
     </script>
     <style type="text/css">
-        body {
-            background-color: #27ae60;
-        }
-
-        .logInTable {
-            background-color: #27ae60;
-            height: 14vh;
-            width: 34vh;
-            direction: rtl;
-        }
-
-        .logInTxt {
-            font-family: Arial;
-            border: none;
-            text-align: right;
-            direction: rtl;
-            color: black;
-            background-color: #27ae60;
-            height: 5vh;
-            width: 34vh;
-            outline: none;
-            border-bottom: 2px solid #242222;
-            transition: 0.5s;
-        }
-
-        .regTxt {
-            font-family: Arial;
-            border: none;
-            text-align: left;
-            color: black;
-            background-color: #27ae60;
-            height: 5vh;
-            width: 34vh;
-            outline: none;
-            border-bottom: 2px solid #242222;
-            transition: 0.5s;
-        }
-
-        .logInTxt:focus, .regTxt:focus {
-            border-bottom-color: white;
-        }
-
-        a.logShow {
-            font-family: 'Lato';
-            color: #fff;
-            border: 3px solid #fff;
-            padding: 15px 10px;
-            display: block;
-            text-align: center;
-            margin: 25px auto;
-            width: 13%;
-            text-decoration: none;
-            cursor: pointer;
-            font-size: 20px;
-            font-weight: 500;
-        }
-
-            a.logShow:hover {
-                background: #fff;
-                color: #575757;
-            }
-
         input::placeholder {
-            color: black;
-            transition: 0.5s;
-            text-align: right;
-            direction: rtl;
+            text-align: right !important;
         }
 
-        input:focus::placeholder {
-            color: white;
+        label[for=input] {
+            text-align: right !important;
         }
 
-        .ShowLog, .formLog {
-            background-color: #27ae60;
+        input {
+            text-align: right !important;
+            direction: rtl !important;
         }
 
-        input[type="checkbox"] {
-            content: "\f096";
-            font-family: "FontAwesome";
-            font-weight: normal;
-            width: 3vh;
-            height: 3vh;
+        div {
+            text-align: right !important;
         }
 
-            input[type="checkbox"]:checked {
-                content: "\f14a";
-                color: #00c853;
-                animation: pop 180ms ease-in;
-            }
-
-        @keyframes pop {
-            0% {
-                transform: scale(0);
-            }
-
-            90% {
-                transform: scale(1.4);
-            }
-
-            100% {
-                transform: scale(1);
-            }
+        .grdView1 {
+            direction: rtl !important;
         }
     </style>
 </head>
@@ -159,43 +56,35 @@
             <asp:TextBox ID="txtPass" runat="server" CssClass="LogIn"></asp:TextBox>
         </center>--%>
         <center>
-        <div class="formLog">
-            <table class="logInTable">
-                <tr>
-                    <td>
-                        <asp:TextBox runat="server" ID="txtFname" placeholder="שם פרטי" CssClass="logInTxt"></asp:TextBox>
-                    </td>
-                    <td>
-                        <asp:TextBox runat="server" ID="Lname" placeholder="שם משפחה" CssClass="logInTxt"></asp:TextBox>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:TextBox runat="server" ID="txtMail" placeholder="מייל" CssClass="regTxt"></asp:TextBox>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:TextBox runat="server" ID="txtPass" placeholder="סיסמא" CssClass="regTxt"></asp:TextBox>
-                    </td>
-                    <td>
-                        <asp:TextBox runat="server" ID="txtRePass" placeholder="אימות סיסמא" CssClass="regTxt"></asp:TextBox>
-                    </td>
-                </tr>
-                <td>
-                    <asp:Label runat="server" ID="lblHobbies" Text="תחביבים"></asp:Label>
-                </td>
-                <tr>
-                    <td>
-                        <asp:CheckBoxList runat="server" ID="cbxGenres" Font-Size="Medium">
-                            <asp:ListItem Text="קומדיה" Value="קומדיה"></asp:ListItem>
-                            <asp:ListItem Text="אקשן" Value="אקשו"></asp:ListItem>
-                            <asp:ListItem Text="אימה" Value="אימה"></asp:ListItem>
-                        </asp:CheckBoxList>
-                    </td>
-                </tr>
-            </table>
-        </div>
+            <div class="card" style="width:50vh;">
+                <div class="card-tabs">
+                    <ul class="tabs tabs-fixed-width">
+                        <li class="tab"><a href="#updateCategory">עדכן קטגוריה</a></li>
+                        <li class="tab"><a href="#showCategories">הצג קטגוריות</a></li>
+                        <li class="tab"><a class="active" href="#addCategory">הוסף קטגוריה</a></li>
+                    </ul>
+                </div>
+                <div class="card-content white lighten-4">
+                    <div id="addCategory">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <asp:TextBox runat="server" ID="txtCategoryName" placeholder="שם קטגוריה"></asp:TextBox>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="showCategories">
+                        <asp:GridView runat="server" ID="categoryGrd" AutoGenerateColumns="False" CssClass="grdView1 highlight white">
+                <Columns>
+                    <asp:BoundField DataField="CategoryId" HeaderText="מספר סידורי" />
+                    <asp:BoundField DataField="CategoryName" HeaderText="שם קטגוריה" />
+                </Columns>
+            </asp:GridView>
+                    </div>
+                    <div id="updateCategory">
+                        עדכן סרטים
+                    </div>
+                </div>
+            </div>
             </center>
     </form>
 </body>

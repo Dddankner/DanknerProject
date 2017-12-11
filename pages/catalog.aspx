@@ -13,11 +13,11 @@
         }
 
         table {
-            margin-left: 5vh;
+            margin-left: 10vh;
         }
 
         .pad td{
-            width:25vh;
+            
         }
 
         .marg {
@@ -32,7 +32,7 @@
     <center>
     <asp:DataList ID="DataList1" runat="server" CssClass="pad" DataKeyField="MovieId" RepeatColumns="3" OnItemDataBound="DataList1_ItemDataBound">
         <ItemTemplate>
-            <div class="card" style="width:23vh;">
+            <div class="card" style="width:25vh;" >
     <div class="card-image waves-effect waves-block waves-light">
       <asp:Image runat="server" ID="movieImg" ImageUrl='<%#Eval("MoviePic") %>' CssClass="img activator" />
     </div>

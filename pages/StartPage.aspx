@@ -6,6 +6,8 @@
 <head runat="server">
     <title></title>
     <script src="/JavaScript/jquery-3.2.1.js"></script>
+    <link href="../Content/css/materialize.css" rel="stylesheet" />
+    <script src="../Content/js/materialize.js"></script>
     <style type="text/css">
         body {
             width: 100%;
@@ -161,6 +163,13 @@
             outline: none;
             border-bottom: 2px solid #242222;
             transition: 0.5s;
+        }
+        .txt::label{
+            color:black;
+        }
+
+        .txt:focus::label{
+            color:white;
         }
 
             .logInTxt:focus {
@@ -318,23 +327,24 @@
             </div>
             <div class="logInForm">
                 <center>
-                <h1> התחבר </h1>
-                <table class="logInTable">
-                <tr>
-                    <td>
-                        <asp:TextBox ID="txtMail" runat="server" placeholder="Mail" CssClass="logInTxt"></asp:TextBox>
-                    </td>
-                    <td>
-                        <asp:Label runat="server" ID="lblError"></asp:Label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:TextBox ID="txtPass" runat="server" placeholder="Password" CssClass="logInTxt"></asp:TextBox>
-                    </td>
-                </tr>
-                            
-            </table>
+                    <h1> התחבר </h1>
+                    <div class="card transparent" style="width:50vh; border-radius:20%">
+                        <div class="card-content white-text">
+                <div class="row right-align" style="width:40vh">
+                        <div class="input-field col s10 right-align">
+                            <asp:TextBox runat="server" ID="txtMail" CssClass="txt"></asp:TextBox>
+                            <label for="<%#ClientID.Equals("txtMail") %>" class="white-text">מייל</label>          
+        </div>
+                    </div>
+                    <div class="row right-align" style="width:40vh">
+                        <div class="input-field col s10 right-align">
+                            <asp:TextBox runat="server" ID="txtPass" CssClass="txt"></asp:TextBox>
+                            <label for="<%#ClientID.Equals("txtPass") %>" class="white-text">סיסמה</label>          
+        </div>
+                    </div>
+                    
+                        </div>
+                        </div>
                     <asp:Button runat="server" ID="logIn" Text="התחבר" CssClass="sendBn" OnClick="logIn_Click1" />
                     <a class="backLog"> חזור &rarr;</a>
                     </center>
