@@ -32,11 +32,11 @@
     <center>
     <asp:DataList ID="DataList1" runat="server" CssClass="pad" DataKeyField="MovieId" RepeatColumns="3" OnItemDataBound="DataList1_ItemDataBound">
         <ItemTemplate>
-            <div class="card" style="width:25vh;" >
-    <div class="card-image waves-effect waves-block waves-light">
+            <div class="card" style="width:25vh !important;" >
+    <div class="card-image waves-effect waves-block waves-light" style="width:100% !important">
       <asp:Image runat="server" ID="movieImg" ImageUrl='<%#Eval("MoviePic") %>' CssClass="img activator" />
     </div>
-    <div class="card-content" style="direction:rtl">
+    <div class="card-content" style="direction:rtl; width:100% !important">
       <span class="card-title activator grey-text text-darken-4"><i class="material-icons right">more_vert</i><%#Eval("MovieName") %></span>
         <p style="text-align:right"><asp:HyperLink ID="HyperLink1" runat="server" ToolTip='<%#Eval("MovieId") %>'>הזמן כרטיסים</asp:HyperLink></p>
     </div>
