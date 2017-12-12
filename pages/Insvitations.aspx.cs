@@ -4,15 +4,35 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data;
+using System.Data.OleDb;
 
 public partial class pages_Insvitations : System.Web.UI.Page
 {
+    int movieID = 0;
+    ListItem selectedList = new ListItem();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.QueryString["MovieId"] != null && Request.QueryString["MovieId"].ToString() != "")
         {
+            if(IsPostBack)
+            {
+                ddlTheaters.SelectedItem.Equals(selectedList);
+            }
+            movieID = int.Parse(Request.QueryString["MovieId"].ToString());
             PanelFill();
+            FillDDL(int.Parse(Request.QueryString["MovieId"].ToString()));
         }
+    }
+
+    public void FillDDL(int id)
+    {
+        DataSet dsThea = TheaterMoviesService.GetTheatersForMovie(id);
+        ddlTheaters.DataSource = dsThea;
+        ddlTheaters.DataTextField = "CityName";
+        ddlTheaters.DataValueField = "TheaterId";
+        ddlTheaters.DataBind();
+        ddlTheaters.Items.Insert(0, new ListItem("-בחר קולנוע-"));
     }
 
     public void PanelFill()
@@ -36,6 +56,7 @@ public partial class pages_Insvitations : System.Web.UI.Page
                 img[i, j] = new ImageButton();
                 img[i, j].ImageUrl = "~/img/seat-white.png";
                 img[i, j].Attributes.Add("style", "height:3vh; width:3vh");
+                img[i, j].PostBackUrl = "../pages/Insvitations.aspx?MovieId=" + movieID + "#selectSeats";
                 string str = i + 1.ToString() + j + 1.ToString();
                 img[i, j].ID = "img-" + str;
                 img[i, j].Click += Pages_Insvitations_Click;
@@ -61,5 +82,11 @@ public partial class pages_Insvitations : System.Web.UI.Page
         else if (img.ImageUrl == "~/img/seat-white.png")
             img.ImageUrl = "~/img/seat-black.png";
         img.Attributes.Add("style", "height:3vh; width:3vh");
+    }
+
+    protected void ddlTheaters_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        instructionContinue.Attributes.Add("style", "display:normal");
+        selectedList = ddlTheaters.SelectedItem;
     }
 }

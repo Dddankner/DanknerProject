@@ -45,8 +45,9 @@
         <p style="text-align:right">
             <label> קטגוריה: <%#Eval("CategoryName") %> </label>
             <br />
+            <label> תקציר: <%#Eval("MovieDescreption") %> </label>
+            <br />
             <a href='<%#Eval("MovieTrailer") %>' target="_blank"> לטריילר </a>
-
         </p>
     </div>
   </div>
@@ -98,19 +99,32 @@
         <%--<div id="pager" class="row" runat="server">
           <asp:Label ID="lblPage" runat="server"></asp:Label>
         </div>--%>
-        <table>
+        <div class="row">
+            <div class="col s10">
+                <asp:Button runat="server" ID="next" OnClick="next_Click" Text="דף הבא" />
+                <asp:Label runat="server" ID="lblShowPage"></asp:Label>
+                <asp:Button runat="server" ID="prev" OnClick="prev_Click" Text="דף הקודם" />
+            </div>
+            <div class="col s10">
+                
+            </div>
+            <div class="col s10">
+                
+            </div>
+        </div>
+        <%--<table>
             <tr>
                 <td>
-                    <asp:Button runat="server" ID="next" OnClick="next_Click" Text="דף הבא" />
+                    <asp:Button runat="server" ID="next1" OnClick="next_Click" Text="דף הבא" />
                 </td>
                 <td>
-                    <asp:Label runat="server" ID="lblShowPage"></asp:Label>
+                    <asp:Label runat="server" ID="lblShowPage1"></asp:Label>
                 </td>
                 <td>
-                    <asp:Button runat="server" ID="prev" OnClick="prev_Click" Text="דף הקודם" />
+                    <asp:Button runat="server" ID="prev1" OnClick="prev_Click" Text="דף הקודם" />
                 </td>
             </tr>
-        </table>
+        </table>--%>
     
         </center>
 </asp:Content>

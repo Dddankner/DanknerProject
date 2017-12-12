@@ -23,6 +23,15 @@ public class TheaterMoviesService
         Connect.InsertUpdateDelete(strSql);
     }
 
+    public static DataSet GetTheatersForMovie(int movieID)
+    {
+        string strSql = "SELECT TheaterMovies.TheaterId, Cities.CityName FROM TheaterMovies,Theaters,Cities WHERE" +
+            " TheaterMovies.TheaterId=Theaters.TheaterId AND" +
+            " Theaters.CityId=Cities.CityId AND" +
+            " TheaterMovies.MovieId=" + movieID;
+        return Connect.GetDataSet(strSql, "TheaterMovies");
+    }
+
     public static DataSet GetMoviesInTheater(int id)
     {
         string strSql = "SELECT TheaterId, MovieName FROM TheaterMovies,Movies WHERE TheaterMovies.TheaterId=" + id + " " +
