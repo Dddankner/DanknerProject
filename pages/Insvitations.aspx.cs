@@ -62,7 +62,7 @@ public partial class pages_Insvitations : System.Web.UI.Page
                 img[i, j].ID = "img-" + str;
                 img[i, j].Click += Pages_Insvitations_Click;
                 img[i, j].Load += Pages_Insvitations_Load;
-                img[i, j].OnClientClick = "f"; 
+                img[i, j].OnClientClick = "f(e, args)"; 
                 cell.Controls.Add(img[i, j]);
                 row[i].Controls.Add(cell);
             }

@@ -19,6 +19,10 @@
         //        $('ul.tabs').tabs('select_tab', 'seatsLink');
         //    });
         });
+
+        function f(e, args) {
+            
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
