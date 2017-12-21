@@ -18,6 +18,7 @@ public partial class pages_Insvitations : System.Web.UI.Page
             if(IsPostBack)
             {
                 ddlTheaters.SelectedItem.Equals(selectedList);
+                ClientScript.RegisterStartupScript(this.GetType(), "Script", "javascript:function(){$('ul.tabs').tabs('select_tab', 'detailsLink')}", true);
             }
             movieID = int.Parse(Request.QueryString["MovieId"].ToString());
             PanelFill();
@@ -61,6 +62,7 @@ public partial class pages_Insvitations : System.Web.UI.Page
                 img[i, j].ID = "img-" + str;
                 img[i, j].Click += Pages_Insvitations_Click;
                 img[i, j].Load += Pages_Insvitations_Load;
+                img[i, j].OnClientClick = "f"; 
                 cell.Controls.Add(img[i, j]);
                 row[i].Controls.Add(cell);
             }
@@ -86,7 +88,6 @@ public partial class pages_Insvitations : System.Web.UI.Page
 
     protected void ddlTheaters_SelectedIndexChanged(object sender, EventArgs e)
     {
-        instructionContinue.Attributes.Add("style", "display:normal");
-        selectedList = ddlTheaters.SelectedItem;
+        ClientScript.RegisterStartupScript(this.Page.GetType(), "Script", "function(){$('ul.tabs').tabs('select_tab', 'seatsLink')}", true);
     }
 }

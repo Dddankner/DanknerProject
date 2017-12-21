@@ -7,11 +7,17 @@
     <script type="text/javascript" lang="ja">
         $(document).ready(function () {
             $('select').material_select();
-
-            $("#conToShow").Click( function () {
-                $("#detailsLink").removeClass("active");
-                $("#seatsLink").addClass("active");
-            });
+            //$('ul.tabs').tabs('select_tab', '#detailsLink');
+            //$("#instructionContinue").on("Click", function () {
+            //    //$("#detailsLink").removeClass("active");
+            //    //$("#selectDetails").css("display", "none");
+            //    //$("#selectSeats").css("display", "normal");
+            //    $('ul.tabs').tabs('select_tab', 'seatsLink');
+            //});
+            $('ul.tabs').tabs();
+        //    $("#btnContinue").click( function () {
+        //        $('ul.tabs').tabs('select_tab', 'seatsLink');
+        //    });
         });
     </script>
 </asp:Content>
@@ -22,14 +28,15 @@
                 <ul class="tabs tabs-fixed-width">
                     <%--<li class="tab"><a href="#final" id="finalLink">סיום והזמנה</a></li>--%>
                     <li class="tab"><a href="#selectSeats" id="seatsLink">בחירת מקומות</a></li>
-                    <li class="tab"><a href="#selectDetails" id="detailsLink" class="active">בחירת פרטים</a></li>
+                    <li class="tab"><a href="#selectDetails" id="detailsLink">בחירת פרטים</a></li>
                 </ul>
             </div>
             <div id="selectDetails">
                 <div class="row">
                     <div class="input-field col s12">
-                        <asp:DropDownList ID="ddlTheaters" runat="server" CssClass="right-align" OnSelectedIndexChanged="ddlTheaters_SelectedIndexChanged"></asp:DropDownList>
-                        <a runat="server" style="display:none;" id="instructionContinue"> להמשך לחץ על בחירת מקומות </a>
+                        <asp:DropDownList ID="ddlTheaters" runat="server" CssClass="right-align" OnSelectedIndexChanged="ddlTheaters_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                        <%--<span class="btn waves-effect waves-light" id="btnContinue"> המשך </span>--%>
+                        <%--<a runat="server" style="display:none;" id="instructionContinue"> להמשך לחץ על בחירת מקומות </a>--%>
                     </div>
                 </div>
             </div>
