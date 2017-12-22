@@ -23,6 +23,13 @@ public class MoviesService
         Connect.InsertUpdateDelete(strSql);
     }
 
+    public static int GetSeatPrice(int movieID)
+    {
+        string strSql = "SELECT MovieSeatPrice FROM Movies Where MovieId=" + movieID;
+        DataSet ds = Connect.GetDataSet(strSql, "Movies");
+        return int.Parse(ds.Tables[0].Rows[0]["MovieSeatPrice"].ToString());
+    }
+
     public static DataSet GetMovieByPic(string pic)
     {
         string strSql = "SELECT * FROM Movie,Categories WHERE Categories.CategoryId=Movies.CategoryID AND" +

@@ -19,9 +19,11 @@ public class OrderDetailsService
 
     public static void SetOrderDetails(OrderDetails od)
     {
-        string strSql = "INSERT INTO OrderDetails(MovieId, OrderId, MovieSeatPrice, MovieSeats, MovieSeatsAmount) " +
-            "VALUES(" + od.MovieId + ", " + od.OrderId + ", " + od.MovieSeatPrice + ", '" + od.MovieSeats + "', " + od.MovieSeatAmount + ")";
+        string strSql = "INSERT INTO OrderDetails(MovieId, OrderId, MovieSeatPrice, MovieSeats, MovieSeatsAmount, TheaterId) " +
+            "VALUES(" + od.MovieId + ", " + od.OrderId + ", " + od.MovieSeatPrice + ", '" + od.MovieSeats + "', " +
+            "" + od.MovieSeatAmount + ", " + od.TheaterId + ")";
         Connect.InsertUpdateDelete(strSql);
+        //HttpContext.Current.Response.Write(strSql);
     }
 
     public static List<int> GetSeatsTaken(int movieID, int theaterID)
@@ -31,13 +33,13 @@ public class OrderDetailsService
         string seats = "";
         for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
         {
-            seats += ds.Tables[0].Rows[0]["MovieSeats"].ToString() + ",";
+            seats += ds.Tables[0].Rows[0]["MovieSeats"].ToString();
         }
         List<int> seatsList = new List<int>();
         string current = "";
         for (int i = 0; i < seats.Length; i++)
         {
-            if(seats[i] != ',')
+            if(seats[i] != '*')
             {
                 current += seats[i];
             }

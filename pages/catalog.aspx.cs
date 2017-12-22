@@ -110,7 +110,7 @@ public partial class pages_catalog : System.Web.UI.Page
         //(HyperLink)FindControl("HyperLink1")
         HyperLink link1 = (HyperLink)e.Item.FindControl("HyperLink1");
         //string movieId = DataList1.DataKeys[e.Item.ItemIndex].ToString();
-        link1.NavigateUrl = "Insvitations.aspx?MovieId=" + link1.ToolTip;
+        link1.NavigateUrl = "Insvitations.aspx?MovieId=" + link1.ToolTip + "&selectedID=0";
     }
 
 

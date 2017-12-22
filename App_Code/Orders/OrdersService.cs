@@ -19,7 +19,14 @@ public class OrdersService
     public static void CreateOrder(Orders o)
     {
         string strSql = "INSERT INTO Orders(MemberId, OrderTime, OrderPrice, CreditCardId)" +
-            "VALUES(" + o.MemberId + ", " + o.OrderTime + ", " + o.OrderPrice + ", " + o.CreditCardId + ")";
+            "VALUES(" + o.MemberId + ", '" + o.OrderTime + "', " + o.OrderPrice + ", " + o.CreditCardId + ")";
         Connect.InsertUpdateDelete(strSql);
+    }
+
+    public static int GetId()
+    {
+        string strSql = "SELECT MAX(OrderId) FROM Orders";
+        object obj = Connect.GetObject(strSql);
+        return int.Parse(obj.ToString());
     }
 }
