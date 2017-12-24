@@ -31,8 +31,8 @@
             <div class="card-tabs">
                 <ul class="tabs tabs-fixed-width">
                     <%--<li class="tab"><a href="#final" id="finalLink">סיום והזמנה</a></li>--%>
-                    <li class="tab"><a href="#selectSeats" id="seatsLink">בחירת מקומות</a></li>
-                    <li class="tab"><a href="#selectDetails" class="active" id="detailsLink">בחירת פרטים</a></li>
+                    <li class="tab disabled"><a href="#selectSeats" id="seatsLink">בחירת מקומות</a></li>
+                    <li class="tab disabled"><a href="#selectDetails" class="active" id="detailsLink">בחירת פרטים</a></li>
                 </ul>
             </div>
             <div id="selectDetails">

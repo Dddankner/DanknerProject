@@ -18,12 +18,17 @@ public partial class pages_Insvitations : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.QueryString["MovieId"] != null && Request.QueryString["MovieId"].ToString() != "")
-        {
+        { 
             if(!IsPostBack)
             {
                 if (Request.QueryString["selectedID"] != null && Request.QueryString["selectedID"].ToString() != "")
                 {
                     Session["selectedID"] = 0;
+                    Session["valueTheater"] = 0;
+                }
+                else
+                {
+                    CheckSeatsSelect();
                 }
                 FillDDL(int.Parse(Request.QueryString["MovieId"].ToString()));
                 //ddlTheaters.SelectedItem.Equals(selectedList);
@@ -43,7 +48,10 @@ public partial class pages_Insvitations : System.Web.UI.Page
             {
                 valueTheater = int.Parse(ddlTheaters.SelectedValue);
                 lblShowID.Text = valueTheater.ToString();
+                Session["valueTheater"] = valueTheater;
             }
+            Response.Write(Session["valueTheater"].ToString());
+            //lblShowID.Text = PrintList();
         }
     }
 
@@ -59,31 +67,31 @@ public partial class pages_Insvitations : System.Web.UI.Page
 
     public void PanelFill()
     {
-        CreateImg(btnSeat);
+        CreateImg();
     }
-    public void CreateImg(CheckBox[,] cbx)
+    public void CreateImg()
     {
         Table tbl = new Table();
-        TableRow[] row = new TableRow[cbx.GetLength(1)];
+        TableRow[] row = new TableRow[btnSeat.GetLength(1)];
         for (int i = 0; i < row.Length; i++)
         {
             row[i] = new TableRow();
         }
-        for (int i = 0; i < cbx.GetLength(1); i++)
+        for (int i = 0; i < btnSeat.GetLength(1); i++)
         {
-            for (int j = 0; j < cbx.GetLength(0); j++)
+            for (int j = 0; j < btnSeat.GetLength(0); j++)
             {
                 TableCell cell = new TableCell();
-                cbx[i, j] = new CheckBox();
+                btnSeat[i, j] = new CheckBox();
                 if (i == 0)
-                    cbx[i, j].Text = "" + (j + 1).ToString() + "";
+                    btnSeat[i, j].Text = "" + (j + 1).ToString() + "";
                 else if (j == 9)
                 {
                     int num = (i + 1) * 10;
-                    cbx[i, j].Text = "" + num.ToString() + "";
+                    btnSeat[i, j].Text = "" + num.ToString() + "";
                 }
                 else
-                    cbx[i, j].Text = "" + (i.ToString()) + ((j + 1).ToString()) + "";
+                    btnSeat[i, j].Text = "" + (i.ToString()) + ((j + 1).ToString()) + "";
                 Image img = new Image();
                 img.ImageUrl = "~/img/seat-white.png";
                 //img[i, j] = new CheckBox();
@@ -94,7 +102,7 @@ public partial class pages_Insvitations : System.Web.UI.Page
                 //img[i, j].ID = "img-" + str;
                 //img[i, j].Click += Pages_Insvitations_Click;
                 //img[i, j].Load += Pages_Insvitations_Load;
-                cell.Controls.Add(cbx[i, j]);
+                cell.Controls.Add(btnSeat[i, j]);
                 row[i].Controls.Add(cell);
                 cell.Controls.Add(img);
                 row[i].Controls.Add(cell);
@@ -154,14 +162,47 @@ public partial class pages_Insvitations : System.Web.UI.Page
     protected void ddlTheaters_SelectedIndexChanged(object sender, EventArgs e)
     {
         Session["selectedID"] = ddlTheaters.SelectedIndex;
+        Session["valueTheater"] = ddlTheaters.SelectedValue;
         //lblShowID.Text = ddlTheaters.SelectedValue;
         //ClientScript.RegisterStartupScript(this.Page.GetType(), "Script", "function(){$('ul.tabs').tabs('select_tab', 'seatsLink')}", true);
     }
 
     protected void btnNext_Click(object sender, EventArgs e)
     {
-
         Response.Redirect("Insvitations.aspx?MovieId="+movieID+ "#selectSeats");
+    }
+
+    public void CheckSeatsSelect()
+    {
+        //int selIndex = int.Parse(Session["selectedID"].ToString());
+        //int theaterID = int.Parse(ddlTheaters.Items[selIndex].Value);
+        List<string> seatsList = new List<string>();
+        seatsList = OrderDetailsService.GetSeatsTaken(movieID, int.Parse(Session["valueTheater"].ToString()));
+        for (int i = 0; i < seatsList.Count; i++)
+        {
+            for (int j = 0; j < btnSeat.GetLength(1); j++)
+            {
+                for (int k = 0; k < btnSeat.GetLength(0); k++)
+                {
+                    if (seatsList.ElementAt(i) == btnSeat[j, k].Text)
+                    {
+                        btnSeat[j, k].Checked = true;
+                        btnSeat[j, k].Enabled = false;
+                    }
+                }
+            }
+        }
+    }
+
+    public string PrintList()
+    {
+        string c = "";
+        List<string> p = OrderDetailsService.GetSeatsTaken(movieID, 4);
+        for (int i = 0; i < p.Count; i++)
+        {
+            c += ", " + p.ElementAt(i);
+        }
+        return c;
     }
 
     protected void btnOrder_Click(object sender, EventArgs e)
@@ -197,7 +238,7 @@ public partial class pages_Insvitations : System.Web.UI.Page
             od.MovieId = movieID;
             od.MovieSeatAmount = count;
             od.MovieSeatPrice = MoviesService.GetSeatPrice(movieID);
-            od.TheaterId = valueTheater;
+            od.TheaterId = int.Parse(Session["valueTheater"].ToString());
             od.MovieSeats = GetSelectedSeats();
             OrderDetailsService.SetOrderDetails(od);
             Response.Redirect("catalog.aspx");

@@ -26,7 +26,7 @@ public class OrderDetailsService
         //HttpContext.Current.Response.Write(strSql);
     }
 
-    public static List<int> GetSeatsTaken(int movieID, int theaterID)
+    public static List<string> GetSeatsTaken(int movieID, int theaterID)
     {
         string strSql = "SELECT MovieSeats FROM OrderDetails WHERE MovieId=" + movieID + " AND TheaterId=" + theaterID;
         DataSet ds = Connect.GetDataSet(strSql, "OrderDetails");
@@ -35,7 +35,7 @@ public class OrderDetailsService
         {
             seats += ds.Tables[0].Rows[0]["MovieSeats"].ToString();
         }
-        List<int> seatsList = new List<int>();
+        List<string> seatsList = new List<string>();
         string current = "";
         for (int i = 0; i < seats.Length; i++)
         {
@@ -45,7 +45,10 @@ public class OrderDetailsService
             }
             else
             {
-                seatsList.Add(int.Parse(current));
+                if(current != "")
+                {
+                    seatsList.Add(current);
+                }
                 current = "";
             }
         }
