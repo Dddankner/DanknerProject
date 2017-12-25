@@ -18,19 +18,23 @@ public partial class pages_Insvitations : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.QueryString["MovieId"] != null && Request.QueryString["MovieId"].ToString() != "")
-        { 
-            if(!IsPostBack)
+        {
+            movieID = int.Parse(Request.QueryString["MovieId"].ToString());
+            if (!IsPostBack)
             {
                 if (Request.QueryString["selectedID"] != null && Request.QueryString["selectedID"].ToString() != "")
                 {
                     Session["selectedID"] = 0;
                     Session["valueTheater"] = 0;
+                    Session["Seats"] = "";
+                    Session["seatsNum"] = 0;
+                    Session["final"] = false;
                 }
                 else
                 {
-                    CheckSeatsSelect();
+                    //CheckSeatsSelect();
                 }
-                FillDDL(int.Parse(Request.QueryString["MovieId"].ToString()));
+                FillDDL(movieID);
                 //ddlTheaters.SelectedItem.Equals(selectedList);
                 //ClientScript.RegisterStartupScript(this.GetType(), "Script", "javascript:function(){$('ul.tabs').tabs('select_tab', 'detailsLink')}", true);
             }
@@ -52,6 +56,11 @@ public partial class pages_Insvitations : System.Web.UI.Page
             }
             Response.Write(Session["valueTheater"].ToString());
             //lblShowID.Text = PrintList();
+            if (Request.QueryString["selectedID"] == null && Session["valueTheater"].ToString() != "0")
+            {
+                CheckSeatsSelect();
+                //lblShowSeats.Text = PrintList() + "- " + movieID.ToString() + ", " + Session["valueTheater"].ToString();
+            }
         }
     }
 
@@ -184,7 +193,7 @@ public partial class pages_Insvitations : System.Web.UI.Page
             {
                 for (int k = 0; k < btnSeat.GetLength(0); k++)
                 {
-                    if (seatsList.ElementAt(i) == btnSeat[j, k].Text)
+                    if (btnSeat[j,k].Text == seatsList.ElementAt(i))
                     {
                         btnSeat[j, k].Checked = true;
                         btnSeat[j, k].Enabled = false;
@@ -197,10 +206,14 @@ public partial class pages_Insvitations : System.Web.UI.Page
     public string PrintList()
     {
         string c = "";
-        List<string> p = OrderDetailsService.GetSeatsTaken(movieID, 4);
+        List<string> p = OrderDetailsService.GetSeatsTaken(movieID, int.Parse(Session["valueTheater"].ToString()));
         for (int i = 0; i < p.Count; i++)
         {
             c += ", " + p.ElementAt(i);
+        }
+        if (p.Count == 0)
+        {
+            c = "none";
         }
         return c;
     }
@@ -236,10 +249,10 @@ public partial class pages_Insvitations : System.Web.UI.Page
             od.OrderId = OrdersService.GetId();
             //od.OrderId = 1;
             od.MovieId = movieID;
-            od.MovieSeatAmount = count;
+            od.MovieSeatAmount = int.Parse(Session["seatsNum"].ToString());
             od.MovieSeatPrice = MoviesService.GetSeatPrice(movieID);
             od.TheaterId = int.Parse(Session["valueTheater"].ToString());
-            od.MovieSeats = GetSelectedSeats();
+            od.MovieSeats = Session["Seats"].ToString();
             OrderDetailsService.SetOrderDetails(od);
             Response.Redirect("catalog.aspx");
         }
@@ -272,5 +285,39 @@ public partial class pages_Insvitations : System.Web.UI.Page
             }
         }
         return selectedSeats;
+    }
+
+    protected void btnConToFinal_Click(object sender, EventArgs e)
+    {
+        string selectedSeats = "";
+        int count = 0;
+        for (int i = 0; i < btnSeat.GetLength(1); i++)
+        {
+            for (int j = 0; j < btnSeat.GetLength(0); j++)
+            {
+                if (btnSeat[i, j].Checked && btnSeat[i,j].Enabled)
+                {
+                    if (selectedSeats == "")
+                        selectedSeats += btnSeat[i, j].Text;
+                    else
+                        selectedSeats += ", " + btnSeat[i, j].Text;
+                    count++;
+                }
+            }
+        }
+        Session["Seats"] = selectedSeats;
+        Session["seatsNum"] = count;
+        Session["final"] = true;
+        Response.Redirect("Insvitations.aspx?MovieId=" + movieID + "#final");
+    }
+
+    protected void btnBackToPanel_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Insvitations.aspx?MovieId=" + movieID + "#selectSeats");
+    }
+
+    protected void btnBackToCity_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Insvitations.aspx?MovieId=" + movieID + "#selectDetails");
     }
 }

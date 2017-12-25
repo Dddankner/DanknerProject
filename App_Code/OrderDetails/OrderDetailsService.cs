@@ -28,12 +28,13 @@ public class OrderDetailsService
 
     public static List<string> GetSeatsTaken(int movieID, int theaterID)
     {
-        string strSql = "SELECT MovieSeats FROM OrderDetails WHERE MovieId=" + movieID + " AND TheaterId=" + theaterID;
+        string strSql = "SELECT * FROM OrderDetails WHERE MovieId=" + movieID + " " +
+            "AND TheaterId=" + theaterID;
         DataSet ds = Connect.GetDataSet(strSql, "OrderDetails");
-        string seats = "";
-        for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+        string seats = ds.Tables[0].Rows[0]["MovieSeats"].ToString();
+        for (int i = 1; i < ds.Tables["OrderDetails"].Rows.Count; i++)
         {
-            seats += ds.Tables[0].Rows[0]["MovieSeats"].ToString();
+            seats = seats + "*" + ds.Tables[0].Rows[i]["MovieSeats"].ToString();
         }
         List<string> seatsList = new List<string>();
         string current = "";

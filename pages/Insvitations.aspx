@@ -31,6 +31,7 @@
             <div class="card-tabs">
                 <ul class="tabs tabs-fixed-width">
                     <%--<li class="tab"><a href="#final" id="finalLink">סיום והזמנה</a></li>--%>
+                    <li class="tab disabled"><a href="#final" id="finalLink">סיום ורכישה</a></li>
                     <li class="tab disabled"><a href="#selectSeats" id="seatsLink">בחירת מקומות</a></li>
                     <li class="tab disabled"><a href="#selectDetails" class="active" id="detailsLink">בחירת פרטים</a></li>
                 </ul>
@@ -50,10 +51,55 @@
                 <asp:Panel runat="server" ID="theaterPrev"></asp:Panel>
                 <%--<asp:Button runat="server" ID="btnOrder" Text="בחר" CssClass="btn waves-effect waves-light" OnClick="btnOrder_Click"></asp:Button>--%>
                 <%--<a class="btn waves-effect waves-light modal-trigger" href="#modal1"> בחר </a>--%>
-                 <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
-
-  <!-- Modal Structure -->
-  <div id="modal1" class="modal">
+                 <%--<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>--%>
+                <div class="row">
+                    <div class="col s6">
+                        <asp:Button runat="server" ID="btnConToFinal" CssClass="btn waves-effect waves-light" OnClick="btnConToFinal_Click" Text="המשך"></asp:Button>
+                    </div>
+                    <div class="col s6">
+                        <asp:Button ID="btnBackToCity" runat="server" Text="חזור" CssClass="btn waves-effect waves-light" OnClick="btnBackToCity_Click"></asp:Button>
+                    </div>
+                </div>
+                <asp:Label runat="server" ID="lblShowSeats"></asp:Label>
+            </div>
+            <div id="final">
+                <%if(bool.Parse(Session["final"].ToString())){ %>
+                <div class="row">
+                    <div class="col s6">
+                        <a><%= MoviesService.GetMovieByID(int.Parse(Request.QueryString["MovieId"].ToString())) %></a>
+                    </div>
+                    <div class="col s6">
+                        <a>שם הסרט</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s6">
+                        <a><%= TheatersService.GetTheaterCity(int.Parse(Session["valueTheater"].ToString())) %></a>
+                    </div>
+                    <div class="col s6">
+                        <a>קולנוע</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s6">
+                        <a><%=Session["Seats"].ToString() %></a>
+                    </div>
+                    <div class="col s6">
+                        <a>הכיסאות שנבחרו הם</a>
+                    </div>
+                </div>
+                <%} %>
+                <div class="row">
+                    <div class="col s6">
+                        <asp:Button runat="server" ID="btnBuy" CssClass="btn waves-effect waves-light" Text="קנה" OnClick="btnOrder_Click"></asp:Button>
+                    </div>
+                    <div class="col s6">
+                        <asp:Button runat="server" ID="btnBackToPanel" CssClass="btn waves-effect waves-light" Text="חזור" OnClick="btnBackToPanel_Click"></asp:Button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--<div id="modal1" class="modal">
     <div class="modal-content">
       <h4>Modal Header</h4>
       <p>A bunch of text</p>
@@ -61,13 +107,7 @@
     <div class="modal-footer">
       <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
     </div>
-  </div>
-                <asp:Label runat="server" ID="lblShowSeats"></asp:Label>
-            </div>
-            <div id="final">
-
-            </div>
-        </div>
+  </div>--%>
        <%-- <div id="modal1" class="modal">
     <div class="modal-content">
       <h4>Modal Header</h4>

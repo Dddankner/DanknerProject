@@ -78,6 +78,13 @@ public class MoviesService
         Connect.InsertUpdateDelete(strSql);
     }
 
+    public static string GetMovieByID(int ID)
+    {
+        string strSql = "SELECT MovieName FROM Movies WHERE MovieId=" + ID;
+        DataSet ds = Connect.GetDataSet(strSql, "Movies");
+        return ds.Tables[0].Rows[0]["MovieName"].ToString();
+    }
+
     //public static bool IsExist(int id)
     //{
     //    string strFind = "SELECT COUNT(MemberId) FROM Members WHERE MemberMail ='" + m.memberMail.Trim() + "'";

@@ -23,11 +23,11 @@ public class CreditCardService
         Connect.InsertUpdateDelete(strSql);
     }
 
-    public static void UpdateCreditCard(CreditCard cd, int id)
+    public static void UpdateCreditCard(CreditCard cd)
     {
         string strSql = "UPDATE CreditCard SET CreditCardNum='" + cd.CreditCardNum + "', CreditCardCVV='" + cd.CreditCardCVV + "', " +
             "CreditCardExpiery=" + cd.CreditCardExpiery + ", MemberId=" + cd.MemberId + " " +
-            "Where CreditCardId=" + id;
+            "Where CreditCardId=" + cd.MemberId;
         Connect.InsertUpdateDelete(strSql);
     }
 
@@ -35,5 +35,12 @@ public class CreditCardService
     {
         string strSql = "SELECT * FROM CreditCard WHERE CreditCardId=" + id;
         return Connect.GetDataSet(strSql, "CreditCard");
+    }
+
+    public static bool HaveCard(int ID)
+    {
+        string strSql = "SELECT COUNT(CreditCardId) FROM CreditCard WHERE MemberId=" + ID;
+        object obj = Connect.GetObject(strSql);
+        return int.Parse(obj.ToString()) > 0;
     }
 }

@@ -104,6 +104,7 @@
     { %>
             <li class="navbarMy"><a href="../pages/Messages.aspx" class="navbarMy"> הודעות </a></li>
             <li class="navbarMy"><a href="../pages/catalog.aspx" class="navbarMy"> חנות </a></li>
+            <li class="navbarMy"><a href="../pages/CreditCardPage.aspx" class="navbarMy"> כרטיס אשראי </a></li>
             <%if (m.memberManager)
     { %>
             <li class="navbarMy"> <a href="../pages/MovieAdd.aspx" class="navbarMy"> דף ניהול </a> </li>
