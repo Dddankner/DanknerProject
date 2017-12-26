@@ -24,6 +24,13 @@
 
         }
     </script>
+    <style type="text/css">
+        .imgCss{
+            border-radius:50%;
+            height:10vh;
+            width:10vh;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <center>
@@ -63,10 +70,16 @@
                 <asp:Label runat="server" ID="lblShowSeats"></asp:Label>
             </div>
             <div id="final">
-                <%if(bool.Parse(Session["final"].ToString())){ %>
+                <%if (bool.Parse(Session["final"].ToString()))
+                        { %>
+                <div class="row">
+                    <div class="col s12">
+                        <asp:Image ID="imgMovie" runat="server" CssClass="imgCss"></asp:Image>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col s6">
-                        <a><%= MoviesService.GetMovieByID(int.Parse(Request.QueryString["MovieId"].ToString())) %></a>
+                        <a><%= MoviesService.GetMovieByID(int.Parse(Session["MovieId"].ToString())) %></a>
                     </div>
                     <div class="col s6">
                         <a>שם הסרט</a>
@@ -88,7 +101,48 @@
                         <a>הכיסאות שנבחרו הם</a>
                     </div>
                 </div>
-                <%} %>
+                <div class="row">
+                    <div class="col s6">
+                        <a><%=Session["seatsNum"].ToString() %></a>
+                    </div>
+                    <div class="col s6">
+                        <a>מספר הכיסאות שבחרת</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s6">
+                        <a><%=MoviesService.GetSeatPrice(int.Parse(Session["MovieId"].ToString())) %></a>
+                    </div>
+                    <div class="col s6">
+                        <a>מחיר לכיסא</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s6">
+                        <a><%=MoviesService.GetSeatPrice(int.Parse(Session["MovieId"].ToString())) * int.Parse(Session["seatsNum"].ToString()) %></a>
+                    </div>
+                    <div class="col s6">
+                        <a>מחיר כולל להזמנה</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <%if (CreditCardService.HaveCard(((Members)Session["Member"]).MemberId))
+                        { %>
+                    <div class="col s6">
+                        <a><%=CreditCardService.GetCardNum(((Members)Session["Member"]).MemberId) %></a>
+                    </div>
+                    <div class="col s6">
+                        <a>מספר כרטיס אשראי</a>
+                    </div>
+                    <%}
+                        else
+                        { %>
+                    <div class="col s12">
+                        <asp:HyperLink ID="linkAddCard" runat="server"> אין לך כרטיס אשראי - לחץ כאן כדי להוסיף </asp:HyperLink>
+                    </div>
+                </div>
+                <%}
+                        } %>
                 <div class="row">
                     <div class="col s6">
                         <asp:Button runat="server" ID="btnBuy" CssClass="btn waves-effect waves-light" Text="קנה" OnClick="btnOrder_Click"></asp:Button>

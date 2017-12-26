@@ -19,7 +19,7 @@ public class CreditCardService
     public static void InsertCreditCard(CreditCard cd)
     {
         string strSql = "INSERT INTO CreditCard(CreditCardNum, CreditCardCVV, CreditCardExpiery, MemberId)" +
-            "VALUES('" + cd.CreditCardNum + "', '" + cd.CreditCardCVV + "', " + cd.CreditCardExpiery + ", " + cd.MemberId + ")";
+            "VALUES('" + cd.CreditCardNum + "', '" + cd.CreditCardCVV + "', '" + cd.CreditCardExpiery + "', " + cd.MemberId + ")";
         Connect.InsertUpdateDelete(strSql);
     }
 
@@ -35,6 +35,20 @@ public class CreditCardService
     {
         string strSql = "SELECT * FROM CreditCard WHERE CreditCardId=" + id;
         return Connect.GetDataSet(strSql, "CreditCard");
+    }
+
+    public static string GetCardNum(int id)
+    {
+        string strSql = "SELECT CreditCardNum FROM CreditCard WHERE MemberId=" + id;
+        DataSet ds = Connect.GetDataSet(strSql, "Members");
+        return ds.Tables[0].Rows[0]["CreditCardNum"].ToString();
+    }
+
+    public static int GetID(int ID)
+    {
+        string strSql = "SELECT CreditCardId FROM CreditCard WHERE MemberId=" + ID;
+        DataSet ds = Connect.GetDataSet(strSql, "CreditCard");
+        return int.Parse(ds.Tables[0].Rows[0]["CreditCardId"].ToString());
     }
 
     public static bool HaveCard(int ID)

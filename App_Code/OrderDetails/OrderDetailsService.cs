@@ -26,13 +26,21 @@ public class OrderDetailsService
         //HttpContext.Current.Response.Write(strSql);
     }
 
+    public static DataSet GetAll(int memberID)
+    {
+        string strSql = "SELECT * FROM Orders,OrderDetails WHERE Orders.OrderId=OrderDetails.OrderId " +
+            "AND Orders.MemberId=OrderDetails.MemberId " +
+            "AND OrderDetails.MemberId=" + memberID;
+        return Connect.GetDataSet(strSql, "OrderDetails");        
+    }
+
     public static List<string> GetSeatsTaken(int movieID, int theaterID)
     {
         string strSql = "SELECT * FROM OrderDetails WHERE MovieId=" + movieID + " " +
             "AND TheaterId=" + theaterID;
         DataSet ds = Connect.GetDataSet(strSql, "OrderDetails");
-        string seats = ds.Tables[0].Rows[0]["MovieSeats"].ToString();
-        for (int i = 1; i < ds.Tables["OrderDetails"].Rows.Count; i++)
+        string seats = "";
+        for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
         {
             seats = seats + "*" + ds.Tables[0].Rows[i]["MovieSeats"].ToString();
         }
