@@ -25,10 +25,10 @@
         }
     </script>
     <style type="text/css">
-        .imgCss{
-            border-radius:50%;
-            height:10vh;
-            width:10vh;
+        .imgCss {
+            border-radius: 50%;
+            height: 10vh;
+            width: 10vh;
         }
     </style>
 </asp:Content>
@@ -71,7 +71,7 @@
             </div>
             <div id="final">
                 <%if (bool.Parse(Session["final"].ToString()))
-                        { %>
+                    { %>
                 <div class="row">
                     <div class="col s12">
                         <asp:Image ID="imgMovie" runat="server" CssClass="imgCss"></asp:Image>
@@ -142,7 +142,7 @@
                     </div>
                 </div>
                 <%}
-                        } %>
+                    } %>
                 <div class="row">
                     <div class="col s6">
                         <asp:Button runat="server" ID="btnBuy" CssClass="btn waves-effect waves-light" Text="קנה" OnClick="btnOrder_Click"></asp:Button>

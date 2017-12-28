@@ -28,10 +28,15 @@ public class OrderDetailsService
 
     public static DataSet GetAll(int memberID)
     {
-        string strSql = "SELECT * FROM Orders,OrderDetails WHERE Orders.OrderId=OrderDetails.OrderId " +
-            "AND Orders.MemberId=OrderDetails.MemberId " +
-            "AND OrderDetails.MemberId=" + memberID;
-        return Connect.GetDataSet(strSql, "OrderDetails");        
+        string strSql = "SELECT * " +
+            "FROM OrderDetails, Orders, Movies, Theaters, Cities " +
+            "WHERE OrderDetails.OrderId=Orders.OrderId " +
+            "AND OrderDetails.MovieId=Movies.MovieId " +
+            "AND OrderDetails.TheaterId=Theaters.TheaterId " +
+            "AND Theaters.CityId=Cities.CityId " +
+            "AND Orders.MemberId=" + memberID;
+        DataSet ds = Connect.GetDataSet(strSql, "OrderDetails");
+        return ds;
     }
 
     public static List<string> GetSeatsTaken(int movieID, int theaterID)
