@@ -92,9 +92,9 @@ public class MembersServer
     {
         string strSql = "UPDATE Members SET MemberFname='" + m.memberFname.Trim() + "', MemberLname='" + m.MemberLname.Trim() + "', " +
             "MemberPass='" + m.memberPass.Trim() + "', CityId=" + m.cityId + ", MemberGender='" + m.memberGender.Trim() + "', " +
-            "MemberHobbies='" + m.memberHobies.Trim() + "', MemberPic='" + m.memberPic.Trim() + "', MemberDate='" + m.memberDate + "', " +
+            "MemberHobbies='" + m.memberHobies.Trim() + "', MemberPic='" + m.memberPic.Trim() + "', MemberDate=#" + m.memberDate + "#, " +
             "MemberMail='" + m.memberMail.Trim() + "'";
-        strSql += "WHERE MemberId='" + m.MemberId + "'";
+        strSql += "WHERE MemberId=" + m.MemberId + "";
         Connect.InsertUpdateDelete(strSql);
     }
 

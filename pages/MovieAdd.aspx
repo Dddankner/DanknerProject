@@ -102,6 +102,29 @@
                 $("#btns").fadeIn(1200);
             })
         })
+        function ValidateHobbies(source, args) {
+            var chkListModules = document.getElementById('<%= ddlCity.ClientID %>');
+            var chkListinputs = chkListModules.getElementsByTagName("input");
+            for (var i = 0; i < chkListinputs.length; i++) {
+                if (chkListinputs[i].checked) {
+                    args.IsValid = true;
+                    return;
+                }
+            }
+
+            args.IsValid = false;
+        }
+        function CheckPhoto(source, args) {
+            if (document.getElementById("uploadBox").value != "") {
+                var type = "";
+                for (var i = document.getElementById("uploadBox").value.LastIndexOf("."); i < document.getElementById("uploadBox").value.length; i++) {
+                    type += document.getElementById("uploadBox").value.charAt(i);
+                }
+                alert(type);
+            }
+            else
+                args.IsValid = true;
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
@@ -189,8 +212,19 @@
                                 <%--<label for='<%#ClientID.Equals("txtTrailer") %>'>טריילר</label>--%>
                             </div>
                         </div>
-
+                        <div class="row">
+                            <div class="col s12">
+<asp:ValidationSummary ID="ValidationSummary1" runat="server"></asp:ValidationSummary>
+                            </div>
+                        </div>
                     </div>
+                    <asp:RequiredFieldValidator ID="txtMovieNameMust" ControlToValidate="txtMovieName" runat="server" ErrorMessage="חובה למלא שם סרט">&nbsp</asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="seatPriceMust" ControlToValidate="txtMovieSeatPrice" runat="server" ErrorMessage="חובה להכניס מחיר לכרטיס">&nbsp</asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="seatAmountMust" ControlToValidate="txtNumSeats" runat="server" ErrorMessage="RequiredFieldValidator">&nbsp</asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator runat="server" ID="validatecategoty" ControlToValidate="ddlCategory" InitialValue="-בחר קטגוריה-" ErrorMessage="חובה למלא קטגוריה">&nbsp</asp:RequiredFieldValidator>
+                    <asp:CustomValidator ID="validateCities" runat="server" ControlToValidate="ddlCity" ErrorMessage="חובה לבחור קולנוע">&nbsp</asp:CustomValidator>
+                    <asp:RequiredFieldValidator ID="trailerMust" ControlToValidate="txtTrailer" runat="server" ErrorMessage="RequiredFieldValidator"></asp:RequiredFieldValidator>
+                    <asp:CustomValidator ID="validatePic" runat="server" ControlToValidate="fuPic" ErrorMessage="חובה להכניס קובץ מסוג תמונה">&nbsp</asp:CustomValidator>
                     <div id="showMovie">
                         <asp:GridView runat="server" ID="MoviesGrd" AutoGenerateColumns="False" DataKeyNames="MovieId" CssClass="grdView1 highlight white">
                 <Columns>
@@ -379,11 +413,17 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col s12">
+<asp:ValidationSummary ID="ValidationSummary2" runat="server"></asp:ValidationSummary>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col s12" style="text-align:center !important">
                                 <asp:Button ID="btnAddTheater" runat="server" Text="הוסף קולנוע" CssClass="btn waves-effect waves-light" OnClick="btnAddTheater_Click"></asp:Button>
                             </div>
                         </div>
                     </div>
+                    <asp:RequiredFieldValidator runat="server" ID="validateCitiesTheater" ControlToValidate="ddlAllCities" InitialValue="-בחר עיר-" ErrorMessage="חובה למלא עיר">&nbsp</asp:RequiredFieldValidator>
                     <div id="showTheater">
                         <asp:GridView runat="server" ID="theaterGrd" AutoGenerateColumns="False" DataKeyNames="" CssClass="grdView1 highlight white">
                 <Columns>

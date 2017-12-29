@@ -61,7 +61,7 @@ public partial class pages_Insvitations : System.Web.UI.Page
         if (IsPostBack)
         {
             valueTheater = int.Parse(ddlTheaters.SelectedValue);
-            lblShowID.Text = valueTheater.ToString();
+            //lblShowID.Text = valueTheater.ToString();
             Session["valueTheater"] = valueTheater;
         }
         //Response.Write(Session["valueTheater"].ToString());

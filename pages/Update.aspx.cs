@@ -75,7 +75,7 @@ public partial class pages_Update : System.Web.UI.Page
         //        cities.Items[i].Selected = true;
         //    }
         //}
-        cities.SelectedIndex = m.cityId - 1;
+        cities.SelectedValue = m.cityId.ToString();
         lblEror.Text = m.cityId.ToString();
     }
 
@@ -139,6 +139,7 @@ public partial class pages_Update : System.Web.UI.Page
         //m.memberPic = photoName;
         m.memberDate = date1;
         m.memberMail = txtMail.Text;
+        m.MemberId = int.Parse(Request.QueryString["id"].ToString());
         MembersServer ms = new MembersServer();
         if (ms.IsMailExist(m))
         {
@@ -150,7 +151,8 @@ public partial class pages_Update : System.Web.UI.Page
             else
                 m.memberPic = origin.memberPic;
             ms.UpdatePic(m);
-            Session["Member"] = m;
+            if (!((Members)Session["Member"]).memberManager)
+                Session["Member"] = m;
             Response.Redirect("../pages/ShowUsers.aspx");
         }
         else

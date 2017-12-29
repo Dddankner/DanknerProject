@@ -35,11 +35,30 @@
             </div>
             <div class="row">
                 <div class="col s12">
+                    <asp:ValidationSummary ID="ValidationSummary1" runat="server"></asp:ValidationSummary>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <asp:Label runat="server" ID="lblError"></asp:Label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
                     <asp:Button runat="server" ID="btnAddCard" Text="הוסף" CssClass="btn waves-effect waves-light" OnClick="btnAddCard_Click"></asp:Button>
                 </div>
             </div>
         </div>
     </div>
-        </center>
+         <%-- ולידציה --%>
+        <asp:RequiredFieldValidator ID="numMust" ControlToValidate="txtCardNumber" runat="server" ErrorMessage="חובה להכניס מספר כרטיס">&nbsp</asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator ID="checkNumIsNums" ControlToValidate="txtCardNumber" ValidationExpression="[1-9]{16}" runat="server" ErrorMessage="מספר כרטיס הוא ספרות בלבד">&nbsp</asp:RegularExpressionValidator>
+        <asp:RequiredFieldValidator ID="CVVMust" runat="server" ControlToValidate="txtCardCVV" ErrorMessage="חובה להכניס את הספרות">&nbsp</asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator ID="CVVOnlyNums" ValidationExpression="[1-9]{3}" ControlToValidate="txtCardCVV" runat="server" ErrorMessage="מורכב רק מספרות CVV">&nbsp</asp:RegularExpressionValidator>
+        <asp:RequiredFieldValidator ID="monthMust" runat="server" ControlToValidate="txtMonth" ErrorMessage="חובה למלא חודש">&nbsp</asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator ID="MonthOnlyNums" runat="server" ControlToValidate="txtMonth" ValidationExpression="[1-9]{2}" ErrorMessage="חודש מורכב מ 2 ספרות">&nbsp</asp:RegularExpressionValidator>
+        <asp:RequiredFieldValidator ID="yearMust" runat="server" ControlToValidate="txtYear" ErrorMessage="חובה למלא שנה">&nbsp</asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator ID="yearOnlyNums" ValidationExpression="[1-9]{2}" ControlToValidate="txtYear" runat="server" ErrorMessage="השנה מורכבת מ 2 ספרות">&nbsp</asp:RegularExpressionValidator>    
+    </center>
 </asp:Content>
 

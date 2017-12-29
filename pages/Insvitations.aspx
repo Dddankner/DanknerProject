@@ -48,9 +48,19 @@
                     <div class="input-field col s12">
                         <asp:DropDownList ID="ddlTheaters" runat="server" CssClass="right-align" OnSelectedIndexChanged="ddlTheaters_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                         <%--<span class="btn waves-effect waves-light" id="btnContinue"> המשך </span>--%>
-                        <asp:Button ID="btnNext" runat="server" Text="המשך" CssClass="btn waves-effect waves-light" OnClick="btnNext_Click"></asp:Button>
-                        <asp:Label runat="server" ID="lblShowID"></asp:Label>
+                        <%--<asp:Label runat="server" ID="lblShowID"></asp:Label>--%>
                         <%--<a runat="server" style="display:none;" id="instructionContinue"> להמשך לחץ על בחירת מקומות </a>--%>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <asp:Label runat="server" ID="lblValidateDrp"></asp:Label>
+                        <asp:RequiredFieldValidator ID="validateDrp" InitialValue="-בחר קולנוע-" ControlToValidate="ddlTheaters" runat="server" ErrorMessage="חובה לבחור קולנוע"></asp:RequiredFieldValidator>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <asp:Button ID="btnNext" runat="server" Text="המשך" CssClass="btn waves-effect waves-light" OnClick="btnNext_Click"></asp:Button>
                     </div>
                 </div>
             </div>

@@ -28,12 +28,58 @@ public class OrderDetailsService
 
     public static DataSet GetAll(int memberID)
     {
-        string strSql = "SELECT * " +
+        string strSql = "SELECT OrderDetails.OrderId, OrderDetails.MovieSeatsAmount, OrderDetails.MovieSeats, " +
+            "Orders.OrderPrice, Orders.OrderTime, Cities.CityName, Movies.MovieName " +
             "FROM OrderDetails, Orders, Movies, Theaters, Cities " +
             "WHERE OrderDetails.OrderId=Orders.OrderId " +
             "AND OrderDetails.MovieId=Movies.MovieId " +
             "AND OrderDetails.TheaterId=Theaters.TheaterId " +
             "AND Theaters.CityId=Cities.CityId " +
+            "AND Orders.MemberId=" + memberID;
+        DataSet ds = Connect.GetDataSet(strSql, "OrderDetails");
+        return ds;
+    }
+
+    public static DataSet Getrder(int memberID, int orderID)
+    {
+        string strSql = "SELECT OrderDetails.OrderId, OrderDetails.MovieSeatsAmount, OrderDetails.MovieSeats, " +
+            "Orders.OrderPrice, Orders.OrderTime, Cities.CityName, Movies.MovieName " +
+            "FROM OrderDetails, Orders, Movies, Theaters, Cities " +
+            "WHERE OrderDetails.OrderId=Orders.OrderId " +
+            "AND OrderDetails.MovieId=Movies.MovieId " +
+            "AND OrderDetails.TheaterId=Theaters.TheaterId " +
+            "AND Theaters.CityId=Cities.CityId " +
+            "AND OrderDetails.OrderId=" + orderID + " " +
+            "AND Orders.MemberId=" + memberID;
+        DataSet ds = Connect.GetDataSet(strSql, "OrderDetails");
+        return ds;
+    }
+
+    public static DataSet SearchByName(int memberID, string movieName)
+    {
+        string strSql = "SELECT OrderDetails.OrderId, OrderDetails.MovieSeatsAmount, OrderDetails.MovieSeats, " +
+            "Orders.OrderPrice, Orders.OrderTime, Cities.CityName, Movies.MovieName " +
+            "FROM OrderDetails, Orders, Movies, Theaters, Cities " +
+            "WHERE OrderDetails.OrderId=Orders.OrderId " +
+            "AND OrderDetails.MovieId=Movies.MovieId " +
+            "AND OrderDetails.TheaterId=Theaters.TheaterId " +
+            "AND Theaters.CityId=Cities.CityId " +
+            "AND Movies.MovieName='" + movieName + "'" +
+            "AND Orders.MemberId=" + memberID;
+        DataSet ds = Connect.GetDataSet(strSql, "OrderDetails");
+        return ds;
+    }
+
+    public static DataSet SearchByDate(int memberID, DateTime e, DateTime s)
+    {
+        string strSql = "SELECT OrderDetails.OrderId, OrderDetails.MovieSeatsAmount, OrderDetails.MovieSeats, " +
+            "Orders.OrderPrice, Orders.OrderTime, Cities.CityName, Movies.MovieName " +
+            "FROM OrderDetails, Orders, Movies, Theaters, Cities " +
+            "WHERE OrderDetails.OrderId=Orders.OrderId " +
+            "AND OrderDetails.MovieId=Movies.MovieId " +
+            "AND OrderDetails.TheaterId=Theaters.TheaterId " +
+            "AND Theaters.CityId=Cities.CityId " +
+            "AND Orders.OrderTime>#" + s + "# AND Orders.OrderTime<#" + e + "# " +
             "AND Orders.MemberId=" + memberID;
         DataSet ds = Connect.GetDataSet(strSql, "OrderDetails");
         return ds;
