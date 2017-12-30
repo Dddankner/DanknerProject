@@ -102,7 +102,7 @@
                 $("#btns").fadeIn(1200);
             })
         })
-        function ValidateHobbies(source, args) {
+        <%--function ValidateHobbies(source, args) {
             var chkListModules = document.getElementById('<%= ddlCity.ClientID %>');
             var chkListinputs = chkListModules.getElementsByTagName("input");
             for (var i = 0; i < chkListinputs.length; i++) {
@@ -113,7 +113,7 @@
             }
 
             args.IsValid = false;
-        }
+        }--%>
         function CheckPhoto(source, args) {
             if (document.getElementById("uploadBox").value != "") {
                 var type = "";
@@ -189,9 +189,10 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <asp:DropDownList ID="ddlCity" runat="server" multiple>
-                                </asp:DropDownList>
-                                <%--<label>בחר קולנוע</label>--%>
+                                <%--<asp:DropDownList ID="ddlCity" runat="server" multiple>
+                                </asp:DropDownList>--%>
+                                <asp:CheckBoxList ID="ddlCity" runat="server"></asp:CheckBoxList>
+                                <label>בחר קולנוע</label>
                             </div>
                         </div>
                         <div class="row">
@@ -214,17 +215,22 @@
                         </div>
                         <div class="row">
                             <div class="col s12">
-<asp:ValidationSummary ID="ValidationSummary1" runat="server"></asp:ValidationSummary>
+<asp:ValidationSummary ID="ValidationSummary1" runat="server" ValidationGroup="MovieAdd"></asp:ValidationSummary>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <asp:Button ID="btnAdd" runat="server" Text="הוסף סרט" OnClick="btnAdd_Click" CssClass="btn waves-effect waves-light"></asp:Button>
                             </div>
                         </div>
                     </div>
-                    <asp:RequiredFieldValidator ID="txtMovieNameMust" ControlToValidate="txtMovieName" runat="server" ErrorMessage="חובה למלא שם סרט">&nbsp</asp:RequiredFieldValidator>
-                    <asp:RequiredFieldValidator ID="seatPriceMust" ControlToValidate="txtMovieSeatPrice" runat="server" ErrorMessage="חובה להכניס מחיר לכרטיס">&nbsp</asp:RequiredFieldValidator>
-                    <asp:RequiredFieldValidator ID="seatAmountMust" ControlToValidate="txtNumSeats" runat="server" ErrorMessage="RequiredFieldValidator">&nbsp</asp:RequiredFieldValidator>
-                    <asp:RequiredFieldValidator runat="server" ID="validatecategoty" ControlToValidate="ddlCategory" InitialValue="-בחר קטגוריה-" ErrorMessage="חובה למלא קטגוריה">&nbsp</asp:RequiredFieldValidator>
-                    <asp:CustomValidator ID="validateCities" runat="server" ControlToValidate="ddlCity" ErrorMessage="חובה לבחור קולנוע">&nbsp</asp:CustomValidator>
-                    <asp:RequiredFieldValidator ID="trailerMust" ControlToValidate="txtTrailer" runat="server" ErrorMessage="RequiredFieldValidator"></asp:RequiredFieldValidator>
-                    <asp:CustomValidator ID="validatePic" runat="server" ControlToValidate="fuPic" ErrorMessage="חובה להכניס קובץ מסוג תמונה">&nbsp</asp:CustomValidator>
+                    <asp:RequiredFieldValidator ID="txtMovieNameMust" ValidationGroup="MovieAdd" ControlToValidate="txtMovieName" runat="server" ErrorMessage="חובה למלא שם סרט">&nbsp</asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="seatPriceMust" ValidationGroup="MovieAdd" ControlToValidate="txtMovieSeatPrice" runat="server" ErrorMessage="חובה להכניס מחיר לכרטיס">&nbsp</asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="seatAmountMust" ValidationGroup="MovieAdd" ControlToValidate="txtNumSeats" runat="server" ErrorMessage="RequiredFieldValidator">&nbsp</asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator runat="server" ValidationGroup="MovieAdd" ID="validatecategoty" ControlToValidate="ddlCategory" InitialValue="-בחר קטגוריה-" ErrorMessage="חובה למלא קטגוריה">&nbsp</asp:RequiredFieldValidator>
+                    <%--<asp:CustomValidator ID="validateCities" runat="server" ValidationGroup="MovieAdd" ControlToValidate="ddlCity" ErrorMessage="חובה לבחור קולנוע">&nbsp</asp:CustomValidator>--%>
+                    <asp:RequiredFieldValidator ID="trailerMust" ValidationGroup="MovieAdd" ControlToValidate="txtTrailer" runat="server" ErrorMessage="RequiredFieldValidator"></asp:RequiredFieldValidator>
+                    <asp:CustomValidator ID="validatePic" runat="server" ValidationGroup="MovieAdd" ControlToValidate="fuPic" ErrorMessage="חובה להכניס קובץ מסוג תמונה">&nbsp</asp:CustomValidator>
                     <div id="showMovie">
                         <asp:GridView runat="server" ID="MoviesGrd" AutoGenerateColumns="False" DataKeyNames="MovieId" CssClass="grdView1 highlight white">
                 <Columns>
@@ -414,16 +420,16 @@
                         </div>
                         <div class="row">
                             <div class="col s12">
-<asp:ValidationSummary ID="ValidationSummary2" runat="server"></asp:ValidationSummary>
+<asp:ValidationSummary ID="ValidationSummary2" runat="server" ValidationGroup="citiesAdd"></asp:ValidationSummary>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s12" style="text-align:center !important">
-                                <asp:Button ID="btnAddTheater" runat="server" Text="הוסף קולנוע" CssClass="btn waves-effect waves-light" OnClick="btnAddTheater_Click"></asp:Button>
+                                <asp:Button ID="btnAddTheater" runat="server" ValidationGroup="citiesAdd" Text="הוסף קולנוע" CssClass="btn waves-effect waves-light" OnClick="btnAddTheater_Click"></asp:Button>
                             </div>
                         </div>
                     </div>
-                    <asp:RequiredFieldValidator runat="server" ID="validateCitiesTheater" ControlToValidate="ddlAllCities" InitialValue="-בחר עיר-" ErrorMessage="חובה למלא עיר">&nbsp</asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator runat="server" ID="validateCitiesTheater" ValidationGroup="citiesAdd" ControlToValidate="ddlAllCities" InitialValue="-בחר עיר-" ErrorMessage="חובה למלא עיר">&nbsp</asp:RequiredFieldValidator>
                     <div id="showTheater">
                         <asp:GridView runat="server" ID="theaterGrd" AutoGenerateColumns="False" DataKeyNames="" CssClass="grdView1 highlight white">
                 <Columns>
@@ -492,11 +498,18 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col s12">
+<asp:ValidationSummary ID="ValidationSummary3" runat="server"></asp:ValidationSummary>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col s12" style="text-align:center !important">
-                                <asp:Button ID="btnAddCategory" OnClick="btnAddCategory_Click" runat="server" CssClass="btn waves-effect waves-light" Text="הוסף קטגוריה"></asp:Button>
+                                <asp:Button ID="btnAddCategory"  OnClick="btnAddCategory_Click" runat="server" CssClass="btn waves-effect waves-light" ValidationGroup="catAdd" Text="הוסף קטגוריה"></asp:Button>
                             </div>
                         </div>
                     </div>
+                    <asp:RequiredFieldValidator ID="valCatIn" ControlToValidate="txtCategoryName" ValidationGroup="catAdd" runat="server" ErrorMessage="חובה למלא שם קטגוריה">&nbsp</asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="valCatCorrect" ControlToValidate="txtCategoryName" runat="server" ValidationGroup="catAdd" ValidationExpression="[א-ת]" ErrorMessage="קטגוריה היא בעברית">&nbsp</asp:RegularExpressionValidator>
                     <div id="showCategories">
                         <asp:GridView runat="server" ID="categoryGrd" AutoGenerateColumns="False" CssClass="grdView1 highlight white">
                 <Columns>
@@ -517,11 +530,20 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col s12">
+<asp:ValidationSummary ID="ValidationSummary4" ValidationGroup="catUp" runat="server"></asp:ValidationSummary>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col s12" style="text-align:center !important">
-                                <asp:Button runat="server" ID="btnUpdateCategory" Text="עדכן קטגוריה" CssClass="btn waves-effect waves-light" />
+                                <asp:Button runat="server" ID="btnUpdateCategory" ValidationGroup="catUp" Text="עדכן קטגוריה" OnClick="btnUpdateCategory_Click" CssClass="btn waves-effect waves-light" />
+                                <asp:Label runat="server" ID="CheckSome"></asp:Label>
                             </div>
                         </div>
                     </div>
+                    <asp:RequiredFieldValidator ID="catUpDrp" runat="server" InitialValue="-בחר קטגוריה-" ValidationGroup="catUp" ControlToValidate="ddlUpdateCategory" ErrorMessage="חובה לבחור קטגוריה לעדכן">&nbsp</asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="catUpVal" ControlToValidate="txtCategoryNameUpdate" ValidationGroup="catUp" runat="server" ErrorMessage="חובה למלא שם קטגוריה">&nbsp</asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="catUpTrue" ControlToValidate="txtCategoryNameUpdate" runat="server" ValidationGroup="catUp" ValidationExpression="[א-ת]{3,}" ErrorMessage="קטגוריה היא 3 או יותר אויתיות ובעברית">&nbsp</asp:RegularExpressionValidator>
                     <div>
                         <a class="backCategory"> חזור </a>
                     </div>

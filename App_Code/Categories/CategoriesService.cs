@@ -24,7 +24,7 @@ public class CategoriesService
 
     public static void UpdateCategory(Categories c)
     {
-        string strSql = "UPDATE Categories SET CategoryName=" + c.CategoryName + " WHERE CategoryId=" + c.CategoryId;
+        string strSql = "UPDATE Categories SET CategoryName='" + c.CategoryName + "' WHERE CategoryId=" + c.CategoryId;
         Connect.InsertUpdateDelete(strSql);
     }
 

@@ -39,6 +39,10 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         ddlCity.DataValueField = "TheaterId";
         ddlCity.DataTextField = "CityName";
         ddlCity.DataBind();
+        for (int i = 0; i < ddlCity.Items.Count; i++)
+        {
+            ddlCity.Items[i].Enabled = true;
+        }
         ddlTheatersUpdate.DataSource = ds;
         ddlTheatersUpdate.DataValueField = "TheaterId";
         ddlTheatersUpdate.DataTextField = "CityName";
@@ -247,5 +251,23 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         hidID.Text = categoryGrd.Rows[e.NewEditIndex].Cells[0].Text;
         txtUpdateCat.Text = categoryGrd.Rows[e.NewEditIndex].Cells[1].Text;
         e.NewEditIndex = -1;
+    }
+
+    protected void btnUpdateCategory_Click(object sender, EventArgs e)
+    {
+        Categories c = new Categories();
+        c.CategoryId = int.Parse(ddlUpdateCategory.SelectedValue);
+        c.CategoryName = txtCategoryNameUpdate.Text;
+        CategoriesService.UpdateCategory(c);
+        DataSet ds2 = CategoriesService.GetCategories();
+        ddlUpdateCategory.DataSource = ds2;
+        ddlUpdateCategory.DataValueField = "CategoryId";
+        ddlUpdateCategory.DataTextField = "categoryName";
+        ddlUpdateCategory.DataBind();
+        ddlUpdateCategory.Items.Insert(0, new ListItem("-בחר קטגוריה-"));
+        txtCategoryNameUpdate.Text = "";
+        categoryGrd.DataSource = ds2;
+        categoryGrd.DataBind();
+        //CheckSome.Text = ddlUpdateCategory.SelectedValue;
     }
 }
