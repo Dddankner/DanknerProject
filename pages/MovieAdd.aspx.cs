@@ -39,10 +39,10 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         ddlCity.DataValueField = "TheaterId";
         ddlCity.DataTextField = "CityName";
         ddlCity.DataBind();
-        for (int i = 0; i < ddlCity.Items.Count; i++)
-        {
-            ddlCity.Items[i].Enabled = true;
-        }
+        //for (int i = 0; i < ddlCity.Items.Count; i++)
+        //{
+        //    ddlCity.Items[i].Enabled = true;
+        //}
         ddlTheatersUpdate.DataSource = ds;
         ddlTheatersUpdate.DataValueField = "TheaterId";
         ddlTheatersUpdate.DataTextField = "CityName";
@@ -50,7 +50,7 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         //ddlCity.Items.Insert(0, new ListItem("-בחר עיר-"));
         theaterGrd.DataSource = ds;
         theaterGrd.DataBind();
-        FillDBCities();
+        //FillDBCities();
         DataSet ds1 = CitiesServer.GetCityList();
         ddlAllCities.DataSource = ds1;
         ddlAllCities.DataValueField = "CityId";
@@ -67,6 +67,7 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         ddlCategoruUpdate.DataValueField = "CategoryId";
         ddlCategoruUpdate.DataTextField = "categoryName";
         ddlCategoruUpdate.DataBind();
+        ddlCategoruUpdate.Items.Insert(0, new ListItem("-בחר קטגוריה-"));
         ddlUpdateCategory.DataSource = ds2;
         ddlUpdateCategory.DataValueField = "CategoryId";
         ddlUpdateCategory.DataTextField = "categoryName";
@@ -79,6 +80,7 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         ddlMovies.DataValueField = "MovieId";
         ddlMovies.DataTextField = "MovieName";
         ddlMovies.DataBind();
+        ddlMovies.Items.Insert(0, new ListItem("-בחר סרט-"));
         MoviesGrd.DataSource = dsMov;
         MoviesGrd.DataBind();
     }
@@ -269,5 +271,15 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         categoryGrd.DataSource = ds2;
         categoryGrd.DataBind();
         //CheckSome.Text = ddlUpdateCategory.SelectedValue;
+    }
+
+    protected void btnAdd_Click1(object sender, EventArgs e)
+    {
+
+    }
+
+    protected void btnUpMovie_Click(object sender, EventArgs e)
+    {
+
     }
 }

@@ -102,7 +102,7 @@
                 $("#btns").fadeIn(1200);
             })
         })
-        <%--function ValidateHobbies(source, args) {
+        <%--<%--function ValidateHobbies(source, args) {
             var chkListModules = document.getElementById('<%= ddlCity.ClientID %>');
             var chkListinputs = chkListModules.getElementsByTagName("input");
             for (var i = 0; i < chkListinputs.length; i++) {
@@ -114,11 +114,49 @@
 
             args.IsValid = false;
         }--%>
+        function ValidateHobbies(source, args) {
+            var chkListModules = document.getElementById('<%= ddlCity.ClientID %>');
+            var chkListinputs = chkListModules.getElementsByTagName("input");
+            for (var i = 0; i < chkListinputs.length; i++) {
+                if (chkListinputs[i].checked) {
+                    args.IsValid = true;
+                    return;
+                }
+            }
+
+            args.IsValid = false;
+        }
+
+        function ValidateHobbiesUp(source, args) {
+            var chkListModules = document.getElementById('<%= ddlTheatersUpdate.ClientID %>');
+            var chkListinputs = chkListModules.getElementsByTagName("input");
+            for (var i = 0; i < chkListinputs.length; i++) {
+                if (chkListinputs[i].checked) {
+                    args.IsValid = true;
+                    return;
+                }
+            }
+
+            args.IsValid = false;
+        }
+
         function CheckPhoto(source, args) {
-            if (document.getElementById("uploadBox").value != "") {
+            if (document.getElementById("fuPic").value != "") {
                 var type = "";
-                for (var i = document.getElementById("uploadBox").value.LastIndexOf("."); i < document.getElementById("uploadBox").value.length; i++) {
-                    type += document.getElementById("uploadBox").value.charAt(i);
+                for (var i = document.getElementById("fuPic").value.LastIndexOf("."); i < document.getElementById("uploadBox").value.length; i++) {
+                    type += document.getElementById("fuPic").value.charAt(i);
+                }
+                alert(type);
+            }
+            else
+                args.IsValid = true;
+        }
+
+        function CheckPhotoUp(source, args) {
+            if (document.getElementById("fuPicUpdate").value != "") {
+                var type = "";
+                for (var i = document.getElementById("fuPicUpdate").value.LastIndexOf("."); i < document.getElementById("uploadBox").value.length; i++) {
+                    type += document.getElementById("fuPicUpdate").value.charAt(i);
                 }
                 alert(type);
             }
@@ -169,7 +207,7 @@
                 </div>
                 <div class="card-content white lighten-4">
                     <div id="addMovieDiv">
-                        <div class="row">
+                        <div class="row"><%--<a href="MovieAdd.aspx">MovieAdd.aspx</a>--%>
                             <div class=" input-field col s12 right-align" style="text-align:right !important">
                                 <asp:TextBox runat="server" ID="txtMovieName" placeholder="שם סרט"></asp:TextBox>
                                 <%--<label for='<%#ClientID.Equals("txtMovieName") %>'>שם סרט</label>--%>
@@ -188,11 +226,11 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col s12">
+                            <div class="col s12">
                                 <%--<asp:DropDownList ID="ddlCity" runat="server" multiple>
                                 </asp:DropDownList>--%>
-                                <asp:CheckBoxList ID="ddlCity" runat="server"></asp:CheckBoxList>
                                 <label>בחר קולנוע</label>
+                                <asp:CheckBoxList ID="ddlCity" runat="server"></asp:CheckBoxList>
                             </div>
                         </div>
                         <div class="row">
@@ -219,18 +257,18 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col s12">
-                                <asp:Button ID="btnAdd" runat="server" Text="הוסף סרט" OnClick="btnAdd_Click" CssClass="btn waves-effect waves-light"></asp:Button>
+                            <div class="col s12" style="text-align:center !important">
+                                <asp:Button ID="btnAdd" ValidationGroup="MovieAdd" runat="server" OnClick="btnAdd_Click1" Text="הוסף סרט" CssClass="btn waves-effect waves-light"></asp:Button>
                             </div>
                         </div>
                     </div>
                     <asp:RequiredFieldValidator ID="txtMovieNameMust" ValidationGroup="MovieAdd" ControlToValidate="txtMovieName" runat="server" ErrorMessage="חובה למלא שם סרט">&nbsp</asp:RequiredFieldValidator>
                     <asp:RequiredFieldValidator ID="seatPriceMust" ValidationGroup="MovieAdd" ControlToValidate="txtMovieSeatPrice" runat="server" ErrorMessage="חובה להכניס מחיר לכרטיס">&nbsp</asp:RequiredFieldValidator>
-                    <asp:RequiredFieldValidator ID="seatAmountMust" ValidationGroup="MovieAdd" ControlToValidate="txtNumSeats" runat="server" ErrorMessage="RequiredFieldValidator">&nbsp</asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="seatAmountMust" ValidationGroup="MovieAdd" ControlToValidate="txtNumSeats" runat="server" ErrorMessage="חובה להכניס מספר כיסאות">&nbsp</asp:RequiredFieldValidator>
                     <asp:RequiredFieldValidator runat="server" ValidationGroup="MovieAdd" ID="validatecategoty" ControlToValidate="ddlCategory" InitialValue="-בחר קטגוריה-" ErrorMessage="חובה למלא קטגוריה">&nbsp</asp:RequiredFieldValidator>
-                    <%--<asp:CustomValidator ID="validateCities" runat="server" ValidationGroup="MovieAdd" ControlToValidate="ddlCity" ErrorMessage="חובה לבחור קולנוע">&nbsp</asp:CustomValidator>--%>
-                    <asp:RequiredFieldValidator ID="trailerMust" ValidationGroup="MovieAdd" ControlToValidate="txtTrailer" runat="server" ErrorMessage="RequiredFieldValidator"></asp:RequiredFieldValidator>
-                    <asp:CustomValidator ID="validatePic" runat="server" ValidationGroup="MovieAdd" ControlToValidate="fuPic" ErrorMessage="חובה להכניס קובץ מסוג תמונה">&nbsp</asp:CustomValidator>
+                    <asp:CustomValidator ID="validateCities" runat="server" ValidationGroup="MovieAdd" ClientValidationFunction="ValidateHobbies" ErrorMessage="חובה לבחור קולנוע">&nbsp</asp:CustomValidator>
+                    <asp:RequiredFieldValidator ID="trailerMust" ValidationGroup="MovieAdd" ControlToValidate="txtTrailer" runat="server" ErrorMessage="חובה להוסיף טריילר">&nbsp</asp:RequiredFieldValidator>
+                    <asp:CustomValidator ID="validatePic" ControlToValidate="fuPic" runat="server" ValidationGroup="MovieAdd" ClientValidationFunction="CheckPhoto" ErrorMessage="חובה להכניס קובץ מסוג תמונה">&nbsp</asp:CustomValidator>
                     <div id="showMovie">
                         <asp:GridView runat="server" ID="MoviesGrd" AutoGenerateColumns="False" DataKeyNames="MovieId" CssClass="grdView1 highlight white">
                 <Columns>
@@ -272,10 +310,11 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col s12">
-                                <asp:DropDownList ID="ddlTheatersUpdate" runat="server" multiple>
-                                </asp:DropDownList>
-                                <%--<label>בחר קולנוע</label>--%>
+                            <div class="col s12">
+                                <%--<asp:DropDownList ID="ddlTheatersUpdate" runat="server" multiple>
+                                </asp:DropDownList>--%>
+                                <label>בחר קולנוע</label>
+                                <asp:CheckBoxList ID="ddlTheatersUpdate" runat="server"></asp:CheckBoxList>
                             </div>
                         </div>
                         <div class="row">
@@ -296,7 +335,25 @@
                                 <%--<label for='<%#ClientID.Equals("txtTrailer") %>'>טריילר</label>--%>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col s12">
+<asp:ValidationSummary ID="ValidationSummary20" ValidationGroup="MovieUp" runat="server"></asp:ValidationSummary>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12" style="text-align:center !important">
+                                <asp:Button ID="btnUpMovie" CausesValidation="true" OnClientClick="return document.getElementById('ValidationSummary20').IsValid" ValidationGroup="MovieUp" OnClick="btnUpMovie_Click" runat="server" CssClass="btn waves-effect waves-light" Text="עדכן סרט"></asp:Button>
+                            </div>
+                        </div>
                     </div>
+                    <asp:RequiredFieldValidator ID="movieDdlMust" ControlToValidate="ddlMovies" runat="server" InitialValue="-בחר סרט-" ErrorMessage="חובה לבחור סרט"></asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="nameMust" ValidationGroup="MovieUp" ControlToValidate="txtMovieNameUpdate" runat="server" ErrorMessage="חובה למלא שם סרט">&nbsp</asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" ValidationGroup="MovieUp" ControlToValidate="txtSeatPriceUpdate" runat="server" ErrorMessage="חובה להכניס מחיר לכרטיס">&nbsp</asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" ValidationGroup="MovieUp" ControlToValidate="txtSeatNumUpdate" runat="server" ErrorMessage="חובה להכניס מספר כיסאות">&nbsp</asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator runat="server" ValidationGroup="MovieUp" ID="RequiredFieldValidator4" ControlToValidate="ddlCategoruUpdate" InitialValue="-בחר קטגוריה-" ErrorMessage="חובה למלא קטגוריה">&nbsp</asp:RequiredFieldValidator>
+                    <asp:CustomValidator ID="CustomValidator1" runat="server" ValidationGroup="MovieUp" ClientValidationFunction="ValidateHobbiesUp" ErrorMessage="חובה לבחור קולנוע">&nbsp</asp:CustomValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator5" ValidationGroup="MovieUp" ControlToValidate="txtTrailerUpdate" runat="server" ErrorMessage="חובה להוסיף טריילר">&nbsp</asp:RequiredFieldValidator>
+                    <asp:CustomValidator ID="CustomValidator2" runat="server" ControlToValidate="fuPicUpdate" ValidationGroup="MovieUp" ClientValidationFunction="CheckPhotoUp" ErrorMessage="חובה להכניס קובץ מסוג תמונה">&nbsp</asp:CustomValidator>
                     <div>
                         <a class="backMovie"> חזור </a>
                     </div>
