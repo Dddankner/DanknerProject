@@ -8,6 +8,11 @@
         input::placeholder {
             text-align: right !important;
         }
+        .notes {
+            background-color: none;
+            color: red;
+            display: block;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
@@ -35,7 +40,7 @@
             </div>
             <div class="row">
                 <div class="col s12">
-<asp:ValidationSummary ID="ValidationSummary1" runat="server"></asp:ValidationSummary>
+<asp:ValidationSummary ID="ValidationSummary1" CssClass="notes" DisplayMode="List" runat="server"></asp:ValidationSummary>
                 </div>
             </div>
             <div class="row">

@@ -46,4 +46,17 @@ public class CategoriesService
         object obj = Connect.GetObject(strFind);
         return int.Parse(obj.ToString()) < 1;
     }
+
+    public static bool IsConnected(int id)
+    {
+        string strSql = "SELECT COUNT(MovieId) FROM Movies WHERE CategoryId=" + id;
+        object obj = Connect.GetObject(strSql);
+        return int.Parse(obj.ToString()) > 0;
+    }
+
+    public static void DeleteCategory(int id)
+    {
+        string strSql = "DELETE FROM Categories WHERE CategoryId=" + id;
+        Connect.InsertUpdateDelete(strSql);
+    }
 }

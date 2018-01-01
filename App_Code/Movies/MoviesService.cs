@@ -18,8 +18,8 @@ public class MoviesService
 
     public static void AddMovie(Movies m)
     {
-        string strSql = "INSERT INTO Movies(MovieName,  MovieSeatPrice, MoviePic, CategoryId, MovieTrailer) " +
-            "VALUES('" + m.MovieName + "', " + m.MovieSeatPrice + ", '" + m.MoviePic + "', " + m.CategoryId + ", '" + m.MovieTrailer.Trim() + "')";
+        string strSql = "INSERT INTO Movies(MovieName,  MovieSeatPrice, MoviePic, CategoryId, MovieTrailer, MovieDescription) " +
+            "VALUES('" + m.MovieName + "', " + m.MovieSeatPrice + ", '" + m.MoviePic + "', " + m.CategoryId + ", '" + m.MovieTrailer.Trim() + "', '" + m.MovieDescription + "')";
         Connect.InsertUpdateDelete(strSql);
     }
 
@@ -73,7 +73,9 @@ public class MoviesService
     public static void UpdateMovie(Movies m)
     {
         string strSql = "UPDATE Movies SET MovieName='" + m.MovieName + "', " +
-            "MovieSeatPrice='" + m.MovieSeatPrice + "', MoviePic='" + m.MoviePic + "', CategoryId=" + m.CategoryId + " " +
+            "MovieSeatPrice='" + m.MovieSeatPrice + "', MoviePic='" + m.MoviePic + "', " +
+            "CategoryId=" + m.CategoryId + ", MovieTrailer='" + m.MovieTrailer + "', " +
+            "MovieDescreption='" + m.MovieDescription + "' " +
             "WHERE MovieId=" + m.MovieId;
         Connect.InsertUpdateDelete(strSql);
     }

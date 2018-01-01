@@ -48,4 +48,17 @@ public class TheatersService
         object obj = Connect.GetObject(strFind);
         return int.Parse(obj.ToString()) < 1;
     }
+
+    public static bool IsConnected(int id)
+    {
+        string strSql = "SELECT COUNT(MovieId) FROM TheaterMovies WHERE TheaterId=" + id;
+        object obj = Connect.GetObject(strSql);
+        return int.Parse(obj.ToString()) > 0;
+    }
+
+    public static void DeleteTheater(int id)
+    {
+        string strSql = "DELETE FROM Theaters WHERE TheaterId=" + id;
+        Connect.InsertUpdateDelete(strSql);
+    }
 }

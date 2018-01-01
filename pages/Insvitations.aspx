@@ -30,6 +30,11 @@
             height: 10vh;
             width: 10vh;
         }
+        .notes {
+            background-color: none;
+            color: red;
+            display: block;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
@@ -54,7 +59,7 @@
                 </div>
                 <div class="row">
                     <div class="col s12">
-                        <asp:ValidationSummary ID="ValidationSummary1" runat="server" ValidationGroup="cityVal"></asp:ValidationSummary>
+                        <asp:ValidationSummary ID="ValidationSummary1" CssClass="notes" DisplayMode="List" runat="server" ValidationGroup="cityVal"></asp:ValidationSummary>
                         <asp:RequiredFieldValidator ID="validateDrp" ValidationGroup="cityVal" InitialValue="-בחר קולנוע-" ControlToValidate="ddlTheaters" runat="server" ErrorMessage="חובה לבחור קולנוע">&nbsp</asp:RequiredFieldValidator>
                     </div>
                 </div>

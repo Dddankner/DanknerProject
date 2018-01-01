@@ -57,7 +57,6 @@ public partial class pages_Insvitations : System.Web.UI.Page
         Session["selectedID"] = ddlTheaters.SelectedIndex;
 
         //CheckSeats();
-        PanelFill();
         if (IsPostBack)
         {
             valueTheater = int.Parse(ddlTheaters.SelectedValue);
@@ -68,6 +67,7 @@ public partial class pages_Insvitations : System.Web.UI.Page
         //lblShowID.Text = PrintList();
         if (Request.QueryString["selectedID"] == null && Session["valueTheater"].ToString() != "0")
         {
+            PanelFill();
             CheckSeatsSelect();
             //lblShowSeats.Text = PrintList() + "- " + movieID.ToString() + ", " + Session["valueTheater"].ToString();
         }
@@ -125,9 +125,12 @@ public partial class pages_Insvitations : System.Web.UI.Page
                 //img[i, j].ID = "img-" + str;
                 //img[i, j].Click += Pages_Insvitations_Click;
                 //img[i, j].Load += Pages_Insvitations_Load;
-                cell.Controls.Add(btnSeat[i, j]);
-                row[i].Controls.Add(cell);
-                cell.Controls.Add(img);
+                if (int.Parse(btnSeat[i, j].Text) <= TheaterMoviesService.GetSeatNum(int.Parse(Session["valueTheater"].ToString()), int.Parse(Session["MovieId"].ToString())))
+                {
+                    cell.Controls.Add(btnSeat[i, j]);
+                    row[i].Controls.Add(cell);
+                    cell.Controls.Add(img);
+                }
                 row[i].Controls.Add(cell);
             }
             tbl.Controls.Add(row[i]);
@@ -207,10 +210,16 @@ public partial class pages_Insvitations : System.Web.UI.Page
             {
                 for (int k = 0; k < btnSeat.GetLength(0); k++)
                 {
-                    if (btnSeat[j, k].Text == seatsList.ElementAt(i))
+                    if (btnSeat[j, k] != null)
                     {
-                        btnSeat[j, k].Checked = true;
-                        btnSeat[j, k].Enabled = false;
+                        if (btnSeat[j, k].Text != "")
+                        {
+                            if (btnSeat[j, k].Text == seatsList.ElementAt(i))
+                            {
+                                btnSeat[j, k].Checked = true;
+                                btnSeat[j, k].Enabled = false;
+                            }
+                        }
                     }
                 }
             }

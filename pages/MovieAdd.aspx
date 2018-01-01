@@ -21,6 +21,12 @@
             font-weight: 500;
         }
 
+        .notes {
+            background-color: none;
+            color: red;
+            display: block;
+        }
+
             .showAddMov:hover, .showAddTheater:hover, a.backCategory:hover, a.addCategory:hover, a.backTheater:hover, a.backMovie:hover {
                 background: black;
                 color: white;
@@ -168,9 +174,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <center>
         <div id="btns" style="width:40vh;">
-        <a class="showAddMov"> הוסף סרט </a>
-        <a class="showAddTheater"> הוסף קולנוע </a>
-        <a class="addCategory"> הוסף קטגוריה </a>
+        <a class="showAddMov"> נהל סרטים </a>
+        <a class="showAddTheater"> נהל בתי קולנוע </a>
+        <a class="addCategory"> נהל קטגוריות </a>
             <%--<asp:GridView runat="server" ID="categoryGrd" AutoGenerateColumns="False" CssClass="highlight striped" OnRowEditing="categoryGrd_RowEditing" OnRowCommand="categoryGrd_RowCommand" OnRowDataBound="categoryGrd_RowDataBound">
                 <Columns>
                     <asp:CommandField ButtonType="Button" DeleteText="מחק" HeaderText="מחק" ShowDeleteButton="True" />
@@ -252,13 +258,18 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="input-field col s12">
+                                <asp:TextBox ID="txtSum" TextMode="MultiLine" placeholder="תקציר" runat="server"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col s12">
-<asp:ValidationSummary ID="ValidationSummary1" runat="server" ValidationGroup="MovieAdd"></asp:ValidationSummary>
+<asp:ValidationSummary ID="ValidationSummary1" CssClass="notes" DisplayMode="List" runat="server" ValidationGroup="MovieAdd"></asp:ValidationSummary>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s12" style="text-align:center !important">
-                                <asp:Button ID="btnAdd" ValidationGroup="MovieAdd" runat="server" OnClick="btnAdd_Click1" Text="הוסף סרט" CssClass="btn waves-effect waves-light"></asp:Button>
+                                <asp:Button ID="btnAdd" ValidationGroup="MovieAdd" runat="server" OnClick="btnAdd_Click" Text="הוסף סרט" CssClass="btn waves-effect waves-light"></asp:Button>
                             </div>
                         </div>
                     </div>
@@ -269,6 +280,7 @@
                     <asp:CustomValidator ID="validateCities" runat="server" ValidationGroup="MovieAdd" ClientValidationFunction="ValidateHobbies" ErrorMessage="חובה לבחור קולנוע">&nbsp</asp:CustomValidator>
                     <asp:RequiredFieldValidator ID="trailerMust" ValidationGroup="MovieAdd" ControlToValidate="txtTrailer" runat="server" ErrorMessage="חובה להוסיף טריילר">&nbsp</asp:RequiredFieldValidator>
                     <asp:CustomValidator ID="validatePic" ControlToValidate="fuPic" runat="server" ValidationGroup="MovieAdd" ClientValidationFunction="CheckPhoto" ErrorMessage="חובה להכניס קובץ מסוג תמונה">&nbsp</asp:CustomValidator>
+                    <asp:RequiredFieldValidator ID="sumReqAdd" runat="server" ControlToValidate="txtSum" ValidationGroup="MovieAdd" ErrorMessage="חובה למלא תקציר"></asp:RequiredFieldValidator>
                     <div id="showMovie">
                         <asp:GridView runat="server" ID="MoviesGrd" AutoGenerateColumns="False" DataKeyNames="MovieId" CssClass="grdView1 highlight white">
                 <Columns>
@@ -314,7 +326,8 @@
                                 <%--<asp:DropDownList ID="ddlTheatersUpdate" runat="server" multiple>
                                 </asp:DropDownList>--%>
                                 <label>בחר קולנוע</label>
-                                <asp:CheckBoxList ID="ddlTheatersUpdate" runat="server"></asp:CheckBoxList>
+                                <%--<asp:CheckBoxList ID="ddlTheatersUpdate" runat="server"></asp:CheckBoxList>--%>
+                                <asp:RadioButtonList ID="ddlTheatersUpdate" runat="server"></asp:RadioButtonList>
                             </div>
                         </div>
                         <div class="row">
@@ -336,17 +349,22 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="input-field col s12">
+                                <asp:TextBox ID="txtSumUpdate" TextMode="MultiLine" placeholder="תקציר" runat="server"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col s12">
-<asp:ValidationSummary ID="ValidationSummary20" ValidationGroup="MovieUp" runat="server"></asp:ValidationSummary>
+<asp:ValidationSummary ID="ValidationSummary20" ValidationGroup="MovieUp" CssClass="notes" DisplayMode="List" runat="server"></asp:ValidationSummary>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s12" style="text-align:center !important">
-                                <asp:Button ID="btnUpMovie" CausesValidation="true" OnClientClick="return document.getElementById('ValidationSummary20').IsValid" ValidationGroup="MovieUp" OnClick="btnUpMovie_Click" runat="server" CssClass="btn waves-effect waves-light" Text="עדכן סרט"></asp:Button>
+                                <asp:Button ID="btnUpMovie" CausesValidation="true" ValidationGroup="MovieUp" OnClick="btnUpMovie_Click" runat="server" CssClass="btn waves-effect waves-light" Text="עדכן סרט"></asp:Button>
                             </div>
                         </div>
                     </div>
-                    <asp:RequiredFieldValidator ID="movieDdlMust" ControlToValidate="ddlMovies" runat="server" InitialValue="-בחר סרט-" ErrorMessage="חובה לבחור סרט"></asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="movieDdlMust" ControlToValidate="ddlMovies" ValidationGroup="MovieUp" runat="server" InitialValue="-בחר סרט-" ErrorMessage="חובה לבחור סרט"></asp:RequiredFieldValidator>
                     <asp:RequiredFieldValidator ID="nameMust" ValidationGroup="MovieUp" ControlToValidate="txtMovieNameUpdate" runat="server" ErrorMessage="חובה למלא שם סרט">&nbsp</asp:RequiredFieldValidator>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" ValidationGroup="MovieUp" ControlToValidate="txtSeatPriceUpdate" runat="server" ErrorMessage="חובה להכניס מחיר לכרטיס">&nbsp</asp:RequiredFieldValidator>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator3" ValidationGroup="MovieUp" ControlToValidate="txtSeatNumUpdate" runat="server" ErrorMessage="חובה להכניס מספר כיסאות">&nbsp</asp:RequiredFieldValidator>
@@ -354,6 +372,7 @@
                     <asp:CustomValidator ID="CustomValidator1" runat="server" ValidationGroup="MovieUp" ClientValidationFunction="ValidateHobbiesUp" ErrorMessage="חובה לבחור קולנוע">&nbsp</asp:CustomValidator>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" ValidationGroup="MovieUp" ControlToValidate="txtTrailerUpdate" runat="server" ErrorMessage="חובה להוסיף טריילר">&nbsp</asp:RequiredFieldValidator>
                     <asp:CustomValidator ID="CustomValidator2" runat="server" ControlToValidate="fuPicUpdate" ValidationGroup="MovieUp" ClientValidationFunction="CheckPhotoUp" ErrorMessage="חובה להכניס קובץ מסוג תמונה">&nbsp</asp:CustomValidator>
+                    <asp:RequiredFieldValidator ID="sumReq" runat="server" ValidationGroup="MovieUp" ControlToValidate="txtSumUpdate" ErrorMessage="חובה למלא תקציר"></asp:RequiredFieldValidator>
                     <div>
                         <a class="backMovie"> חזור </a>
                     </div>
@@ -477,7 +496,7 @@
                         </div>
                         <div class="row">
                             <div class="col s12">
-<asp:ValidationSummary ID="ValidationSummary2" runat="server" ValidationGroup="citiesAdd"></asp:ValidationSummary>
+<asp:ValidationSummary ID="ValidationSummary2" CssClass="notes" DisplayMode="List" runat="server" ValidationGroup="citiesAdd"></asp:ValidationSummary>
                             </div>
                         </div>
                         <div class="row">
@@ -488,10 +507,11 @@
                     </div>
                     <asp:RequiredFieldValidator runat="server" ID="validateCitiesTheater" ValidationGroup="citiesAdd" ControlToValidate="ddlAllCities" InitialValue="-בחר עיר-" ErrorMessage="חובה למלא עיר">&nbsp</asp:RequiredFieldValidator>
                     <div id="showTheater">
-                        <asp:GridView runat="server" ID="theaterGrd" AutoGenerateColumns="False" DataKeyNames="" CssClass="grdView1 highlight white">
+                        <asp:GridView runat="server" ID="theaterGrd" OnRowDeleting="theaterGrd_RowDeleting" AutoGenerateColumns="False" OnRowCommand="theaterGrd_RowCommand1" DataKeyNames="" CssClass="grdView1 highlight white">
                 <Columns>
                     <asp:BoundField DataField="TheaterId" HeaderText="מספר סידורי" />
                     <asp:BoundField DataField="CityName" HeaderText="עיר" />
+                    <asp:ButtonField ButtonType="Button" HeaderText="מחק" Text="מחק" CommandName="delete" />
                 </Columns>
             </asp:GridView>
                     </div>
@@ -556,22 +576,23 @@
                         </div>
                         <div class="row">
                             <div class="col s12">
-<asp:ValidationSummary ID="ValidationSummary3" runat="server"></asp:ValidationSummary>
+<asp:ValidationSummary ID="ValidationSummary3" runat="server" CssClass="notes" DisplayMode="List" ValidationGroup="catAdd"></asp:ValidationSummary>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s12" style="text-align:center !important">
-                                <asp:Button ID="btnAddCategory"  OnClick="btnAddCategory_Click" runat="server" CssClass="btn waves-effect waves-light" ValidationGroup="catAdd" Text="הוסף קטגוריה"></asp:Button>
+                                <asp:Button ID="btnAddCategory" OnClick="btnAddCategory_Click" runat="server" CssClass="btn waves-effect waves-light" ValidationGroup="catAdd" Text="הוסף קטגוריה"></asp:Button>
                             </div>
                         </div>
                     </div>
                     <asp:RequiredFieldValidator ID="valCatIn" ControlToValidate="txtCategoryName" ValidationGroup="catAdd" runat="server" ErrorMessage="חובה למלא שם קטגוריה">&nbsp</asp:RequiredFieldValidator>
                     <asp:RegularExpressionValidator ID="valCatCorrect" ControlToValidate="txtCategoryName" runat="server" ValidationGroup="catAdd" ValidationExpression="[א-ת]" ErrorMessage="קטגוריה היא בעברית">&nbsp</asp:RegularExpressionValidator>
                     <div id="showCategories">
-                        <asp:GridView runat="server" ID="categoryGrd" AutoGenerateColumns="False" CssClass="grdView1 highlight white">
+                        <asp:GridView runat="server" ID="categoryGrd" OnRowDeleting="categoryGrd_RowDeleting" AutoGenerateColumns="False" OnRowCommand="categoryGrd_RowCommand1" CssClass="grdView1 highlight white">
                 <Columns>
                     <asp:BoundField DataField="CategoryId" HeaderText="מספר סידורי" />
                     <asp:BoundField DataField="CategoryName" HeaderText="שם קטגוריה" />
+                    <asp:ButtonField Text="מחק" ButtonType="Button" HeaderText="מחק" CommandName="delete" />
                 </Columns>
             </asp:GridView>
                     </div>
@@ -588,7 +609,7 @@
                         </div>
                         <div class="row">
                             <div class="col s12">
-<asp:ValidationSummary ID="ValidationSummary4" ValidationGroup="catUp" runat="server"></asp:ValidationSummary>
+<asp:ValidationSummary ID="ValidationSummary4" ValidationGroup="catUp" CssClass="notes" DisplayMode="List" runat="server"></asp:ValidationSummary>
                             </div>
                         </div>
                         <div class="row">

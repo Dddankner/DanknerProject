@@ -18,6 +18,11 @@
         input{
             text-align:right;
         }
+        .notes {
+            background-color: none;
+            color: red;
+            display: block;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
@@ -41,7 +46,13 @@
                             <asp:TextBox runat="server" ID="txtByID" placeholder="מספר הזמנה"></asp:TextBox>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col">
+<asp:ValidationSummary ID="ValidationSummary3" ValidationGroup="idC" CssClass="notes" DisplayMode="List" runat="server"></asp:ValidationSummary>
+                        </div>
+                    </div>
                 </div>
+<asp:RequiredFieldValidator ID="idVal" ValidationGroup="idC" ControlToValidate="txtByID" runat="server" ErrorMessage="חובה למלא מספר הזמנה"></asp:RequiredFieldValidator>
                 <div id="byMovie">
                     <div class="row">
                         <div class="col s2">
@@ -51,7 +62,13 @@
                             <asp:TextBox runat="server" ID="txtByMovieName" placeholder="שם הסרט"></asp:TextBox>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col">
+<asp:ValidationSummary ID="ValidationSummary2" ValidationGroup="nameC" CssClass="notes" DisplayMode="List" runat="server"></asp:ValidationSummary>
+                        </div>
+                    </div>
                 </div>
+<asp:RequiredFieldValidator ID="nameVal" ValidationGroup="nameC" runat="server" ControlToValidate="txtByMovieName" ErrorMessage="חובה למלא שם סרט"></asp:RequiredFieldValidator>
                 <div id="byDate">
                     <div class="row">
                         <div class="col s6">
@@ -68,11 +85,19 @@
                             <asp:Button runat="server" ID="searchByDate" Text="חיפוש" OnClick="searchByDate_Click"></asp:Button>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col">
+<asp:ValidationSummary CssClass="notes" DisplayMode="List" ID="ValidationSummary1" ValidationGroup="datec" runat="server"></asp:ValidationSummary>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-action">
                     <asp:Button runat="server" ID="btnReset" Text="אפס" OnClick="btnReset_Click"></asp:Button>
                 </div>
             </div>
+            <asp:RequiredFieldValidator ID="date1Val" runat="server" ValidationGroup="dateC" ControlToValidate="txtDate" ErrorMessage="חובה למלא תאריך התחלה">&nbsp</asp:RequiredFieldValidator>
+            <asp:RequiredFieldValidator ID="date2Val" runat="server" ValidationGroup="dateC" ControlToValidate="txtEndDate" ErrorMessage="חובה למלא תאריך סיום">&nbsp</asp:RequiredFieldValidator>
+
     <asp:GridView ID="grdOrders" runat="server" AutoGenerateColumns="False" CssClass="bordered highlight white grd1" DataKeyNames="OrderId" OnRowCommand="grdOrders_RowCommand">
         <Columns>
             <asp:ButtonField ButtonType="Button" HeaderText="חשבונית" Text="חשבונית" CommandName="bill" />

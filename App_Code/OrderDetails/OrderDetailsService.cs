@@ -55,6 +55,20 @@ public class OrderDetailsService
         return ds;
     }
 
+    public static DataSet GetAll()
+    {
+        string strSql = "SELECT OrderDetails.OrderId, OrderDetails.MovieSeatsAmount, OrderDetails.MovieSeats, " +
+            "Orders.OrderPrice, Orders.OrderTime, Cities.CityName, Movies.MovieName " +
+            "FROM OrderDetails, Orders, Movies, Theaters, Cities " +
+            "WHERE OrderDetails.OrderId=Orders.OrderId " +
+            "AND OrderDetails.MovieId=Movies.MovieId " +
+            "AND OrderDetails.TheaterId=Theaters.TheaterId " +
+            "AND Theaters.CityId=Cities.CityId ";
+            DataSet ds = Connect.GetDataSet(strSql, "OrderDetails");
+            return ds;
+        
+    }
+
     public static DataSet SearchByName(int memberID, string movieName)
     {
         string strSql = "SELECT OrderDetails.OrderId, OrderDetails.MovieSeatsAmount, OrderDetails.MovieSeats, " +
@@ -70,6 +84,20 @@ public class OrderDetailsService
         return ds;
     }
 
+    public static DataSet SearchByNameManager( string movieName)
+    {
+        string strSql = "SELECT OrderDetails.OrderId, OrderDetails.MovieSeatsAmount, OrderDetails.MovieSeats, " +
+            "Orders.OrderPrice, Orders.OrderTime, Cities.CityName, Movies.MovieName " +
+            "FROM OrderDetails, Orders, Movies, Theaters, Cities " +
+            "WHERE OrderDetails.OrderId=Orders.OrderId " +
+            "AND OrderDetails.MovieId=Movies.MovieId " +
+            "AND OrderDetails.TheaterId=Theaters.TheaterId " +
+            "AND Theaters.CityId=Cities.CityId " +
+            "AND Movies.MovieName='" + movieName + "'";
+        DataSet ds = Connect.GetDataSet(strSql, "OrderDetails");
+        return ds;
+    }
+
     public static DataSet SearchByDate(int memberID, DateTime e, DateTime s)
     {
         string strSql = "SELECT OrderDetails.OrderId, OrderDetails.MovieSeatsAmount, OrderDetails.MovieSeats, " +
@@ -81,6 +109,20 @@ public class OrderDetailsService
             "AND Theaters.CityId=Cities.CityId " +
             "AND Orders.OrderTime>#" + s + "# AND Orders.OrderTime<#" + e + "# " +
             "AND Orders.MemberId=" + memberID;
+        DataSet ds = Connect.GetDataSet(strSql, "OrderDetails");
+        return ds;
+    }
+
+    public static DataSet SearchByDateManager(DateTime e, DateTime s)
+    {
+        string strSql = "SELECT OrderDetails.OrderId, OrderDetails.MovieSeatsAmount, OrderDetails.MovieSeats, " +
+            "Orders.OrderPrice, Orders.OrderTime, Cities.CityName, Movies.MovieName " +
+            "FROM OrderDetails, Orders, Movies, Theaters, Cities " +
+            "WHERE OrderDetails.OrderId=Orders.OrderId " +
+            "AND OrderDetails.MovieId=Movies.MovieId " +
+            "AND OrderDetails.TheaterId=Theaters.TheaterId " +
+            "AND Theaters.CityId=Cities.CityId " +
+            "AND Orders.OrderTime>#" + s + "# AND Orders.OrderTime<#" + e + "# ";
         DataSet ds = Connect.GetDataSet(strSql, "OrderDetails");
         return ds;
     }

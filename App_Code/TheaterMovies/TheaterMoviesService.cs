@@ -23,6 +23,13 @@ public class TheaterMoviesService
         Connect.InsertUpdateDelete(strSql);
     }
 
+    public static int GetSeatNum(int theaID, int movieID)
+    {
+        string strSql = "SELECT * FROM TheaterMovies WHERE TheaterId=" + theaID + " " +
+            "AND MovieId=" + movieID;
+        return int.Parse(Connect.GetDataSet(strSql, "TheaterMovies").Tables[0].Rows[0]["TheaterMovieSeatNum"].ToString());
+    }
+
     public static DataSet GetTheatersForMovie(int movieID)
     {
         string strSql = "SELECT TheaterMovies.TheaterId, Cities.CityName FROM TheaterMovies,Theaters,Cities WHERE" +
@@ -83,5 +90,21 @@ public class TheaterMoviesService
         cmd.Transaction = trance;
         trance.Commit();
         con.Close();
+    }
+
+    public static void UpdateTheaterMovie(TheaterMovies tm)
+    {
+        string strSql = "UPDATE TheaterMovies SET TheaterMovieSeatNum=" + tm.TheaterMovieSeatNum + "," +
+            " MovieId=" + tm.MovieId + ", TheaterId=" + tm.TheaterId + " " +
+            "WHERE MovieId=" + tm.MovieId + " AND TheaterId=" + tm.TheaterId;
+        Connect.InsertUpdateDelete(strSql);
+    }
+
+    public static bool IsExist(int theaID, int movieID)
+    {
+        string strSql = "SELECT COUNT(MovieId) FROM TheaterMovies WHERE TheaterId=" + theaID + " " +
+            "AND MovieId=" + movieID;
+        object obj = Connect.GetObject(strSql);
+        return int.Parse(obj.ToString()) > 0;
     }
 }

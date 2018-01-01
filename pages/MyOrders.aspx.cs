@@ -18,7 +18,11 @@ public partial class pages_MyOrders : System.Web.UI.Page
 
     public void FillGrd()
     {
-        DataSet ds = OrderDetailsService.GetAll(((Members)Session["Member"]).MemberId);
+        DataSet ds = new DataSet();
+        if (((Members)Session["Member"]).memberManager)
+            ds = OrderDetailsService.GetAll();
+        else
+            ds = OrderDetailsService.GetAll(((Members)Session["Member"]).MemberId);
         grdOrders.DataSource = ds;
         grdOrders.DataBind();
     }
@@ -69,7 +73,11 @@ public partial class pages_MyOrders : System.Web.UI.Page
     {
         DateTime end = DateE();
         DateTime s = DateS();
-        DataSet ds = OrderDetailsService.SearchByDate(((Members)Session["Member"]).MemberId, end, s);
+        DataSet ds = new DataSet();
+        if (((Members)Session["Member"]).memberManager)
+            ds = OrderDetailsService.SearchByDateManager(end, s);
+        else
+            ds = OrderDetailsService.SearchByDate(((Members)Session["Member"]).MemberId, end, s);
         grdOrders.DataSource = ds;
         grdOrders.DataBind();
     }
@@ -100,7 +108,11 @@ public partial class pages_MyOrders : System.Web.UI.Page
 
     protected void searchByMovieName_Click(object sender, EventArgs e)
     {
-        DataSet ds = OrderDetailsService.SearchByName(((Members)Session["Member"]).MemberId, txtByMovieName.Text);
+        DataSet ds = new DataSet();
+        if (((Members)Session["Member"]).memberManager)
+            ds = OrderDetailsService.SearchByNameManager(txtByMovieName.Text);
+        else
+            ds = OrderDetailsService.SearchByName(((Members)Session["Member"]).MemberId, txtByMovieName.Text);
         grdOrders.DataSource = ds;
         grdOrders.DataBind();
     }

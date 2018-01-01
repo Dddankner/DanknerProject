@@ -104,6 +104,7 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         m.MovieSeatPrice = int.Parse(txtMovieSeatPrice.Text);
         m.CategoryId = int.Parse(ddlCategory.SelectedItem.Value);
         m.MovieTrailer = txtTrailer.Text;
+        m.MovieDescription = txtSum.Text;
         string photoName = "";
         fuPic.SaveAs(Server.MapPath("/moviesImg/" + fuPic.FileName));
         photoName = "/moviesImg/" + fuPic.FileName;
@@ -125,6 +126,41 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         txtNumSeats.Text = "";
         txtMovieName.Text = "";
         ddlCategory.SelectedIndex = 0;
+        FillDdl();
+    }
+
+    protected void btnUpMovie_Click(object sender, EventArgs e)
+    {
+        Movies m = new Movies();
+        m.MovieId = int.Parse(ddlMovies.SelectedValue);
+        m.CategoryId = int.Parse(ddlCategoruUpdate.SelectedValue);
+        m.MovieName = txtMovieNameUpdate.Text;
+        m.MovieSeatPrice = int.Parse(txtSeatPriceUpdate.Text);
+        m.MovieTrailer = txtTrailerUpdate.Text;
+        string photoName = "";
+        if (fuPicUpdate.HasFiles)
+        {
+            fuPicUpdate.SaveAs(Server.MapPath("/moviesImg/" + fuPicUpdate.FileName));
+            photoName = "/moviesImg/" + fuPicUpdate.FileName;
+        }
+        else
+        {
+            photoName = MoviesService.GetImageUrl(int.Parse(ddlMovies.SelectedValue));
+        }
+        m.MoviePic = photoName;
+        m.MovieDescription = txtSumUpdate.Text;
+        MoviesService.UpdateMovie(m);
+        TheaterMovies tm = new TheaterMovies();
+        tm.MovieId = int.Parse(ddlMovies.SelectedValue);
+        tm.TheaterId = int.Parse(ddlTheatersUpdate.SelectedValue);
+        tm.TheaterMovieSeatNum = int.Parse(txtSeatNumUpdate.Text);
+        if (TheaterMoviesService.IsExist(tm.TheaterId, tm.MovieId))
+            TheaterMoviesService.UpdateTheaterMovie(tm);
+        else
+        {
+            TheaterMoviesService.SetMovieToTheater(tm);
+        }
+        //Response.Write(photoName);
     }
 
     protected void btnAddTheater_Click(object sender, EventArgs e)
@@ -273,12 +309,51 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         //CheckSome.Text = ddlUpdateCategory.SelectedValue;
     }
 
-    protected void btnAdd_Click1(object sender, EventArgs e)
+    protected void categoryGrd_RowCommand1(object sender, GridViewCommandEventArgs e)
+    {
+        if(e.CommandName == "delete")
+        {
+            int rowIndex = int.Parse(e.CommandArgument.ToString());
+            int catID = int.Parse(categoryGrd.Rows[rowIndex].Cells[0].Text);
+            string catName = categoryGrd.Rows[rowIndex].Cells[1].Text;
+            if(CategoriesService.IsConnected(catID))
+            {
+                Response.Write("<script>alert('הקטגוריה לא יכולה להימחק מכיוון שהיא מקושרת');</script>");
+            }
+            else
+            {
+                CategoriesService.DeleteCategory(catID);
+                Response.Write("<script>alert('הקטגוריה נמחקה');</script>");
+                FillDdl();
+            }
+        }
+    }
+
+    protected void categoryGrd_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
 
     }
 
-    protected void btnUpMovie_Click(object sender, EventArgs e)
+    protected void theaterGrd_RowCommand1(object sender, GridViewCommandEventArgs e)
+    {
+        if(e.CommandName == "delete")
+        {
+            int rowIndex = int.Parse(e.CommandArgument.ToString());
+            int theaID = int.Parse(theaterGrd.Rows[rowIndex].Cells[0].Text);
+            if(TheatersService.IsConnected(theaID))
+            {
+                Response.Write("<script>alert('הקולנוע לא יכולה להימחק מכיוון שהוא מקושר');</script>");
+            }
+            else
+            {
+                TheatersService.DeleteTheater(theaID);
+                Response.Write("<script>alert('הקולנוע נמחק');</script>");
+                FillDdl();
+            }
+        }
+    }
+
+    protected void theaterGrd_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
 
     }
