@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<usersInfo>
+  <user>
+  <admin>לא</admin>
+  <name>דני</name>
+  <pass>1234</pass>
+  </user>
+
+  <user>
+    <admin>כן</admin>
+    <name>בוריס</name>
+    <pass>456789</pass>
+  </user>
+
+  <user>
+    <admin>לא</admin>
+    <name>אולג</name>
+    <pass>696969</pass>
+  </user>
+</usersInfo>
