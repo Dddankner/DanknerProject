@@ -26,7 +26,7 @@ public partial class pages_ShowUsers : System.Web.UI.Page
             GridViewRow r1 = e.Row;
             string mail = r1.Cells[2].Text;
             MembersServer ms = new MembersServer();
-            string pic = ms.PicUrl(mail);
+            string pic = MembersServer.PicUrl(mail);
             ((Image)r1.FindControl("MemberImage")).ImageUrl = "../MembersImg/" + pic + "";
             r1.CssClass = "row";
             if (r1.Cells[11].Text == "פעיל")
@@ -46,8 +46,8 @@ public partial class pages_ShowUsers : System.Web.UI.Page
         {
             if (GridView1.Rows[i].Cells[10].FindControl("DeleteBtn") is Image)
             {
-                int id = MembersServer.GetMemberId(GridView1.Rows[i].Cells[2].Text.Trim());
-                ((Image)GridView1.Rows[i].Cells[10].FindControl("DeleteBtn")).Attributes.Add("onclick", "DeleteRed('" + id + "')");
+                string mail = GridView1.Rows[i].Cells[2].Text.Trim();
+                ((Image)GridView1.Rows[i].Cells[10].FindControl("DeleteBtn")).Attributes.Add("onclick", "DeleteRed('" + mail + "')");
             }
         }
 

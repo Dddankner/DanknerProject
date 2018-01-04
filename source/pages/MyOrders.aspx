@@ -6,7 +6,7 @@
     <link href="../Content/css/materialize.css" rel="stylesheet" />
     <style type="text/css">
         .grd1{
-            width:80vh;
+            width:120vh;
             font-size:2.4vh;
         }
         .wid{
@@ -24,6 +24,15 @@
             display: block;
         }
     </style>
+    <script type="text/javascript" lang="ja">
+        function ConfirmDelete(id)
+        {
+            if (confirm("אתה בטוח שברצונך למחוק הזמנה זו?"))
+            {
+                window.location.href = "DeleteOrder.aspx?id=" + id;
+            }
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
@@ -98,8 +107,9 @@
             <asp:RequiredFieldValidator ID="date1Val" runat="server" ValidationGroup="dateC" ControlToValidate="txtDate" ErrorMessage="חובה למלא תאריך התחלה">&nbsp</asp:RequiredFieldValidator>
             <asp:RequiredFieldValidator ID="date2Val" runat="server" ValidationGroup="dateC" ControlToValidate="txtEndDate" ErrorMessage="חובה למלא תאריך סיום">&nbsp</asp:RequiredFieldValidator>
 
-    <asp:GridView ID="grdOrders" runat="server" AutoGenerateColumns="False" CssClass="bordered highlight white grd1" DataKeyNames="OrderId" OnRowCommand="grdOrders_RowCommand">
+    <asp:GridView ID="grdOrders" runat="server" OnRowDeleting="grdOrders_RowDeleting" AutoGenerateColumns="False" CssClass="bordered highlight white grd1" DataKeyNames="OrderId" OnRowCommand="grdOrders_RowCommand">
         <Columns>
+            <asp:ButtonField ButtonType="Button" HeaderText="מחק" Text="מחק" CommandName="delete" />
             <asp:ButtonField ButtonType="Button" HeaderText="חשבונית" Text="חשבונית" CommandName="bill" />
             <asp:BoundField DataField="OrderPrice" HeaderText="מחיר הזמנה" />
             <asp:BoundField DataField="MovieSeatsAmount" HeaderText="מספר כרטיסים" />

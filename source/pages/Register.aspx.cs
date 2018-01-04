@@ -57,6 +57,7 @@ public partial class Register : System.Web.UI.Page
         if (ms.IsMailExist(m))
         {
             ms.Register(m);
+            m.MemberId = MembersServer.GetMemberId(m.memberMail);
             Session["Member"] = m;
             Response.Redirect("../pages/Main.aspx");
         }

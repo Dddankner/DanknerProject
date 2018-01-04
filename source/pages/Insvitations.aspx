@@ -23,6 +23,24 @@
         function f(e, args) {
 
         }
+
+        function alertSeats(id)
+        {
+            alert('חובה לבחור כיסאות');
+            window.location.href = "Insvitations.aspx?MovieId=" + id + "#selectSeats";
+        }
+
+        function Confirm() {
+            var confirm_value = document.createElement("INPUT");
+            confirm_value.type = "hidden";
+            confirm_value.name = "confirm_value";
+            if (confirm("עליך להוסיף כרטיס אשראי לפני רכישה. האם ברצונך לעבור לדף הוספת כרטיס?")) {
+                confirm_value.value = "Yes";
+            } else {
+                confirm_value.value = "No";
+            }
+            document.forms[0].appendChild(confirm_value);
+        }
     </script>
     <style type="text/css">
         .imgCss {

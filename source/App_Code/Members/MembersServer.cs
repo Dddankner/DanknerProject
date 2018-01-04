@@ -98,7 +98,7 @@ public class MembersServer
         Connect.InsertUpdateDelete(strSql);
     }
 
-    public string PicUrl(string mail)
+    public static string PicUrl(string mail)
     {
         string strSql = "SELECT * FROM Members WHERE MemberMail='" + mail.Trim() + "'";
         DataSet ds = Connect.GetDataSet(strSql, "Members");
@@ -124,5 +124,12 @@ public class MembersServer
         DataSet ds = MembersServer.ShowMemberById(id);
         string Status = ds.Tables["Members"].Rows[0]["MemberStatus"].ToString();
         return Status == "פעיל";
-    } 
+    }
+    
+    public static string GetMail(int id)
+    {
+        string strSql = "SELECT MemberMail FROM Members WHERE MemberId=" + id;
+        DataSet ds = Connect.GetDataSet(strSql, "Members");
+        return ds.Tables[0].Rows[0]["MemberMail"].ToString();
+    }
 }

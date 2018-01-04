@@ -29,4 +29,12 @@ public class OrdersService
         object obj = Connect.GetObject(strSql);
         return int.Parse(obj.ToString());
     }
+
+    public static void DeleteOrder(int OrderID)
+    {
+        string strSql = "DELETE FROM OrderDetails WHERE OrderId=" + OrderID;
+        Connect.InsertUpdateDelete(strSql);
+        strSql = "DELETE FROM Orders WHERE OrderId=" + OrderID;
+        Connect.InsertUpdateDelete(strSql);
+    }
 }

@@ -35,7 +35,8 @@ public class OrderDetailsService
             "AND OrderDetails.MovieId=Movies.MovieId " +
             "AND OrderDetails.TheaterId=Theaters.TheaterId " +
             "AND Theaters.CityId=Cities.CityId " +
-            "AND Orders.MemberId=" + memberID;
+            "AND Orders.MemberId=" + memberID + " " +
+            "ORDER BY Orders.OrderTime DESC";
         DataSet ds = Connect.GetDataSet(strSql, "OrderDetails");
         return ds;
     }
@@ -55,6 +56,20 @@ public class OrderDetailsService
         return ds;
     }
 
+    public static DataSet GetOrderManager(int orderID)
+    {
+        string strSql = "SELECT OrderDetails.OrderId, OrderDetails.MovieSeatsAmount, OrderDetails.MovieSeats, " +
+            "Orders.OrderPrice, Orders.OrderTime, Cities.CityName, Movies.MovieName " +
+            "FROM OrderDetails, Orders, Movies, Theaters, Cities " +
+            "WHERE OrderDetails.OrderId=Orders.OrderId " +
+            "AND OrderDetails.MovieId=Movies.MovieId " +
+            "AND OrderDetails.TheaterId=Theaters.TheaterId " +
+            "AND Theaters.CityId=Cities.CityId " +
+            "AND OrderDetails.OrderId=" + orderID;
+        DataSet ds = Connect.GetDataSet(strSql, "OrderDetails");
+        return ds;
+    }
+
     public static DataSet GetAll()
     {
         string strSql = "SELECT OrderDetails.OrderId, OrderDetails.MovieSeatsAmount, OrderDetails.MovieSeats, " +
@@ -63,7 +78,8 @@ public class OrderDetailsService
             "WHERE OrderDetails.OrderId=Orders.OrderId " +
             "AND OrderDetails.MovieId=Movies.MovieId " +
             "AND OrderDetails.TheaterId=Theaters.TheaterId " +
-            "AND Theaters.CityId=Cities.CityId ";
+            "AND Theaters.CityId=Cities.CityId " +
+            "ORDER BY Orders.OrderTime DESC";
             DataSet ds = Connect.GetDataSet(strSql, "OrderDetails");
             return ds;
         

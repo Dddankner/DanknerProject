@@ -26,7 +26,7 @@ public class CreditCardService
     public static void UpdateCreditCard(CreditCard cd)
     {
         string strSql = "UPDATE CreditCard SET CreditCardNum='" + cd.CreditCardNum + "', CreditCardCVV='" + cd.CreditCardCVV + "', " +
-            "CreditCardExpiery=" + cd.CreditCardExpiery + ", MemberId=" + cd.MemberId + " " +
+            "CreditCardExpiery=#" + cd.CreditCardExpiery + "#, MemberId=" + cd.MemberId + " " +
             "Where CreditCardId=" + cd.MemberId;
         Connect.InsertUpdateDelete(strSql);
     }

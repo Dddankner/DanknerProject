@@ -24,8 +24,9 @@ public partial class pages_catalog : System.Web.UI.Page
             current = int.Parse(Session["currentP"].ToString());
         }
         pageCur = current + 1;
-        lblShowPage.Text = paged.PageCount+ "&nbsp;" + "מתוך" + "&nbsp;" + pageCur;
-
+        //lblShowPage.Text = paged.PageCount+ "&nbsp;" + "מתוך" + "&nbsp;" + pageCur;
+        lblFNum.Text = pageCur.ToString();
+        lblLNum.Text = paged.PageCount.ToString();
         // PanelFill();
         // theaterPrev.Attributes.Add("style", "display:none");
     }
@@ -131,7 +132,9 @@ public partial class pages_catalog : System.Web.UI.Page
         this.current = Convert.ToInt32(Session["currentP"].ToString());
         FillDataList();
         pageCur = this.current + 1;
-        lblShowPage.Text = paged.PageCount + "&nbsp;" + "מתוך" + "&nbsp;" + pageCur;
+        //lblShowPage.Text = paged.PageCount + "&nbsp;" + "מתוך" + "&nbsp;" + pageCur;
+        lblFNum.Text = pageCur.ToString();
+        lblLNum.Text = paged.PageCount.ToString();
     }
 
     protected void prev_Click(object sender, EventArgs e)
@@ -140,6 +143,8 @@ public partial class pages_catalog : System.Web.UI.Page
         this.current = Convert.ToInt32(Session["currentP"].ToString());
         FillDataList();
         pageCur = this.current + 1;
-        lblShowPage.Text = paged.PageCount + "&nbsp;" + "מתוך" + "&nbsp;" + pageCur;
+        //lblShowPage.Text = paged.PageCount + "&nbsp;" + "מתוך" + "&nbsp;" + pageCur;
+        lblFNum.Text = pageCur.ToString();
+        lblLNum.Text = paged.PageCount.ToString();
     }
 }

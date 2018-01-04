@@ -27,7 +27,8 @@
         }
         function DeleteRed(id)
         {
-            location.href = "../pages/Delete.aspx?id=" + id + "";
+            if (confirm("האם אתה בטוח שברצונך למחוק את המשתמש?"))
+                location.href = "../pages/Delete.aspx?mail=" + id + "";
         }
     </script>
 </asp:Content>

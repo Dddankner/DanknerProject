@@ -19,10 +19,16 @@ public partial class pages_CreditCardFromOrders : System.Web.UI.Page
         cd.CreditCardExpiery = GetExpiery();
         cd.MemberId = ((Members)Session["Member"]).MemberId;
         if (!CreditCardService.HaveCard(((Members)Session["Member"]).MemberId))
-            CreditCardService.InsertCreditCard(cd);
-        else
-            CreditCardService.UpdateCreditCard(cd);
-        Response.Redirect("../pages/Insvitations.aspx?#final");
+        {
+            if (GetExpiery() >= DateTime.Now.AddMonths(+3))
+            {
+                CreditCardService.InsertCreditCard(cd);
+                Response.Redirect("../pages/Insvitations.aspx?#final");
+            }
+            else
+                Response.Write("<script language='javascript'>alert('הכרטיס לא בתוקף')</script>");
+        }
+        //Response.Write(((Members)Session["Member"]).MemberId);
     }
 
     public DateTime GetExpiery()

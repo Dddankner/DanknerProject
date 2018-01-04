@@ -71,6 +71,11 @@
         .dropdownMy:hover .dropdown-contentMy {
             display: block;
         }
+        .imgNav{
+            height:5vh;
+            width:5vh;
+            border-radius:50%;
+        }
     </style>
     <script type="text/javascript" lang="ja">
         function ImageShow() {
@@ -84,6 +89,7 @@
     <form id="form1" runat="server">
         <ul class="navbarMy">
             <li class="navbarMy"><a href="../pages/Main.aspx" class="navbarMy">ראשי </a></li>
+            <li class="navbarMy"><a href="../pages/catalog.aspx" class="navbarMy"> חנות </a></li>
             <%if (Session["Member"] == null)
                 { %>
             <li class="navbarMy"><a href="../pages/Register.aspx" class="navbarMy">הרשמה </a></li>
@@ -103,7 +109,6 @@
     else
     { %>
             <li class="navbarMy"><a href="../pages/Messages.aspx" class="navbarMy"> הודעות </a></li>
-            <li class="navbarMy"><a href="../pages/catalog.aspx" class="navbarMy"> חנות </a></li>
             <li class="navbarMy"><a href="../pages/CreditCardPage.aspx" class="navbarMy"> כרטיס אשראי </a></li>
             <li class="navbarMy"><a href="../pages/MyOrders.aspx" class="navbarMy"> ההזמנות שלי </a></li>
             <%if (m.memberManager)
@@ -111,19 +116,19 @@
             <li class="navbarMy"> <a href="../pages/MovieAdd.aspx" class="navbarMy"> דף ניהול </a> </li>
             <%} %>
             <li class="navbarMy">
-                <asp:Image ID="MemberPicture" runat="server" Style="float: left" />
+                <asp:Image ID="MemberPicture" runat="server" Style="float: left" CssClass="imgNav" />
             </li>
             <%if (!m.memberManager)
     { %>
-            <li style="float: left" class="dropdownMy navbarMy"><img src='<%=
-                                                                    %>'></img></li>
             <li style="float: left" class="dropdownMy navbarMy"><a href="javascript:void(0)" class="dropbtn navbarMy">שלום <%= m.memberFname.ToString().Trim() + " " + m.MemberLname.ToString().Trim()%></a>
                 <div class="dropdown-contentMy">
                     <%--<a href="../pages/Update.aspx">עדכן </a>--%>
                     <a href="../pages/ShowUsers.aspx">הצג נתונים </a>
                     <a href="../pages/LogOut.aspx">התנתק </a>
                 </div>
-            </li><%}
+            </li>
+            <li style="float: left" class="dropdownMy navbarMy"><asp:Image ID="Image1" runat="server" ImageUrl='<%#MembersServer.PicUrl(m.memberMail) %>' /></li>
+            <%}
     else
     {%>
                 <li style="float: left" class="dropdownMy navbarMy"><a href="javascript:void(0)" class="dropbtn navbarMy">שלום <%= m.memberFname.ToString().Trim() + " " + m.MemberLname.ToString().Trim() + " - מנהל"%></a>

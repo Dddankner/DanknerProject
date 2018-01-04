@@ -22,20 +22,20 @@
         <div class="card-content">
             <div class="row">
                 <div class="col s12">
-                    <asp:TextBox ID="txtCardNumber" runat="server" placeholder="מספר כרטיס"></asp:TextBox>
+                    <asp:TextBox ID="txtCardNumber" runat="server" MaxLength="16" placeholder="מספר כרטיס"></asp:TextBox>
                 </div>
             </div>
             <div class="row">
                 <div class="col s6">
-                    <asp:TextBox ID="txtCardCVV" runat="server" placeholder="CVV"></asp:TextBox>
+                    <asp:TextBox ID="txtCardCVV" runat="server" placeholder="CVV" MaxLength="3"></asp:TextBox>
                 </div>
             </div>
             <div class="row">
                 <div class="col s6">
-                    <asp:TextBox ID="txtMonth" runat="server" placeholder="חודש"></asp:TextBox>
+                    <asp:TextBox ID="txtMonth" runat="server" placeholder="חודש" MaxLength="2"></asp:TextBox>
                 </div>
                 <div class="col s6">
-                    <asp:TextBox ID="txtYear" runat="server" placeholder="שנה"></asp:TextBox>
+                    <asp:TextBox ID="txtYear" runat="server" placeholder="שנה" MaxLength="2"></asp:TextBox>
                 </div>
             </div>
             <div class="row">
@@ -57,13 +57,13 @@
     </div>
          <%-- ולידציה --%>
         <asp:RequiredFieldValidator ID="numMust" ControlToValidate="txtCardNumber" runat="server" ErrorMessage="חובה להכניס מספר כרטיס">&nbsp</asp:RequiredFieldValidator>
-        <asp:RegularExpressionValidator ID="checkNumIsNums" ControlToValidate="txtCardNumber" ValidationExpression="[1-9]{16}" runat="server" ErrorMessage="מספר כרטיס הוא ספרות בלבד">&nbsp</asp:RegularExpressionValidator>
+        <asp:RegularExpressionValidator ID="checkNumIsNums" ControlToValidate="txtCardNumber" ValidationExpression="[1-9]{16}" runat="server" ErrorMessage="מספר כרטיס הוא 16 ספרות וספרות בלבד">&nbsp</asp:RegularExpressionValidator>
         <asp:RequiredFieldValidator ID="CVVMust" runat="server" ControlToValidate="txtCardCVV" ErrorMessage="חובה להכניס את הספרות">&nbsp</asp:RequiredFieldValidator>
-        <asp:RegularExpressionValidator ID="CVVOnlyNums" ValidationExpression="[1-9]{3}" ControlToValidate="txtCardCVV" runat="server" ErrorMessage="מורכב רק מספרות CVV">&nbsp</asp:RegularExpressionValidator>
+        <asp:RegularExpressionValidator ID="CVVOnlyNums" ValidationExpression="[0-9]{3}" ControlToValidate="txtCardCVV" runat="server" ErrorMessage="מורכב רק 3 ספרות וספרות בלבד CVV">&nbsp</asp:RegularExpressionValidator>
         <asp:RequiredFieldValidator ID="monthMust" runat="server" ControlToValidate="txtMonth" ErrorMessage="חובה למלא חודש">&nbsp</asp:RequiredFieldValidator>
-        <asp:RegularExpressionValidator ID="MonthOnlyNums" runat="server" ControlToValidate="txtMonth" ValidationExpression="[1-9]{2}" ErrorMessage="חודש מורכב מ 2 ספרות">&nbsp</asp:RegularExpressionValidator>
+        <asp:RegularExpressionValidator ID="MonthOnlyNums" runat="server" ControlToValidate="txtMonth" ValidationExpression="[0-9]{2}" ErrorMessage="חודש מורכב מ 2 ספרות וספרות בלבד">&nbsp</asp:RegularExpressionValidator>
         <asp:RequiredFieldValidator ID="yearMust" runat="server" ControlToValidate="txtYear" ErrorMessage="חובה למלא שנה">&nbsp</asp:RequiredFieldValidator>
-        <asp:RegularExpressionValidator ID="yearOnlyNums" ValidationExpression="[1-9]{2}" ControlToValidate="txtYear" runat="server" ErrorMessage="השנה מורכבת מ 2 ספרות">&nbsp</asp:RegularExpressionValidator>    
+        <asp:RegularExpressionValidator ID="yearOnlyNums" ValidationExpression="[0-9]{2}" ControlToValidate="txtYear" runat="server" ErrorMessage="השנה מורכבת מ 2 ספרות וספרות בלבד">&nbsp</asp:RegularExpressionValidator>    
     </center>
 </asp:Content>
 

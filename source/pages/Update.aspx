@@ -173,7 +173,7 @@
         <asp:RequiredFieldValidator runat="server" ID="validateCiies" ControlToValidate="cities" InitialValue="-בחר עיר-" ErrorMessage="עיר לא מולאה">&nbsp</asp:RequiredFieldValidator>
         <asp:RequiredFieldValidator ID="CheckDate" ControlToValidate="txtDate" runat="server" ErrorMessage="חובה למלא תאריך">&nbsp</asp:RequiredFieldValidator>
         <%--<asp:CompareValidator ID="CheckDateValid" ControlToValidate="txtDate" runat="server" Operator="LessThanEqual" Type="Date" ErrorMessage="תאריך צריך להיות dd/mm/yyyy">&nbsp</asp:CompareValidator>--%>
-        <asp:RegularExpressionValidator ID="PhotoCheck" ControlToValidate="photoUpload" ValidationExpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))+(.gif|.GIF|.jpg|.JPG|.jpeg|.JPEG)$" runat="server" ErrorMessage="חייב להעלות תמונה">&nbsp</asp:RegularExpressionValidator>
+        <asp:RegularExpressionValidator ID="PhotoCheck" ControlToValidate="photoUpload" ValidationExpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))+(.gif|.GIF|.jpg|.JPG|.jpeg|.JPEG|.jfif)$" runat="server" ErrorMessage="חייב להעלות תמונה">&nbsp</asp:RegularExpressionValidator>
     </center>
 </asp:Content>
 

@@ -35,13 +35,23 @@ public partial class pages_MyOrders : System.Web.UI.Page
             bill.Attributes.Add("style", "display:normal");
             int rowIndex = int.Parse(e.CommandArgument.ToString());
             int orderID = int.Parse(grdOrders.DataKeys[rowIndex].Value.ToString());
-            DataSet ds = OrderDetailsService.Getrder(((Members)Session["Member"]).MemberId, orderID);
+            DataSet ds = new DataSet();
+            if (((Members)Session["Member"]).memberManager)
+                ds = OrderDetailsService.GetOrderManager(orderID);
+            else
+                ds = OrderDetailsService.Getrder(((Members)Session["Member"]).MemberId, orderID);
             lblDate.Text = ds.Tables[0].Rows[0]["OrderTime"].ToString();
             lblID.Text = orderID.ToString();
             lblMovie.Text = ds.Tables[0].Rows[0]["MovieName"].ToString();
             lblPrice.Text = ds.Tables[0].Rows[0]["OrderPrice"].ToString();
             lblSeats.Text = ds.Tables[0].Rows[0]["MovieSeats"].ToString();
             lblCardNumber.Text = CreditCardService.GetCardNum(((Members)Session["Member"]).MemberId).ToString();
+        }
+        if(e.CommandName == "delete")
+        {
+            int rowIndex = int.Parse(e.CommandArgument.ToString());
+            int orderID = int.Parse(grdOrders.DataKeys[rowIndex].Value.ToString());
+            ClientScript.RegisterStartupScript(GetType(), "hwa", "ConfirmDelete('" + orderID + "')", true);
         }
     }
 
@@ -115,5 +125,10 @@ public partial class pages_MyOrders : System.Web.UI.Page
             ds = OrderDetailsService.SearchByName(((Members)Session["Member"]).MemberId, txtByMovieName.Text);
         grdOrders.DataSource = ds;
         grdOrders.DataBind();
+    }
+
+    protected void grdOrders_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+
     }
 }

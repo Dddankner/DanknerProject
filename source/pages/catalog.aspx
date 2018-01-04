@@ -32,13 +32,16 @@
     <center>
     <asp:DataList ID="DataList1" runat="server" CssClass="pad" DataKeyField="MovieId" RepeatColumns="3" OnItemDataBound="DataList1_ItemDataBound">
         <ItemTemplate>
-            <div class="card" style="width:25vh !important;" >
+            <div class="card" style="width:25vh !important; z-index:-1;" >
     <div class="card-image waves-effect waves-block waves-light" style="width:100% !important">
       <asp:Image runat="server" ID="movieImg" ImageUrl='<%#Eval("MoviePic") %>' CssClass="img activator" />
     </div>
     <div class="card-content" style="direction:rtl; width:100% !important">
       <span class="card-title activator grey-text text-darken-4"><i class="material-icons right">more_vert</i><%#Eval("MovieName") %></span>
+        <%if (Session["Member"] != null)
+            { %>
         <p style="text-align:right"><asp:HyperLink ID="HyperLink1" runat="server" ToolTip='<%#Eval("MovieId") %>'>הזמן כרטיסים</asp:HyperLink></p>
+    <%} %>
     </div>
     <div class="card-reveal" style="direction:rtl;">
       <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i><%#Eval("MovieName") %></span>
@@ -99,17 +102,21 @@
         <%--<div id="pager" class="row" runat="server">
           <asp:Label ID="lblPage" runat="server"></asp:Label>
         </div>--%>
-        <div class="row">
-            <div class="col s10">
+        <div class="row" style="width:70vh">
+            <div class="col s3">
                 <asp:Button runat="server" ID="next" OnClick="next_Click" Text="דף הבא" />
-                <asp:Label runat="server" ID="lblShowPage"></asp:Label>
+            </div>
+            <div class="col s1">
+                <asp:Label runat="server" ID="lblLNum"></asp:Label>
+            </div>
+            <div class="col s4">
+                <asp:Label runat="server" ID="lblShowPage" Text="מתוך"></asp:Label>
+            </div>
+            <div class="col s1">
+                <asp:Label runat="server" ID="lblFNum"></asp:Label>
+            </div>
+            <div class="col s3">
                 <asp:Button runat="server" ID="prev" OnClick="prev_Click" Text="דף הקודם" />
-            </div>
-            <div class="col s10">
-                
-            </div>
-            <div class="col s10">
-                
             </div>
         </div>
         <%--<table>

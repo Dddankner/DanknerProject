@@ -40,6 +40,10 @@ public partial class pages_Insvitations : System.Web.UI.Page
                 //ClientScript.RegisterStartupScript(this.GetType(), "Script", "javascript:function(){$('ul.tabs').tabs('select_tab', 'detailsLink')}", true);
             }
         }
+        if (!CreditCardService.HaveCard(((Members)Session["Member"]).MemberId))
+        {
+            btnBuy.OnClientClick = "Confirm()";
+        }
         if (!IsPostBack)
         {
             FillDDL(int.Parse(Session["MovieId"].ToString()));
@@ -52,7 +56,7 @@ public partial class pages_Insvitations : System.Web.UI.Page
         if(Session["Seats"].ToString() != "")
         {
             //SelectSession();
-            Response.Write(GetSelectedSeats());
+            //Response.Write(GetSelectedSeats());
         }
         Session["selectedID"] = ddlTheaters.SelectedIndex;
 
@@ -195,7 +199,7 @@ public partial class pages_Insvitations : System.Web.UI.Page
 
     protected void btnNext_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Insvitations.aspx?MovieId=" + movieID + "#selectSeats");
+        Response.Redirect("Insvitations.aspx?MovieId=" + int.Parse(Session["MovieId"].ToString()) + "#selectSeats");
     }
 
     public void CheckSeatsSelect()
@@ -299,22 +303,41 @@ public partial class pages_Insvitations : System.Web.UI.Page
         lblShowSeats.Text = selectedSeats;
         if (int.Parse(Session["selectedID"].ToString()) != 0)
         {
-            Orders o1 = new Orders();
-            o1.MemberId = ((Members)(Session["Member"])).MemberId;
-            o1.OrderTime = Date1(DateTime.Now.ToShortDateString());
-            o1.OrderPrice = MoviesService.GetSeatPrice(movieID) * count;
-            o1.CreditCardId = CreditCardService.GetID(((Members)Session["Member"]).MemberId);
-            OrdersService.CreateOrder(o1);
-            OrderDetails od = new OrderDetails();
-            od.OrderId = OrdersService.GetId();
-            //od.OrderId = 1;
-            od.MovieId = int.Parse(Session["MovieId"].ToString());
-            od.MovieSeatAmount = int.Parse(Session["seatsNum"].ToString());
-            od.MovieSeatPrice = MoviesService.GetSeatPrice(int.Parse(Session["MovieId"].ToString()));
-            od.TheaterId = int.Parse(Session["valueTheater"].ToString());
-            od.MovieSeats = GetSelectedSeats();
-            OrderDetailsService.SetOrderDetails(od);
-            Response.Redirect("catalog.aspx");
+            if (CreditCardService.HaveCard(((Members)Session["Member"]).MemberId))
+            {
+                Orders o1 = new Orders();
+                o1.MemberId = ((Members)(Session["Member"])).MemberId;
+                o1.OrderTime = Date1(DateTime.Now.ToShortDateString());
+                o1.OrderPrice = MoviesService.GetSeatPrice(int.Parse(Session["MovieId"].ToString())) * int.Parse(Session["seatsNum"].ToString());
+                o1.CreditCardId = CreditCardService.GetID(((Members)Session["Member"]).MemberId);
+                OrdersService.CreateOrder(o1);
+                OrderDetails od = new OrderDetails();
+                od.OrderId = OrdersService.GetId();
+                //od.OrderId = 1;
+                od.MovieId = int.Parse(Session["MovieId"].ToString());
+                od.MovieSeatAmount = int.Parse(Session["seatsNum"].ToString());
+                od.MovieSeatPrice = MoviesService.GetSeatPrice(int.Parse(Session["MovieId"].ToString()));
+                od.TheaterId = int.Parse(Session["valueTheater"].ToString());
+                od.MovieSeats = GetSelectedSeats();
+                OrderDetailsService.SetOrderDetails(od);
+                Response.Redirect("catalog.aspx");
+                //Response.Write(Session["MovieId"].ToString());
+            }
+            else
+            {
+                string confirmValue = Request.Form["confirm_value"];
+                if (confirmValue == "Yes")
+                {
+                    Response.Redirect("../pages/CreditCardFromOrders.aspx?MovieId=" + Session["MovieId"].ToString());
+                }
+                else
+                {
+                    Response.Redirect("Insvitations.aspx?MovieId=" + Session["MovieId"].ToString() + "#final");
+                }
+                //Response.Write("<script language='javascript'>alert('עליך להוסיף כרטיס אשראי לפני ביצוע הזמנה')</script>");
+                //Response.Redirect("Insvitations.aspx?MovieId=" + Session["MovieId"].ToString() + "#final");
+                //Response.Redirect("../pages/CreditCardFromOrders.aspx?MovieId=" + Session["MovieId"].ToString());
+            }
         }
     }
 
@@ -364,16 +387,21 @@ public partial class pages_Insvitations : System.Web.UI.Page
         Session["Seats"] = selectedSeats;
         Session["seatsNum"] = count;
         Session["final"] = true;
-        Response.Redirect("Insvitations.aspx?MovieId=" + movieID + "#final");
+        if (Session["Seats"].ToString() == "")
+        {
+            ClientScript.RegisterStartupScript(GetType(), "hwa", "alertSeats('" + int.Parse(Session["MovieId"].ToString()) + "')", true);
+        }
+        else
+            Response.Redirect("Insvitations.aspx?MovieId=" + int.Parse(Session["MovieId"].ToString()) + "#final");
     }
 
     protected void btnBackToPanel_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Insvitations.aspx?MovieId=" + movieID + "#selectSeats");
+        Response.Redirect("Insvitations.aspx?MovieId=" + int.Parse(Session["MovieId"].ToString()) + "#selectSeats");
     }
 
     protected void btnBackToCity_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Insvitations.aspx?MovieId=" + movieID + "#selectDetails");
+        Response.Redirect("Insvitations.aspx?MovieId=" + int.Parse(Session["MovieId"].ToString()) + "#selectDetails");
     }
 }

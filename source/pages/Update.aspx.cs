@@ -12,23 +12,25 @@ public partial class pages_Update : System.Web.UI.Page
     public static Members origin;
     public static int id = 0;
     protected void Page_Load(object sender, EventArgs e)
-    {       
+    {
         if (Request.QueryString["id"] != null && Request.QueryString["id"].ToString() != "")
-        { 
+        {
             id = int.Parse(Request.QueryString["id"].ToString());
             if (!IsPostBack)
-                fill(id);            
-            btnDate.Attributes.Add("style", "height:25px; width:25px");
-            FillDBCities();
-            DataSet ds = new DataSet();
-            ds = CitiesServer.GetCityList();
-            cities.DataSource = ds;
-            cities.DataTextField = "CityName";
-            cities.DataValueField = "CityId";
-            cities.DataBind();
-            Cal.EndDate = DateTime.Now.AddYears(-15);
-            txtDate.Attributes.Add("readonly", "true");
-            //cities.Items.Insert(0, new ListItem("-בחר עיר-"));
+            {
+                fill(id);
+                btnDate.Attributes.Add("style", "height:25px; width:25px");
+                FillDBCities();
+                DataSet ds = new DataSet();
+                ds = CitiesServer.GetCityList();
+                cities.DataSource = ds;
+                cities.DataTextField = "CityName";
+                cities.DataValueField = "CityId";
+                cities.DataBind();
+                Cal.EndDate = DateTime.Now.AddYears(-15);
+                txtDate.Attributes.Add("readonly", "true");
+                //cities.Items.Insert(0, new ListItem("-בחר עיר-"));
+            }
         }
         else
             Response.Write("אין לך גישה לדף זה");
@@ -58,7 +60,7 @@ public partial class pages_Update : System.Web.UI.Page
         {
             for (int j = 0; j < hobbies.Length; j++)
             {
-                if(cbxHobbies.Items[i].Text == hobbies[j])
+                if (cbxHobbies.Items[i].Text == hobbies[j])
                 {
                     cbxHobbies.Items[i].Selected = true;
                 }
@@ -76,7 +78,7 @@ public partial class pages_Update : System.Web.UI.Page
         //    }
         //}
         cities.SelectedValue = m.cityId.ToString();
-        lblEror.Text = m.cityId.ToString();
+        //lblEror.Text = m.cityId.ToString();
     }
 
     public string[] HobbiesFill(int id)
@@ -118,7 +120,7 @@ public partial class pages_Update : System.Web.UI.Page
         m.memberMail = ds.Tables["Members"].Rows[0]["MemberMail"].ToString();
         m.memberGender = ds.Tables["Members"].Rows[0]["MemberGender"].ToString();
         m.memberHobies = ds.Tables["Members"].Rows[0]["MemberHobbies"].ToString();
-        m.memberDate = DateTime.Parse(ds.Tables["Members"].Rows[0]["memberDate"].ToString()); 
+        m.memberDate = DateTime.Parse(ds.Tables["Members"].Rows[0]["memberDate"].ToString());
         m.memberPass = ds.Tables["Members"].Rows[0]["MemberPass"].ToString();
         m.memberPic = ds.Tables["Members"].Rows[0]["MemberPic"].ToString();
         m.cityId = int.Parse(ds.Tables["Members"].Rows[0]["Members.CityId"].ToString());
@@ -141,7 +143,28 @@ public partial class pages_Update : System.Web.UI.Page
         m.memberMail = txtMail.Text;
         m.MemberId = int.Parse(Request.QueryString["id"].ToString());
         MembersServer ms = new MembersServer();
-        if (ms.IsMailExist(m))
+        if (!ms.IsMailExist(m))
+        {
+            if (txtMail.Text == MembersServer.GetMail(int.Parse(Request.QueryString["id"].ToString())))
+            {
+                if (photoUpload.HasFile)
+                {
+                    photoUpload.SaveAs(Server.MapPath("../MembersImg/" + photoUpload.FileName));
+                    m.memberPic = photoUpload.FileName;
+                }
+                else
+                    m.memberPic = origin.memberPic;
+                ms.UpdatePic(m);
+                if (!((Members)Session["Member"]).memberManager)
+                    Session["Member"] = m;
+                Response.Redirect("../pages/ShowUsers.aspx");
+            }
+            else
+            {
+                lblEror.Text = "המייל קיים במערכת";
+            }
+        }
+        else
         {
             if (photoUpload.HasFile)
             {
@@ -155,8 +178,6 @@ public partial class pages_Update : System.Web.UI.Page
                 Session["Member"] = m;
             Response.Redirect("../pages/ShowUsers.aspx");
         }
-        else
-            lblEror.Text = "המייל קיים במערכת";
     }
 
     public string CheckHobbies()
