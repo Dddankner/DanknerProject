@@ -32,7 +32,7 @@
     <center>
     <asp:DataList ID="DataList1" runat="server" CssClass="pad" DataKeyField="MovieId" RepeatColumns="3" OnItemDataBound="DataList1_ItemDataBound">
         <ItemTemplate>
-            <div class="card" style="width:25vh !important; z-index:-1;" >
+            <div class="card" style="width:25vh !important;" >
     <div class="card-image waves-effect waves-block waves-light" style="width:100% !important">
       <asp:Image runat="server" ID="movieImg" ImageUrl='<%#Eval("MoviePic") %>' CssClass="img activator" />
     </div>
