@@ -25,6 +25,12 @@
         }
         
     </style>
+    <script type="text/javascript" lang="ja">
+        $(document).ready(function () {
+            // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+            $('.modal').modal();
+        });
+    </script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
@@ -40,7 +46,8 @@
       <span class="card-title activator grey-text text-darken-4"><i class="material-icons right">more_vert</i><%#Eval("MovieName") %></span>
         <%if (Session["Member"] != null)
             { %>
-        <p style="text-align:right"><asp:HyperLink ID="HyperLink1" runat="server" ToolTip='<%#Eval("MovieId") %>'>הזמן כרטיסים</asp:HyperLink></p>
+        <p style="text-align:right">
+            <asp:HyperLink ID="HyperLink1" runat="server" ToolTip='<%#Eval("MovieId") %>'>הזמן כרטיסים</asp:HyperLink></p>
     <%} %>
     </div>
     <div class="card-reveal" style="direction:rtl;">
@@ -99,6 +106,7 @@
             </table>--%>
         </ItemTemplate>
     </asp:DataList>
+         
         <%--<div id="pager" class="row" runat="server">
           <asp:Label ID="lblPage" runat="server"></asp:Label>
         </div>--%>
@@ -119,6 +127,19 @@
                 <asp:Button runat="server" ID="prev" OnClick="prev_Click" Text="דף הקודם" />
             </div>
         </div>
+
+
+        <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+
+        <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Modal Header</h4>
+      <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
         <%--<table>
             <tr>
                 <td>

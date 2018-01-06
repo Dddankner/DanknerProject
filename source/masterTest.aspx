@@ -16,6 +16,12 @@
 
         .myselect {
         }
+        .input-field label{
+            right:0 !important;
+        }
+        .input-field.col label {
+        right: 0.75rem !important;
+    }
     </style>
     <script type="text/javascript" lang="ja">
         $(document).ready(function () {
