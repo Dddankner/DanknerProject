@@ -215,20 +215,20 @@
                     <div id="addMovieDiv">
                         <div class="row"><%--<a href="MovieAdd.aspx">MovieAdd.aspx</a>--%>
                             <div class=" input-field col s12 right-align" style="text-align:right !important">
-                                <asp:TextBox runat="server" ID="txtMovieName" placeholder="שם סרט"></asp:TextBox>
-                                <%--<label for='<%#ClientID.Equals("txtMovieName") %>'>שם סרט</label>--%>
+                                <asp:TextBox runat="server" ID="txtMovieName"></asp:TextBox>
+                                <label for='<%#ClientID.Equals("txtMovieName") %>'>שם סרט</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class=" input-field col s12 right-align" style="text-align:right !important">
-                                <asp:TextBox runat="server" ID="txtMovieSeatPrice" placeholder="מחיר לכרטיס"></asp:TextBox>
-                                <%--<label for='<%#ClientID.Equals("txtMovieSeatPrice") %>'>מחיר לכרטיס</label>--%>
+                                <asp:TextBox runat="server" ID="txtMovieSeatPrice"></asp:TextBox>
+                                <label for='<%#ClientID.Equals("txtMovieSeatPrice") %>'>מחיר לכרטיס</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class=" input-field col s12 right-align" style="text-align:right !important">
-                                <asp:TextBox runat="server" ID="txtNumSeats" placeholder="מספר כיסאות"></asp:TextBox>
-                                <%--<label for='<%#ClientID.Equals("txtNumSeats") %>'>מספר כיסאות</label>--%>
+                                <asp:TextBox runat="server" ID="txtNumSeats"></asp:TextBox>
+                                <label for='<%#ClientID.Equals("txtNumSeats") %>'>מספר כיסאות</label>
                             </div>
                         </div>
                         <div class="row">
@@ -246,20 +246,23 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col s12">
-                                <label>בחר תמונה</label>
+                            <div class="input-field col s9">
                                 <asp:FileUpload ID="fuPic" runat="server"></asp:FileUpload>
+                            </div>
+                            <div class="col s3">
+                                <label>בחר תמונה</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class=" input-field col s12 right-align" style="text-align:right !important">
-                                <asp:TextBox runat="server" ID="txtTrailer" placeholder="טריילר"></asp:TextBox>
-                                <%--<label for='<%#ClientID.Equals("txtTrailer") %>'>טריילר</label>--%>
+                                <asp:TextBox runat="server" ID="txtTrailer"></asp:TextBox>
+                                <label for='<%#ClientID.Equals("txtTrailer") %>'>טריילר</label>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col s12">
-                                <asp:TextBox ID="txtSum" TextMode="MultiLine" placeholder="תקציר" runat="server"></asp:TextBox>
+                            <div class="input-field col s12 right-align" style="text-align:right !important">
+                                <asp:TextBox ID="txtSum" TextMode="MultiLine" CssClass="materialize-textarea" runat="server"></asp:TextBox>
+                                <label for='<%#ClientID.Equals("txtSum") %>'>תקציר</label>
                             </div>
                         </div>
                         <div class="row">
@@ -305,20 +308,20 @@
                         </div>
                         <div class="row">
                             <div class=" input-field col s12 right-align" style="text-align:right !important">
-                                <asp:TextBox runat="server" ID="txtMovieNameUpdate" placeholder="שם סרט"></asp:TextBox>
-                                <%--<label for='<%#ClientID.Equals("txtMovieName") %>'>שם סרט</label>--%>
+                                <asp:TextBox runat="server" ID="txtMovieNameUpdate"></asp:TextBox>
+                                <label for='<%#ClientID.Equals("txtMovieNameUpdate") %>'>שם סרט</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class=" input-field col s12 right-align" style="text-align:right !important">
-                                <asp:TextBox runat="server" ID="txtSeatPriceUpdate" placeholder="מחיר לכרטיס"></asp:TextBox>
-                                <%--<label for='<%#ClientID.Equals("txtMovieSeatPrice") %>'>מחיר לכרטיס</label>--%>
+                                <asp:TextBox runat="server" ID="txtSeatPriceUpdate"></asp:TextBox>
+                                <label for='<%#ClientID.Equals("txtSeatPriceUpdate") %>'>מחיר לכרטיס</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class=" input-field col s12 right-align" style="text-align:right !important">
-                                <asp:TextBox runat="server" ID="txtSeatNumUpdate" placeholder="מספר כיסאות"></asp:TextBox>
-                                <%--<label for='<%#ClientID.Equals("txtNumSeats") %>'>מספר כיסאות</label>--%>
+                                <asp:TextBox runat="server" ID="txtSeatNumUpdate"></asp:TextBox>
+                                <label for='<%#ClientID.Equals("txtSeatNumUpdate") %>'>מספר כיסאות</label>
                             </div>
                         </div>
                         <div class="row">
@@ -344,13 +347,14 @@
                         </div>
                         <div class="row">
                             <div class=" input-field col s12 right-align" style="text-align:right !important">
-                                <asp:TextBox runat="server" ID="txtTrailerUpdate" placeholder="טריילר"></asp:TextBox>
-                                <%--<label for='<%#ClientID.Equals("txtTrailer") %>'>טריילר</label>--%>
+                                <asp:TextBox runat="server" ID="txtTrailerUpdate"></asp:TextBox>
+                                <label for='<%#ClientID.Equals("txtTrailerUpdate") %>'>טריילר</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <asp:TextBox ID="txtSumUpdate" TextMode="MultiLine" placeholder="תקציר" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txtSumUpdate" TextMode="MultiLine" CssClass="materialize-textarea" runat="server"></asp:TextBox>
+                                <label for='<%#ClientID.Equals("txtSumUpdate") %>'>תקציר</label>
                             </div>
                         </div>
                         <div class="row">
@@ -571,7 +575,8 @@
                     <div id="addCategoryDiv">
                         <div class="row">
                             <div class="input-field col s12">
-                                <asp:TextBox runat="server" ID="txtCategoryName" placeholder="שם קטגוריה"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="txtCategoryName"></asp:TextBox>
+                                <label for='<%=ClientID.Equals("txtCategoryName") %>'>שם קטגוריה</label>
                             </div>
                         </div>
                         <div class="row">
@@ -586,7 +591,7 @@
                         </div>
                     </div>
                     <asp:RequiredFieldValidator ID="valCatIn" ControlToValidate="txtCategoryName" ValidationGroup="catAdd" runat="server" ErrorMessage="חובה למלא שם קטגוריה">&nbsp</asp:RequiredFieldValidator>
-                    <asp:RegularExpressionValidator ID="valCatCorrect" ControlToValidate="txtCategoryName" runat="server" ValidationGroup="catAdd" ValidationExpression="[א-ת]" ErrorMessage="קטגוריה היא בעברית">&nbsp</asp:RegularExpressionValidator>
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1" ControlToValidate="txtCategoryName" runat="server" ValidationGroup="catUp" ValidationExpression="[א-ת]{3,}" ErrorMessage="קטגוריה היא 3 או יותר אויתיות ובעברית">&nbsp</asp:RegularExpressionValidator>
                     <div id="showCategories">
                         <asp:GridView runat="server" ID="categoryGrd" OnRowDeleting="categoryGrd_RowDeleting" AutoGenerateColumns="False" OnRowCommand="categoryGrd_RowCommand1" CssClass="grdView1 highlight white">
                 <Columns>
@@ -604,7 +609,8 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <asp:TextBox runat="server" ID="txtCategoryNameUpdate" placeholder="שם קטגוריה"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="txtCategoryNameUpdate"></asp:TextBox>
+                                <label for='<%=ClientID.Equals("txtCategoryNameUpdate") %>'>שם קטגוריה</label>
                             </div>
                         </div>
                         <div class="row">

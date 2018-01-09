@@ -23,6 +23,13 @@ public class MoviesService
         Connect.InsertUpdateDelete(strSql);
     }
 
+    public static int GetIDByName(string name)
+    {
+        string strSql = "SELECT MovieId FROM Movies WHERE MovieName='" + name + "'";
+        DataSet ds = Connect.GetDataSet(strSql, "Movies");
+        return int.Parse(ds.Tables[0].Rows[0]["MovieId"].ToString());
+    }
+
     public static int GetSeatPrice(int movieID)
     {
         string strSql = "SELECT MovieSeatPrice FROM Movies Where MovieId=" + movieID;

@@ -23,8 +23,20 @@ public partial class pages_MyOrders : System.Web.UI.Page
             ds = OrderDetailsService.GetAll();
         else
             ds = OrderDetailsService.GetAll(((Members)Session["Member"]).MemberId);
+        ds = ReplaceDS(ds);
         grdOrders.DataSource = ds;
         grdOrders.DataBind();
+    }
+
+    public DataSet ReplaceDS(DataSet ds)
+    {
+        for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+        {
+            //string s = ds.Tables[0].Rows[i]["MovieSeats"].ToString();
+            //s.Replace("*", ",");
+            ds.Tables[0].Rows[i]["MovieSeats"].ToString().Replace("*", ",");
+        }
+        return ds;
     }
 
     protected void grdOrders_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -40,6 +52,8 @@ public partial class pages_MyOrders : System.Web.UI.Page
                 ds = OrderDetailsService.GetOrderManager(orderID);
             else
                 ds = OrderDetailsService.Getrder(((Members)Session["Member"]).MemberId, orderID);
+            int movieID = MoviesService.GetIDByName(ds.Tables[0].Rows[0]["MovieName"].ToString());
+            imgPic.ImageUrl = MoviesService.GetImageUrl(movieID);
             lblDate.Text = ds.Tables[0].Rows[0]["OrderTime"].ToString();
             lblID.Text = orderID.ToString();
             lblMovie.Text = ds.Tables[0].Rows[0]["MovieName"].ToString();

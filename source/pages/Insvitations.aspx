@@ -48,10 +48,16 @@
             height: 10vh;
             width: 10vh;
         }
+        .rightAl{
+            text-align:right;
+        }
         .notes {
             background-color: none;
             color: red;
             display: block;
+        }
+        input{
+            text-align:right;
         }
     </style>
 </asp:Content>
@@ -68,8 +74,11 @@
             </div>
             <div id="selectDetails">
                 <div class="row">
+                    <div class="row">
+                        <asp:Image ID="imgDdl" CssClass="imgCss" runat="server"></asp:Image>
+                    </div>
                     <div class="input-field col s12">
-                        <asp:DropDownList ID="ddlTheaters" runat="server" CssClass="right-align" OnSelectedIndexChanged="ddlTheaters_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                        <asp:DropDownList ID="ddlTheaters" runat="server" CssClass="rightAl" OnSelectedIndexChanged="ddlTheaters_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                         <%--<span class="btn waves-effect waves-light" id="btnContinue"> המשך </span>--%>
                         <%--<asp:Label runat="server" ID="lblShowID"></asp:Label>--%>
                         <%--<a runat="server" style="display:none;" id="instructionContinue"> להמשך לחץ על בחירת מקומות </a>--%>
@@ -88,6 +97,9 @@
                 </div>
             </div>
             <div id="selectSeats">
+                <div class="row">
+                      <asp:Image ID="imgPanel" runat="server" CssClass="imgCss"></asp:Image>
+                </div>
                 <asp:Panel runat="server" ID="theaterPrev"></asp:Panel>
                 <%--<asp:Button runat="server" ID="btnOrder" Text="בחר" CssClass="btn waves-effect waves-light" OnClick="btnOrder_Click"></asp:Button>--%>
                 <%--<a class="btn waves-effect waves-light modal-trigger" href="#modal1"> בחר </a>--%>

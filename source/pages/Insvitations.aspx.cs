@@ -72,6 +72,7 @@ public partial class pages_Insvitations : System.Web.UI.Page
         if (Request.QueryString["selectedID"] == null && Session["valueTheater"].ToString() != "0")
         {
             PanelFill();
+            imgPanel.ImageUrl = MoviesService.GetImageUrl(int.Parse(Session["MovieId"].ToString()));
             CheckSeatsSelect();
             //lblShowSeats.Text = PrintList() + "- " + movieID.ToString() + ", " + Session["valueTheater"].ToString();
         }
@@ -90,6 +91,7 @@ public partial class pages_Insvitations : System.Web.UI.Page
         ddlTheaters.DataValueField = "TheaterId";
         ddlTheaters.DataBind();
         ddlTheaters.Items.Insert(0, new ListItem("-בחר קולנוע-"));
+        imgDdl.ImageUrl = MoviesService.GetImageUrl(int.Parse(Session["MovieId"].ToString()));
     }
 
     public void PanelFill()

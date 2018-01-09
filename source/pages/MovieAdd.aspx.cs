@@ -240,6 +240,7 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         else
         {
             //ErrorCat.Text = "הקטגויה כבר קיימת";
+            Response.Write("<script language='javascript'>alert('הקטגוריה קיימת במערכת ולכן אי אפשר להוסף אותה')</script>");
         }      
     }
 

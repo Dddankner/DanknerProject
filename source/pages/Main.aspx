@@ -29,25 +29,25 @@
         <div class="slider" style="width:800px; height:600px">
             <ul class="slides">
                 <li>
-                    <img src="../WidePoster/ant-manWidePoster.jpg" onclick="ShowCatalog()"/>
+                    <img src="../WidePoster/ant-manWidePoster.jpg" style="cursor:pointer" onclick="ShowCatalog()"/>
                     <div class="caption left-align">
                         <h3> אנט מן </h3>
                     </div>
                 </li>
                 <li>
-                    <img src="../WidePoster/black-pantherWidePoster.jpg" onclick="ShowCatalog()"/>
+                    <img src="../WidePoster/black-pantherWidePoster.jpg" style="cursor:pointer" onclick="ShowCatalog()"/>
                     <div class="caption left-align">
                         <h3> הפנתר השחור </h3>
                     </div>
                 </li>
                 <li>
-                    <img src="../WidePoster/justice-leagueWidePoster.jpg" onclick="ShowCatalog()"/>
+                    <img src="../WidePoster/justice-leagueWidePoster.jpg" style="cursor:pointer" onclick="ShowCatalog()"/>
                     <div class="caption right-align">
                         <h3> ליגת הצדק </h3>
                     </div>
                 </li>
                 <li>
-                    <img src="../WidePoster/wonder-womanWidePoster.jpg" onclick="ShowCatalog()"/>
+                    <img src="../WidePoster/wonder-womanWidePoster.jpg" style="cursor:pointer" onclick="ShowCatalog()"/>
                     <div class="caption left-align">
                         <h3> וונדר וומן </h3>
                     </div>

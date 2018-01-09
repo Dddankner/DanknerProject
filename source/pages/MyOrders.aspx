@@ -23,6 +23,11 @@
             color: red;
             display: block;
         }
+         .imgCss {
+            border-radius: 50%;
+            height: 10vh;
+            width: 10vh;
+        }
     </style>
     <script type="text/javascript" lang="ja">
         function ConfirmDelete(id)
@@ -122,6 +127,11 @@
         <div runat="server" id="bill" style="display:none" class="card wid">
             <div class="row" style="text-align:center">
                 <a>חשבונית</a>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <asp:Image ID="imgPic" runat="server" CssClass="imgCss"></asp:Image>
+                </div>
             </div>
             <div class="row">
                 <div class="col s6">

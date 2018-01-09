@@ -89,7 +89,7 @@
     <form id="form1" runat="server">
         <ul class="navbarMy">
             <li class="navbarMy"><a href="../pages/Main.aspx" class="navbarMy">ראשי </a></li>
-            <li class="navbarMy"><a href="../pages/catalog.aspx" class="navbarMy"> חנות </a></li>
+            <li class="navbarMy"><a href="../pages/catalog.aspx" class="navbarMy"> סרטים </a></li>
             <%if (Session["Member"] == null)
                 { %>
             <li class="navbarMy"><a href="../pages/Register.aspx" class="navbarMy">הרשמה </a></li>
@@ -110,11 +110,14 @@
     { %>
             <li class="navbarMy"><a href="../pages/Messages.aspx" class="navbarMy"> הודעות </a></li>
             <li class="navbarMy"><a href="../pages/CreditCardPage.aspx" class="navbarMy"> כרטיס אשראי </a></li>
-            <li class="navbarMy"><a href="../pages/MyOrders.aspx" class="navbarMy"> ההזמנות שלי </a></li>
             <%if (m.memberManager)
-    { %>
+                { %>
+            <li class="navbarMy"><a href="../pages/MyOrders.aspx" class="navbarMy"> הזמנות </a></li>
             <li class="navbarMy"> <a href="../pages/MovieAdd.aspx" class="navbarMy"> דף ניהול </a> </li>
-            <%} %>
+            <%}
+    else
+    { %>
+             <li class="navbarMy"><a href="../pages/MyOrders.aspx" class="navbarMy"> ההזמנות שלי </a></li><%} %>
             <li class="navbarMy">
                 <asp:Image ID="MemberPicture" runat="server" Style="float: left" CssClass="imgNav" />
             </li>
@@ -136,7 +139,7 @@
     } %>
                 <div class="dropdown-contentMy">
                     <%--<a href="../pages/Update.aspx">עדכן </a>--%>
-                    <a href="../pages/ShowUsers.aspx">הצג נתונים </a>
+                    <a href="../pages/ShowUsers.aspx">הצג משתמשים </a>
                     <a href="../pages/LogOut.aspx">התנתק </a>
                 </div>
             </li>
