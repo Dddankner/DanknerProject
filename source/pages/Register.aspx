@@ -2,6 +2,9 @@
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ocv1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <script src="../JavaScript/jquery-3.2.1.js"></script>
+    <script src="../Content/js/materialize.js"></script>
+    <link href="../Content/css/materialize.css" rel="stylesheet" />
     <%-- <style type="text/css">
         .reg td {
             padding:7px;
@@ -21,21 +24,40 @@
         }
     </style>--%>
     <style type="text/css">
+        input[type=text]{
+            text-align:right;
+        }
         .notes {
             background-color: none;
             color: red;
             display: block;
         }
-        .redC{
-            color:red;
+
+        .redC {
+            color: red;
         }
     </style>
     <link href="../Style/Forms.css" rel="stylesheet" />
 
     <script type="text/javascript" lang="ja">
+        $(document).ready(function () {
+            // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+            $('.modal').modal();
+            $('select').material_select();
+            $('.datepicker').pickadate({
+                selectMonths: true, // Creates a dropdown to control month
+                selectYears: 15, // Creates a dropdown of 15 years to control year,
+                today: 'Today',
+                clear: 'Clear',
+                close: 'Ok',
+                closeOnSelect: false // Close upon selecting a date,
+            });
+            $('.tooltipped').tooltip({ delay: 20 });
+            $('.tooltipped').tooltip({ position: 'right' });
+        });
 
         function ValidateHobbies(source, args) {
-            var chkListModules = document.getElementById('<%= cbxHobbies.ClientID %>');
+            <%--var chkListModules = document.getElementById('<%= cbxHobbies.ClientID %>');
             var chkListinputs = chkListModules.getElementsByTagName("input");
             for (var i = 0; i < chkListinputs.length; i++) {
                 if (chkListinputs[i].checked) {
@@ -44,7 +66,7 @@
                 }
             }
 
-            args.IsValid = false;
+            args.IsValid = false;--%>
         }
         function CheckPhoto(source, args) {
             if (document.getElementById("uploadBox").value != "") {
@@ -57,13 +79,123 @@
             else
                 args.IsValid = true;
         }
+
+        function con(id) {
+            $('ul.tabs').tabs('select_tab', id);
+        }
+
     </script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <%--<link href="css/reg.css" rel="stylesheet" />--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <center>
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-    <table class="tablePopUp">
+        <div class="card" style="width:50vh">
+            <div class="card-tabs">
+                <ul class="tabs tabs-fixed-width">
+                    <li class="tab"><a href="#memberDetails" class="active"> פרטי משתמש </a></li>
+                    <li class="tab"><a href="#acountDetails"> פרטי חשבון </a></li>
+                    <li class="tab"><a href="#personalDetails"> פרטים אישיים </a></li>
+                </ul>
+            </div>
+            <div class="card-content">
+                <div id="memberDetails">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <asp:TextBox runat="server" ID="txtMail" TextMode="Email"></asp:TextBox>
+                            <label for='<%#ClientID.Equals("txtMail") %>'>מייל</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <asp:TextBox runat="server" ID="txtPass" TextMode="Password" data-delay="50" CssClass="tooltipped" data-tooltip="סיסמא היא בין 6-10 תווים"></asp:TextBox>
+                            <label for='<%#ClientID.Equals("txtPass") %>'>סיסמא</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <asp:TextBox runat="server" ID="txtRePass" TextMode="Password" data-delay="50" CssClass="tooltipped" data-tooltip="סיסמא היא בין 6-10 תווים"></asp:TextBox>
+                            <label for='<%#ClientID.Equals("txtRePass") %>'>אימות סיסמא</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <a class="btn" onclick="con('acountDetails')"> המשך </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="acountDetails">
+                    <div class="row">
+                        <div class="col s12">
+                            <asp:RadioButtonList runat="server" ID="rbtGender">
+                                <asp:ListItem Text="זכר"></asp:ListItem>
+                                <asp:ListItem Text="נקבה"></asp:ListItem>
+                    </asp:RadioButtonList>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <!-- Modal Trigger -->
+                            <a class="waves-effect waves-light btn modal-trigger" href="#hobbiesModal">בחר קטגוריות</a>
+                            <!-- Modal Structure -->
+                            <div id="hobbiesModal" class="modal">
+                                <div class="modal-content" style="text-align:right">
+                                    <h4>תחביבים</h4>
+                                    <p style="text-align:right">בחר את הקטגוריות האהובות עליך</p>
+                                    <asp:CheckBoxList runat="server" ID="cbxCategories"></asp:CheckBoxList>
+                                </div>
+                                <div class="modal-footer" style="text-align:left">
+                                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">אישור</a>
+                                </div>
+                           </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s9">
+                             <asp:FileUpload runat="server" ID="photoUpload" />
+                        </div>
+                        <div class="col s3">
+                            <label>בחר תמונה</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <a class="btn" onclick="con('personalDetails')">המשך</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="personalDetails">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <%--<i class="material-icons prefix">account_circle</i>--%>
+                            <asp:TextBox runat="server" ID="txtfName"></asp:TextBox>
+                            <label for='<%#ClientID.Equals("txtFname") %>'>שם פרטי</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <asp:TextBox runat="server" ID="txtlName"></asp:TextBox>
+                            <label for='<%#ClientID.Equals("txtLname") %>'>שם משפחה</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <asp:DropDownList runat="server" ID="cities"></asp:DropDownList>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <asp:TextBox ID="txtDate" runat="server" CssClass="datepicker tooltipped" data-delay="50" data-tooltip="חובה להיות מעל גיל 13"></asp:TextBox>
+                            <label for='<%#ClientID.Equals("txtDate") %>'>תאריך</label>
+                        </div>
+                    </div>
+                </div>
+                <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="notes" DisplayMode="List"/>
+                    <asp:label ID="lblEror" CssClass="redC" runat="server"></asp:label>
+            </div>
+        </div>
+    <%--<table class="tablePopUp">
 
             <tr>
                 <td>
@@ -117,11 +249,11 @@
                     <asp:Label runat="server" ID="lblPhone"  Text="טלפון" ></asp:Label>
                 </td>
             </tr>--%>
-            <tr>
-                <td>
+            <%--<tr>
+                <td>--%>
                     <%--<asp:TextBox runat="server" placeholder="תאריך לידה" ID="txtDate" CssClass="txtBox"></asp:TextBox>--%>
                     
-                    <ocv1:CalendarExtender id="Cal" runat="server" TargetControlID="txtDate" PopupButtonID="btnDate" Format="dd/MM/yyyy"></ocv1:CalendarExtender>
+                    <%--<ocv1:CalendarExtender id="Cal" runat="server" TargetControlID="txtDate" PopupButtonID="btnDate" Format="dd/MM/yyyy"></ocv1:CalendarExtender>
                     <asp:TextBox ID="txtDate" runat="server"></asp:TextBox>
                     <asp:ImageButton ID="btnDate" ImageUrl="~/img/Calicon.png" runat="server" CausesValidation="false"></asp:ImageButton>
                 </td>
@@ -177,8 +309,8 @@
                     <asp:Button runat="server" ID="btnSend" Text="שלח" OnClick="btnSend_Click" />
                 </td>
             </tr>
-        </table>
-        <asp:RequiredFieldValidator ID="validateFname" ControlToValidate="txtfName" runat="server" ErrorMessage="חובה למלא שם פרטי">&nbsp</asp:RequiredFieldValidator>
+        </table>--%>
+        <%--<asp:RequiredFieldValidator ID="validateFname" ControlToValidate="txtfName" runat="server" ErrorMessage="חובה למלא שם פרטי">&nbsp</asp:RequiredFieldValidator>
         <asp:RegularExpressionValidator ID="validateValidFname" ControlToValidate="txtfName" runat="server" ErrorMessage="שם פרטי לא תקין" ValidationExpression="[א-ת]{2,8}">&nbsp</asp:RegularExpressionValidator>
         <asp:RequiredFieldValidator ID="validatelName" ControlToValidate="txtlName" runat="server" ErrorMessage="חובה למלא שם משפחה">&nbsp</asp:RequiredFieldValidator>
         <asp:RegularExpressionValidator ID="validateVlidLname" ControlToValidate="txtlName" runat="server" ErrorMessage="שם משפחה לא תקין" ValidationExpression="[א-ת]{2,8}">&nbsp</asp:RegularExpressionValidator>
@@ -194,7 +326,7 @@
         <asp:CustomValidator runat="server" id="CustomHobbies" ErrorMessage="חובה למלא תחביב" ClientValidationFunction="ValidateHobbies">&nbsp</asp:CustomValidator>
         <asp:RequiredFieldValidator runat="server" ID="validateCiies" ControlToValidate="cities" InitialValue="-בחר עיר-" ErrorMessage="עיר לא מולאה">&nbsp</asp:RequiredFieldValidator>
         <%--<asp:CompareValidator ID="CheckDateValid" ControlToValidate="txtDate" runat="server" Operator="LessThanEqual" Type="Date" ErrorMessage="תאריך צריך להיות dd/mm/yyyy">&nbsp</asp:CompareValidator>--%>
-        <asp:RegularExpressionValidator ID="PhotoCheck" ControlToValidate="photoUpload" ValidationExpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))+(.gif|.GIF|.jpg|.JPG|.jpeg|.JPEG|.jfif)$" runat="server" ErrorMessage="חייב להעלות תמונה">&nbsp</asp:RegularExpressionValidator>
+        <%--<asp:RegularExpressionValidator ID="PhotoCheck" ControlToValidate="photoUpload" ValidationExpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))+(.gif|.GIF|.jpg|.JPG|.jpeg|.JPEG|.jfif)$" runat="server" ErrorMessage="חייב להעלות תמונה">&nbsp</asp:RegularExpressionValidator>--%>
     </center>
     \
     <div id="div1" runat="server">

@@ -2,6 +2,9 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <link href="../Style/Forms.css" rel="stylesheet" />
+    <script src="../JavaScript/jquery-3.2.1.js"></script>
+    <script src="../Content/js/materialize.js"></script>
+    <link href="../Content/css/materialize.css" rel="stylesheet" />
     <style type="text/css">
         .notes {
             background-color: none;
@@ -12,7 +15,37 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <center>
-    <table class="tablePopUp">
+        <div class="card" style="width:50vh">
+            <div class="card-panel">
+                <div class="card-title">
+                    <h3> התחברות </h3>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <asp:TextBox ID="Mail" runat="server"></asp:TextBox>
+                        <label for='<%#ClientID.Equals("Mail") %>'>שם משתמש</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <asp:TextBox ID="Pass" runat="server" TextMode="Password"></asp:TextBox>
+                        <label for='<%#ClientID.Equals("Pass") %>'>סיסמא</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <asp:Button ID="LogInBtn" runat="server" Text="התחבר" CssClass="btn waves-effect waves-light" OnClick="LogInBtn_Click"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="notes" DisplayMode="List"></asp:ValidationSummary>
+                        <asp:Label ID="lblError" runat="server" ForeColor="Red"></asp:Label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <%--<table class="tablePopUp">
         <tr>
             <td>
                 <asp:TextBox ID="Mail" runat="server" CssClass="txtBox"></asp:TextBox>
@@ -42,7 +75,7 @@
                 <asp:Label ID="lblError" runat="server" ForeColor="Red"></asp:Label>
             </td>
         </tr>
-    </table>
+    </table>--%>
         <asp:RequiredFieldValidator ID="validateMail" ControlToValidate="Mail" runat="server" ErrorMessage="חובה מלא מייל" BorderColor="Red">&nbsp</asp:RequiredFieldValidator>
         <asp:RegularExpressionValidator ID="validateValidMail" ControlToValidate="Mail" runat="server" ErrorMessage="מייל לא תקין" BorderColor="Red" ValidationExpression="\w+\@\w+\.com">&nbsp</asp:RegularExpressionValidator>
         <asp:RequiredFieldValidator ID="validatePass" ControlToValidate="Pass" runat="server" ErrorMessage="חובה למלא סיסמא" BorderColor="Red">&nbsp</asp:RequiredFieldValidator>

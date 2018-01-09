@@ -23,6 +23,10 @@
             $(".button-collapse").sideNav();
             $('select').material_select();
         });
+        function con()
+        {
+            $('ul.tabs').tabs('select_tab', 'test5');
+        }
     </script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 </head>
@@ -92,7 +96,12 @@
                             <asp:TextBox runat="server" ID="txtPass"></asp:TextBox>
                             <label for="<%#ClientID.Equals("txtPass") %>">סיסמא</label>          
         </div>
-                </div>                
+                </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <a class="btn" onclick="con()"> המשך </a>
+                        </div>
+                    </div>
             </div>
                     <div id="test5">
                 <div class="row">
