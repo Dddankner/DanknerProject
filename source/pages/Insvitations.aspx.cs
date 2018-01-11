@@ -102,6 +102,9 @@ public partial class pages_Insvitations : System.Web.UI.Page
     {
         Table tbl = new Table();
         TableRow[] row = new TableRow[btnSeat.GetLength(1)];
+        List<string> seatsList = new List<string>();
+        seatsList = OrderDetailsService.GetSeatsTaken(movieID, int.Parse(Session["valueTheater"].ToString()));
+        int listIndex = 0;
         for (int i = 0; i < row.Length; i++)
         {
             row[i] = new TableRow();
@@ -113,11 +116,27 @@ public partial class pages_Insvitations : System.Web.UI.Page
                 TableCell cell = new TableCell();
                 btnSeat[i, j] = new CheckBox();
                 if (i == 0)
+                {
                     btnSeat[i, j].Text = "" + (j + 1).ToString() + "";
+                    if(btnSeat[i,j].Text == seatsList.ElementAt(listIndex) && listIndex < seatsList.Count)
+                    {
+                        btnSeat[i, j].ForeColor = System.Drawing.Color.Red;
+                        btnSeat[i, j].Checked = true;
+                        btnSeat[i, j].Enabled = true;
+                        listIndex++;
+                    }
+                }
                 else if (j == 9)
                 {
                     int num = (i + 1) * 10;
                     btnSeat[i, j].Text = "" + num.ToString() + "";
+                    if (btnSeat[i, j].Text == seatsList.ElementAt(listIndex) && listIndex < seatsList.Count)
+                    {
+                        btnSeat[i, j].ForeColor = System.Drawing.Color.Red;
+                        btnSeat[i, j].Checked = true;
+                        btnSeat[i, j].Enabled = true;
+                        listIndex++;
+                    }
                 }
                 else
                     btnSeat[i, j].Text = "" + (i.ToString()) + ((j + 1).ToString()) + "";
@@ -208,28 +227,28 @@ public partial class pages_Insvitations : System.Web.UI.Page
     {
         //int selIndex = int.Parse(Session["selectedID"].ToString());
         //int theaterID = int.Parse(ddlTheaters.Items[selIndex].Value);
-        List<string> seatsList = new List<string>();
-        seatsList = OrderDetailsService.GetSeatsTaken(movieID, int.Parse(Session["valueTheater"].ToString()));
-        for (int i = 0; i < seatsList.Count; i++)
-        {
-            for (int j = 0; j < btnSeat.GetLength(1); j++)
-            {
-                for (int k = 0; k < btnSeat.GetLength(0); k++)
-                {
-                    if (btnSeat[j, k] != null)
-                    {
-                        if (btnSeat[j, k].Text != "")
-                        {
-                            if (btnSeat[j, k].Text == seatsList.ElementAt(i))
-                            {
-                                btnSeat[j, k].Checked = true;
-                                btnSeat[j, k].Enabled = false;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        //List<string> seatsList = new List<string>();
+        //seatsList = OrderDetailsService.GetSeatsTaken(movieID, int.Parse(Session["valueTheater"].ToString()));
+        //for (int i = 0; i < seatsList.Count; i++)
+        //{
+        //    for (int j = 0; j < btnSeat.GetLength(1); j++)
+        //    {
+        //        for (int k = 0; k < btnSeat.GetLength(0); k++)
+        //        {
+        //            if (btnSeat[j, k] != null)
+        //            {
+        //                if (btnSeat[j, k].Text != "")
+        //                {
+        //                    if (btnSeat[j, k].Text == seatsList.ElementAt(i))
+        //                    {
+        //                        btnSeat[j, k].Checked = true;
+        //                        btnSeat[j, k].Enabled = false;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
     }
 
     public string PrintList(List<string> p)
