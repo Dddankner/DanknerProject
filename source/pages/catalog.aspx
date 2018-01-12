@@ -36,6 +36,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
     <center>
+        
     <asp:DataList ID="DataList1" runat="server" CssClass="pad" DataKeyField="MovieId" RepeatColumns="3" OnItemDataBound="DataList1_ItemDataBound">
         <ItemTemplate>
             <div class="card" style="width:25vh !important;" >
@@ -61,52 +62,8 @@
         </p>
     </div>
   </div>
-            
-            <%--<div class="row">
-        <div class="col s12 m7">
-          <div class="card">
-            <div class="card-image">
-              <asp:Image runat="server" ID="movieImg" ImageUrl='<%#Eval("MoviePic") %>' CssClass="img" />
-              <span class="card-title"><%#Eval("MovieName") %></span>
-            </div>
-            <div class="card-action" style="text-align:right">
-                <asp:HyperLink ID="HyperLink1" runat="server">הזמן כרטיסים</asp:HyperLink>
-            </div>
-          </div>
-        </div>
-      </div>--%>
-            <%--<table dir="rtl" class="tablePopUp">
-                <tr>
-                    <td colspan="2">
-                        <asp:Image runat="server"   ID="movieImg" ImageUrl='<%#Eval("MoviePic") %>' CssClass="img" CausesValidation="False" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Label ID="lblName" runat="server" Text="שם הסרט"></asp:Label>
-                    </td>
-                    <td>
-                        <asp:Label ID="lblNameDB" runat="server" Text='<%#Eval("MovieName") %>'></asp:Label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Label ID="lblCategory" runat="server" Text="קטגוריה"></asp:Label>
-                    </td>
-                    <td>
-                        <asp:Label ID="lblCategoryDB" runat="server" Text='<%#Eval("CategoryName") %>'></asp:Label>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                          <asp:Button ID="ButtonInvite" ToolTip='<%#Eval("MovieId") %>' runat="server" Text="הזמן כרטיסים" OnClick="ButtonInvite_Click" ></asp:Button>
-
-                    </td>
-                </tr>
-            </table>--%>
         </ItemTemplate>
     </asp:DataList>
-         
         <%--<div id="pager" class="row" runat="server">
           <asp:Label ID="lblPage" runat="server"></asp:Label>
         </div>--%>
@@ -129,7 +86,7 @@
         </div>
 
 
-        <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+        <%--<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>--%>
 
         <div id="modal1" class="modal">
     <div class="modal-content">

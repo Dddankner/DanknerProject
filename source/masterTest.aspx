@@ -16,15 +16,15 @@
 
         .myselect {
         }
-        
     </style>
     <script type="text/javascript" lang="ja">
         $(document).ready(function () {
-            $(".button-collapse").sideNav();
+            $(".button-collapse").sideNav({
+                edge: 'right'
+            });
             $('select').material_select();
         });
-        function con()
-        {
+        function con() {
             $('ul.tabs').tabs('select_tab', 'test5');
         }
     </script>
@@ -32,7 +32,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <%--<ul id="slide-out" class="side-nav right-align right-aligned">
+        <ul id="slide-out" class="side-nav right-align right-aligned">
             <li>
                 <div class="user-view">
                     <div class="background">
@@ -52,9 +52,11 @@
             <li><a class="subheader">Subheader</a></li>
             <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
         </ul>
-        <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>--%>
+        <div style="text-align:right">
+            <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+        </div>
         <center>
-        <div class="card" style="width:50vh">
+        <%--<div class="card" style="width:50vh">
             <div class="card-content">
                 <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
             </div>
@@ -112,7 +114,7 @@
                 </div>
                 </div>
                 <div id="test6">Test 3</div>
-        </div>
+        </div>--%>
             </center>
     </form>
 </body>

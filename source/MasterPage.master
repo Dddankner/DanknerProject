@@ -7,13 +7,14 @@
 <head runat="server">
     <title></title>
     <script src="/JavaScript/jquery-3.2.1.js"></script>
-    <%--<script src="/Content/js/materialize.js"></script>
-    <link href="/Content/css/materialize.css" rel="stylesheet" />--%>
+    <script src="/Content/js/materialize.js"></script>
+    <link href="/Content/css/materialize.css" rel="stylesheet" />
     <style type="text/css">
-        body{
-            background-color:#f1f1f1;
+        body {
+            background-color: #f1f1f1;
         }
-        ul.navbarMy{
+
+        ul.navbarMy {
             list-style-type: none;
             margin: 0;
             padding: 0;
@@ -21,31 +22,31 @@
             background-color: #454343;
         }
 
-        li.navbarMy{
+        li.navbarMy {
             float: right;
             border-right: 1px solid #bbb;
         }
 
-            li:last-child.navbarMy{
-                border-right: none;
-            }
+        li:last-child.navbarMy {
+            border-right: none;
+        }
 
-            li a.navbarMy{
-                display: block;
-                color: white;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-            }
+        li a.navbarMy {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
 
-                li a:hover:not(.active).navbarMy{
-                    background-color: #555;
-                    color: white;
-                }
+        li a:hover:not(.active).navbarMy {
+            background-color: #555;
+            color: white;
+        }
 
-            li.dropdownMy {
-                display: inline-block;
-            }
+        li.dropdownMy {
+            display: inline-block;
+        }
 
         .dropdown-contentMy {
             display: none;
@@ -71,81 +72,81 @@
         .dropdownMy:hover .dropdown-contentMy {
             display: block;
         }
-        .imgNav{
-            height:5vh;
-            width:5vh;
-            border-radius:50%;
+
+        .imgNav {
+            height: 5vh;
+            width: 5vh;
+            border-radius: 50%;
         }
     </style>
     <script type="text/javascript" lang="ja">
-        function ImageShow() {
-
-        }
+        $(document).ready(function () {
+            $(".button-collapse").sideNav({
+                edge: 'right'
+            });
+        });
     </script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body style="margin: 0%">
     <form id="form1" runat="server">
-        <ul class="navbarMy">
-            <li class="navbarMy"><a href="../pages/Main.aspx" class="navbarMy">ראשי </a></li>
-            <li class="navbarMy"><a href="../pages/catalog.aspx" class="navbarMy"> סרטים </a></li>
+        <ul id="slide-out" class="side-nav right-align right-aligned">
+            <li>
+                <div class="user-view">
+                    <div class="background">
+                        <img src="../MembersImg/back.jpg">
+                    </div>
+                    <% if (Session["Member"] == null)
+                        { %>
+                    <a href="#!user">
+                        <asp:Image CssClass="circle" ID="imgGuest" ImageUrl="~/MembersImg/guest.png" runat="server" /></a>
+                    <a href="#!name"><span class="white-text name">אורח</span></a>
+                    <%}
+                        else
+                        { %>
+                    <a href="#!user">
+                        <asp:Image CssClass="circle" ID="imgUser" runat="server" /></a>
+                    <a><span class="white-text name"><%= m.memberFname.ToString().Trim() + " " + m.MemberLname.ToString().Trim() %></span></a>
+                    <a><span class="white-text email"><%=m.memberMail %></span></a>
+                    <%} %>
+                </div>
+            </li>
+            <li><a href="../pages/Main.aspx">דף ראשי<i class="material-icons right">home</i></a></li>
+            <li><a href="../pages/catalog.aspx">סרטים<i class="material-icons right">movie</i></a></li>
             <%if (Session["Member"] == null)
                 { %>
-            <li class="navbarMy"><a href="../pages/Register.aspx" class="navbarMy">הרשמה </a></li>
-            <li class="navbarMy"><a href="../pages/LogIn.aspx" class="navbarMy">התחברות </a></li>
-            <%} %>
-            <%--<%if (Session["Member"] != null)
-                { %><li><a href="../pages/LogOut.aspx"> התנתק </a></li><%} %>
-            <%if (Session["Member"] != null)
-                { %>
-            <li> <a href="../pages/Update.aspx"> עדכן </a> </li><%} %>
-            <%if (Session["Member"] != null)
-                { %>
-            <li> <a href="../pages/ShowUsers.aspx"> הצג נתונים </a> </li><%} %>--%>
-            <li style="float: left" class="navbarMy"><%if (Session["Member"] == null)
-                                        { %> <a class="navbarMy">שלום אורח </a></li>
+            <li><a href="../pages/Register.aspx">הרשמה<i class="material-icons right">create</i></a></li>
+            <li><a href="../pages/LogIn.aspx">התחברות<i class="material-icons right">input</i></a></li>
             <%}
-    else
-    { %>
-            <li class="navbarMy"><a href="../pages/Messages.aspx" class="navbarMy"> הודעות </a></li>
-            <li class="navbarMy"><a href="../pages/CreditCardPage.aspx" class="navbarMy"> כרטיס אשראי </a></li>
+            else
+            { %>
+            <li><a href="../pages/CreditCardPage.aspx">כרטיס אשראי<i class="material-icons right">credit_card</i></a></li>
+            <li><a href="../pages/Messages.aspx">הודעות<i class="material-icons right">inbox</i></a></li>
             <%if (m.memberManager)
                 { %>
-            <li class="navbarMy"><a href="../pages/MyOrders.aspx" class="navbarMy"> הזמנות </a></li>
-            <li class="navbarMy"> <a href="../pages/MovieAdd.aspx" class="navbarMy"> דף ניהול </a> </li>
+            <li><a href="../pages/MyOrders.aspx">הזמנות<i class="material-icons right">storage</i></a></li>
+            <li><a href="../pages/MovieAdd.aspx">דף ניהול<i class="material-icons right">note_add</i></a></li>
+            <li><a href="../pages/ShowUsers.aspx">הצג משתמשים<i class="material-icons right">perm_identity</i></a></li>
             <%}
-    else
-    { %>
-             <li class="navbarMy"><a href="../pages/MyOrders.aspx" class="navbarMy"> ההזמנות שלי </a></li><%} %>
-            <li class="navbarMy">
-                <asp:Image ID="MemberPicture" runat="server" Style="float: left" CssClass="imgNav" />
-            </li>
-            <%if (!m.memberManager)
-    { %>
-            <li style="float: left" class="dropdownMy navbarMy"><a href="javascript:void(0)" class="dropbtn navbarMy">שלום <%= m.memberFname.ToString().Trim() + " " + m.MemberLname.ToString().Trim()%></a>
-                <div class="dropdown-contentMy">
-                    <%--<a href="../pages/Update.aspx">עדכן </a>--%>
-                    <a href="../pages/ShowUsers.aspx">הצג נתונים </a>
-                    <a href="../pages/LogOut.aspx">התנתק </a>
-                </div>
-            </li>
-            <li style="float: left" class="dropdownMy navbarMy"><asp:Image ID="Image1" runat="server" ImageUrl='<%#MembersServer.PicUrl(m.memberMail) %>' /></li>
+            else
+            { %>
+            <li><a href="../pages/MyOrders.aspx">ההזמנות שלי<i class="material-icons right">storage</i></a></li>
+            <li><a href="../pages/ShowUsers.aspx">הצג נתונים<i class="material-icons right">account_box</i></a></li>
             <%}
-    else
-    {%>
-                <li style="float: left" class="dropdownMy navbarMy"><a href="javascript:void(0)" class="dropbtn navbarMy">שלום <%= m.memberFname.ToString().Trim() + " " + m.MemberLname.ToString().Trim() + " - מנהל"%></a>
-                <%}
-    } %>
-                <div class="dropdown-contentMy">
-                    <%--<a href="../pages/Update.aspx">עדכן </a>--%>
-                    <a href="../pages/ShowUsers.aspx">הצג משתמשים </a>
-                    <a href="../pages/LogOut.aspx">התנתק </a>
-                </div>
+                } %>
+            <li>
+                <div class="divider"></div>
             </li>
-                
+            <%if (Session["Member"] != null)
+                { %>
+            <li><a href="../pages/LogOut.aspx" class="">התנתק</a></li>
+            <%} %>
         </ul>
-
+        <div style="text-align: right">
+            <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons" style="font-size:40px">menu</i></a>
+        </div>
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
 

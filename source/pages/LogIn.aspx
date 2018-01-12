@@ -20,10 +20,13 @@
                 <div class="card-title">
                     <h3> התחברות </h3>
                 </div>
+                <div>
+
+                </div>
                 <div class="row">
                     <div class="input-field col s12">
                         <asp:TextBox ID="Mail" runat="server"></asp:TextBox>
-                        <label for='<%#ClientID.Equals("Mail") %>'>שם משתמש</label>
+                        <label for='<%#ClientID.Equals("Mail") %>'>מייל</label>
                     </div>
                 </div>
                 <div class="row">

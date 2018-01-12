@@ -54,6 +54,9 @@
             });
             $('.tooltipped').tooltip({ delay: 20 });
             $('.tooltipped').tooltip({ position: 'right' });
+            //$('#conToDetails').on("Click", function(){
+            //    $('#detailsTab').removeClass("disabled");
+            //});
         });
 
         function ValidateHobbies(source, args) {
@@ -80,7 +83,13 @@
                 args.IsValid = true;
         }
 
-        function con(id) {
+        function conDet(id) {
+            $('#detailsTab').removeClass("disabled");
+            $('ul.tabs').tabs('select_tab', id);
+        }
+
+        function conPers(id) {
+            $('#persTab').removeClass("disabled");
             $('ul.tabs').tabs('select_tab', id);
         }
 
@@ -92,11 +101,15 @@
     <center>
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
         <div class="card" style="width:50vh">
+            <div class="card-title">
+                <h3>הרשמה</h3>
+            </div>
+            <div class="divider"></div>
             <div class="card-tabs">
                 <ul class="tabs tabs-fixed-width">
                     <li class="tab"><a href="#memberDetails" class="active"> פרטי משתמש </a></li>
-                    <li class="tab"><a href="#acountDetails"> פרטי חשבון </a></li>
-                    <li class="tab"><a href="#personalDetails"> פרטים אישיים </a></li>
+                    <li class="tab disabled" id="detailsTab"><a href="#acountDetails"> פרטי חשבון </a></li>
+                    <li class="tab disabled" id="persTab"><a href="#personalDetails"> פרטים אישיים </a></li>
                 </ul>
             </div>
             <div class="card-content">
@@ -121,7 +134,7 @@
                     </div>
                     <div class="row">
                         <div class="col s12">
-                            <a class="btn" onclick="con('acountDetails')"> המשך </a>
+                            <a class="btn" onclick="conDet('acountDetails')"> המשך </a>
                         </div>
                     </div>
                 </div>
@@ -161,7 +174,7 @@
                     </div>
                     <div class="row">
                         <div class="col s12">
-                            <a class="btn" onclick="con('personalDetails')">המשך</a>
+                            <a class="btn" onclick="conPers('personalDetails')">המשך</a>
                         </div>
                     </div>
                 </div>

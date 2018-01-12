@@ -13,13 +13,13 @@ public partial class masterTest : System.Web.UI.Page
     {
         if(!IsPostBack)
         {
-            FillDBCities();
-            DataSet ds = new DataSet();
-            ds = CitiesServer.GetCityList();
-            cities.DataSource = ds;
-            cities.DataTextField = "CityName";
-            cities.DataValueField = "CityId";
-            cities.DataBind();
+            //FillDBCities();
+            //DataSet ds = new DataSet();
+            //ds = CitiesServer.GetCityList();
+            //cities.DataSource = ds;
+            //cities.DataTextField = "CityName";
+            //cities.DataValueField = "CityId";
+            //cities.DataBind();
         }
     }
     public void FillDBCities()

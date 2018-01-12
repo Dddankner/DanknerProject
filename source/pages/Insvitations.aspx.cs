@@ -71,9 +71,9 @@ public partial class pages_Insvitations : System.Web.UI.Page
         //lblShowID.Text = PrintList();
         if (Request.QueryString["selectedID"] == null && Session["valueTheater"].ToString() != "0")
         {
-            PanelFill();
+            //PanelFill();
             imgPanel.ImageUrl = MoviesService.GetImageUrl(int.Parse(Session["MovieId"].ToString()));
-            CheckSeatsSelect();
+            //CheckSeatsSelect();
             //lblShowSeats.Text = PrintList() + "- " + movieID.ToString() + ", " + Session["valueTheater"].ToString();
         }
         if(bool.Parse(Session["final"].ToString()))
@@ -118,24 +118,29 @@ public partial class pages_Insvitations : System.Web.UI.Page
                 if (i == 0)
                 {
                     btnSeat[i, j].Text = "" + (j + 1).ToString() + "";
-                    if(btnSeat[i,j].Text == seatsList.ElementAt(listIndex) && listIndex < seatsList.Count)
+                    if (listIndex < seatsList.Count)
                     {
-                        btnSeat[i, j].ForeColor = System.Drawing.Color.Red;
-                        btnSeat[i, j].Checked = true;
-                        btnSeat[i, j].Enabled = true;
-                        listIndex++;
+                        if (btnSeat[i, j].Text == seatsList.ElementAt(listIndex) && listIndex < seatsList.Count)
+                        {
+                            btnSeat[i, j].ForeColor = System.Drawing.Color.Red;
+                            btnSeat[i, j].Checked = true;
+                            btnSeat[i, j].Enabled = false;
+                            listIndex++;
+                        }
                     }
                 }
                 else if (j == 9)
                 {
                     int num = (i + 1) * 10;
                     btnSeat[i, j].Text = "" + num.ToString() + "";
-                    if (btnSeat[i, j].Text == seatsList.ElementAt(listIndex) && listIndex < seatsList.Count)
+                    if (listIndex < seatsList.Count)
                     {
-                        btnSeat[i, j].ForeColor = System.Drawing.Color.Red;
-                        btnSeat[i, j].Checked = true;
-                        btnSeat[i, j].Enabled = true;
-                        listIndex++;
+                        if (btnSeat[i, j].Text == seatsList.ElementAt(listIndex) && listIndex < seatsList.Count)
+                        {
+                            btnSeat[i, j].Checked = true;
+                            btnSeat[i, j].Enabled = false;
+                            listIndex++;
+                        }
                     }
                 }
                 else
@@ -214,6 +219,7 @@ public partial class pages_Insvitations : System.Web.UI.Page
     {
         Session["selectedID"] = ddlTheaters.SelectedIndex;
         Session["valueTheater"] = ddlTheaters.SelectedValue;
+        PanelFill();
         //lblShowID.Text = ddlTheaters.SelectedValue;
         //ClientScript.RegisterStartupScript(this.Page.GetType(), "Script", "function(){$('ul.tabs').tabs('select_tab', 'seatsLink')}", true);
     }
