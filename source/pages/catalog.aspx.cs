@@ -112,6 +112,8 @@ public partial class pages_catalog : System.Web.UI.Page
         HyperLink link1 = (HyperLink)e.Item.FindControl("HyperLink1");
         //string movieId = DataList1.DataKeys[e.Item.ItemIndex].ToString();
         link1.NavigateUrl = "Insvitations.aspx?MovieId=" + link1.ToolTip + "&selectedID=0";
+        link1 = (HyperLink)e.Item.FindControl("hlMoviePage");
+        link1.NavigateUrl = "MoviePage.aspx?movieID=" + link1.ToolTip;
     }
 
 

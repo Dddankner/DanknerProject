@@ -39,7 +39,7 @@
         
     <asp:DataList ID="DataList1" runat="server" CssClass="pad" DataKeyField="MovieId" RepeatColumns="3" OnItemDataBound="DataList1_ItemDataBound">
         <ItemTemplate>
-            <div class="card" style="width:25vh !important;" >
+            <div class="card sticky-action" style="width:25vh !important;" >
     <div class="card-image waves-effect waves-block waves-light" style="width:100% !important">
       <asp:Image runat="server" ID="movieImg" ImageUrl='<%#Eval("MoviePic") %>' CssClass="img activator" />
     </div>
@@ -50,6 +50,9 @@
         <p style="text-align:right">
             <asp:HyperLink ID="HyperLink1" runat="server" ToolTip='<%#Eval("MovieId") %>'>הזמן כרטיסים</asp:HyperLink></p>
     <%} %>
+    </div>
+    <div class="card-action" style="direction:rtl;">
+        <asp:HyperLink ID="hlMoviePage" runat="server" ToolTip='<%#Eval("MovieId") %>'>HyperLink</asp:HyperLink>
     </div>
     <div class="card-reveal" style="direction:rtl;">
       <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i><%#Eval("MovieName") %></span>

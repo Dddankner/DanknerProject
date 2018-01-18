@@ -74,6 +74,11 @@
             direction: rtl !important;
         }
 
+        textarea{
+            text-align: right !important;
+            direction: rtl !important;
+        }
+
         div {
             text-align: right !important;
         }

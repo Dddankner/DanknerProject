@@ -94,6 +94,13 @@ public class MoviesService
         return ds.Tables[0].Rows[0]["MovieName"].ToString();
     }
 
+    public static DataSet GetMovieDS(int id)
+    {
+        string strSql = "SELECT * FROM Movies WHERE MovieId=" + id;
+        DataSet ds = Connect.GetDataSet(strSql, "Movies");
+        return ds;
+    }
+
     //public static bool IsExist(int id)
     //{
     //    string strFind = "SELECT COUNT(MemberId) FROM Members WHERE MemberMail ='" + m.memberMail.Trim() + "'";

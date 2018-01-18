@@ -21,7 +21,7 @@ public class Connect
         //בניית מחרוזת התחברות
         //נתיב יחסי
         string connection = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=|DataDirectory|\DataBase.accdb;Persist Security Info=True";
-
+        //Provider=Microsoft.ACE.OLEDB.12.0;Data Source=|DataDirectory|\DataBase.accdb;Persist Security Info=True
         //אובייקט התחברות
         OleDbConnection con = new OleDbConnection(connection);
 
