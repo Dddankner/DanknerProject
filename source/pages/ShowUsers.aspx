@@ -34,6 +34,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <center>
+        <div style="margin-top:10vh; width:95%">
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="grdView" OnRowDataBound="GridView1_RowDataBound" >
         <Columns>
             <asp:BoundField DataField="MemberFname" HeaderText="שם פרטי" />
@@ -51,18 +52,21 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="עדכן">
                 <ItemTemplate>
-                    <asp:Image ID="ImageUpdate" runat="server" ImageUrl="~/img/UpdatePic.png" CssClass="imgCss"></asp:Image>
+                    <i class="material-icons imgCss" id="ImageUpdate" runat="server">mode_edit</i>
+                    <%--<asp:Image ID="ImageUpdate" runat="server" CssClass="imgCss"></asp:Image>--%>
                     <%--<asp:Image ID="UpdateBtn" runat="server" ImageUrl="~/img/UpdatePic.png" OnClick="UpdateBtn_Click" Height="35px" Width="35px" />--%>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="מחק">
                 <ItemTemplate>
-                    <asp:Image ID="DeleteBtn" runat="server" ImageUrl="~/img/deletePic.png" CssClass="imgCss" />
+                    <i class="material-icons imgCss" id="DeleteBtn" runat="server">delete</i>
+                    <%--<asp:Image ID="DeleteBtn" runat="server" ImageUrl="~/img/deletePic.png" CssClass="imgCss" />--%>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:BoundField DataField="MemberStatus" HeaderText="סטטוס" />
         </Columns>
 </asp:GridView>
+            </div>
         </center>
 </asp:Content>
 

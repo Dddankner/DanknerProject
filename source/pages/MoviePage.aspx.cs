@@ -9,18 +9,18 @@ using System.Data.OleDb;
 
 public partial class pages_MoviePage : System.Web.UI.Page
 {
-    Movies m = new Movies();
+    public Movies m = new Movies();
     protected void Page_Load(object sender, EventArgs e)
     {
-        if(Request.QueryString["movieID"] != null && Request.QueryString["movieID"].ToString() != "")
-        {
+        //if(Request.QueryString["movieID"] != null && Request.QueryString["movieID"].ToString() != "")
+        //{
             CreateM();
             if(!IsPostBack)
             {
                 imgMovie.ImageUrl = m.MoviePic;
                 tit.InnerText = m.MovieName;
             }
-        }
+        //}
         else
         {
             Response.Redirect("catalog.aspx");

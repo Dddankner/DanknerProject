@@ -24,13 +24,14 @@
             <a href="catalog.aspx"><i class="material-icons" style="font-size: 40px; color: #039be5">arrow_forward</i></a>
         </div>
         <center>
-        <div class="card" style="width:40vh">
+        <%--<div class="card" style="width:40vh">
             <div class="card-image">
                 <asp:Image ID="imgMovie" runat="server" CssClass="imgCss"></asp:Image>
                 <span class="card-title" id="tit" runat="server"></span>
             </div>
-            <iframe width="420" height="315" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>
-        </div>
+            <a><%#m.MovieTrailer %></a>
+            <iframe width="420" height="315" src='<%#m.MovieTrailer %>'></iframe>
+        </div>--%>
             </center>
     </form>
 </body>

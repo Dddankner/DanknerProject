@@ -1,45 +1,61 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" Culture="en-GB" AutoEventWireup="true" CodeFile="MyOrders.aspx.cs" Inherits="pages_MyOrders" %>
+
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ocv1" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <script src="../JavaScript/jquery-3.2.1.js"></script>
     <script src="../Content/js/materialize.js"></script>
     <link href="../Content/css/materialize.css" rel="stylesheet" />
     <style type="text/css">
-        .grd1{
-            width:120vh;
-            font-size:2.4vh;
+        .grd1 {
+            width: 120vh;
+            font-size: 2.4vh;
         }
-        .wid{
-            width:50vh;
+
+        .wid {
+            width: 50vh;
         }
-        input::placeholder{
-            text-align:right;
+
+        input::placeholder {
+            text-align: right;
         }
-        input{
-            text-align:right;
+
+        input {
+            text-align: right;
         }
+
         .notes {
             background-color: none;
             color: red;
             display: block;
         }
-         .imgCss {
+
+        .imgCss {
             border-radius: 50%;
             height: 10vh;
             width: 10vh;
         }
     </style>
     <script type="text/javascript" lang="ja">
-        function ConfirmDelete(id)
-        {
-            if (confirm("אתה בטוח שברצונך למחוק הזמנה זו?"))
-            {
+        function ConfirmDelete(id) {
+            if (confirm("אתה בטוח שברצונך למחוק הזמנה זו?")) {
                 window.location.href = "DeleteOrder.aspx?id=" + id;
             }
         }
+        $(document).ready(function () {
+            $.getJSON("/Content/autocompleteData/GetData.ashx", function (data) {
+                $('input.autocomplete').autocomplete({
+                    data: JSON.parse(data),
+                    limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
+                    onAutocomplete: function (val) {
+                        // Callback function when value is autcompleted.
+                    },
+                    minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+                });
+            });
+        });
     </script>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <center>
         <div runat="server" id="grdDiv">
@@ -73,7 +89,7 @@
                             <asp:Button runat="server" ID="searchByMovieName" Text="חיפוש" OnClick="searchByMovieName_Click"></asp:Button>
                         </div>
                         <div class="col s10">
-                            <asp:TextBox runat="server" ID="txtByMovieName" placeholder="שם הסרט"></asp:TextBox>
+                            <asp:TextBox runat="server" ID="txtByMovieName" CssClass="autocomplete" placeholder="שם הסרט"></asp:TextBox>
                         </div>
                     </div>
                     <div class="row">

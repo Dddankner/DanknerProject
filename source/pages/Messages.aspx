@@ -110,7 +110,7 @@
             <td> נושא </td>
         </tr>
         <tr>
-            <td> <asp:TextBox ID="MessageContent" runat="server" TextMode="MultiLine"> </asp:TextBox> </td>
+            <td> <asp:TextBox ID="MessageContent" runat="server" TextMode="MultiLine" data-length="240"> </asp:TextBox> </td>
             <td> תוכן </td>
         </tr>
         <tr>

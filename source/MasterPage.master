@@ -100,7 +100,7 @@
             <li>
                 <div class="user-view">
                     <div class="background">
-                        <img src="../MembersImg/back.jpg">
+                        <img src="../MembersImg/back.jpg"/>
                     </div>
                     <% if (Session["Member"] == null)
                         { %>

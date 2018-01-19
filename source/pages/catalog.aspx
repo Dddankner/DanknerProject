@@ -36,7 +36,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
     <center>
-        
+        <div style="width:95%">
     <asp:DataList ID="DataList1" runat="server" CssClass="pad" DataKeyField="MovieId" RepeatColumns="3" OnItemDataBound="DataList1_ItemDataBound">
         <ItemTemplate>
             <div class="card sticky-action" style="width:25vh !important;" >
@@ -67,6 +67,7 @@
   </div>
         </ItemTemplate>
     </asp:DataList>
+            </div>
         <%--<div id="pager" class="row" runat="server">
           <asp:Label ID="lblPage" runat="server"></asp:Label>
         </div>--%>

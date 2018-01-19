@@ -22,21 +22,25 @@
         <span> הכנס כרטיס </span>
         <div class="card-content">
             <div class="row">
-                <div class="col s12">
-                    <asp:TextBox ID="txtCardNumber" runat="server" MaxLength="16" placeholder="מספר כרטיס"></asp:TextBox>
+                <div class="input-field col s12">
+                    <asp:TextBox ID="txtCardNumber" runat="server" MaxLength="16"></asp:TextBox>
+                    <label for='<%#ClientID.Equals("txtCardNumber") %>'>מספר כרטיס</label>
                 </div>
             </div>
             <div class="row">
-                <div class="col s6">
-                    <asp:TextBox ID="txtCardCVV" runat="server" placeholder="CVV" MaxLength="3"></asp:TextBox>
+                <div class="input-field col s6">
+                    <asp:TextBox ID="txtCardCVV" runat="server" MaxLength="3"></asp:TextBox>
+                    <label for='<%#ClientID.Equals("txtCardCVV") %>'>CVV</label>
                 </div>
             </div>
             <div class="row">
-                <div class="col s6">
-                    <asp:TextBox ID="txtMonth" runat="server" placeholder="חודש" MaxLength="2"></asp:TextBox>
+                <div class="input-field col s6">
+                    <asp:TextBox ID="txtMonth" runat="server" MaxLength="2"></asp:TextBox>
+                    <label for='<%#ClientID.Equals("txtMonth") %>'>חודש</label>
                 </div>
-                <div class="col s6">
-                    <asp:TextBox ID="txtYear" runat="server" placeholder="שנה" MaxLength="2"></asp:TextBox>
+                <div class="input-field col s6">
+                    <asp:TextBox ID="txtYear" runat="server" MaxLength="2"></asp:TextBox>
+                    <label for='<%#ClientID.Equals("txtYear") %>'>שנה</label>
                 </div>
             </div>
             <div class="row">
@@ -70,21 +74,25 @@
         <h3> עדכן כרטיס </h3>
         <div class="card-content">
             <div class="row">
-                <div class="col s12">
-                    <asp:TextBox ID="txtCardNumUp" runat="server" placeholder="מספר כרטיס" MaxLength="16"></asp:TextBox>
+                <div class="input-field col s12">
+                    <asp:TextBox ID="txtCardNumUp" runat="server" MaxLength="16"></asp:TextBox>
+                    <label for='<%#ClientID.Equals("txtCardNumUp") %>'>מספר כרטיס</label>
                 </div>
             </div>
             <div class="row">
-                <div class="col s6">
-                    <asp:TextBox ID="txtCardCVVUp" runat="server" placeholder="CVV" MaxLength="3"></asp:TextBox>
+                <div class="input-field col s6">
+                    <asp:TextBox ID="txtCardCVVUp" runat="server" MaxLength="3"></asp:TextBox>
+                    <label for='<%#ClientID.Equals("txtCardCVVUp") %>'>CVV</label>
                 </div>
             </div>
             <div class="row">
-                <div class="col s6">
-                    <asp:TextBox ID="txtMonthUp" runat="server" placeholder="חודש" MaxLength="2"></asp:TextBox>
+                <div class="input-field col s6">
+                    <asp:TextBox ID="txtMonthUp" runat="server" MaxLength="2"></asp:TextBox>
+                    <label for='<%#ClientID.Equals("txtMonthUp") %>'>חודש</label>
                 </div>
-                <div class="col s6">
-                    <asp:TextBox ID="txtYearUp" runat="server" placeholder="שנה" MaxLength="2"></asp:TextBox>
+                <div class="input-field col s6">
+                    <asp:TextBox ID="txtYearUp" runat="server" MaxLength="2"></asp:TextBox>
+                    <label for='<%#ClientID.Equals("txtYearUp") %>'>שנה</label>
                 </div>
             </div>
             <div class="row">

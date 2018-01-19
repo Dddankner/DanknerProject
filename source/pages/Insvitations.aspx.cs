@@ -59,19 +59,15 @@ public partial class pages_Insvitations : System.Web.UI.Page
             //Response.Write(GetSelectedSeats());
         }
         Session["selectedID"] = ddlTheaters.SelectedIndex;
-
-        //CheckSeats();
         if (IsPostBack)
         {
             valueTheater = int.Parse(ddlTheaters.SelectedValue);
             //lblShowID.Text = valueTheater.ToString();
             Session["valueTheater"] = valueTheater;
         }
-        //Response.Write(Session["valueTheater"].ToString());
-        //lblShowID.Text = PrintList();
         if (Request.QueryString["selectedID"] == null && Session["valueTheater"].ToString() != "0")
         {
-            //PanelFill();
+            PanelFill();
             imgPanel.ImageUrl = MoviesService.GetImageUrl(int.Parse(Session["MovieId"].ToString()));
             //CheckSeatsSelect();
             //lblShowSeats.Text = PrintList() + "- " + movieID.ToString() + ", " + Session["valueTheater"].ToString();
@@ -219,7 +215,7 @@ public partial class pages_Insvitations : System.Web.UI.Page
     {
         Session["selectedID"] = ddlTheaters.SelectedIndex;
         Session["valueTheater"] = ddlTheaters.SelectedValue;
-        PanelFill();
+        
         //lblShowID.Text = ddlTheaters.SelectedValue;
         //ClientScript.RegisterStartupScript(this.Page.GetType(), "Script", "function(){$('ul.tabs').tabs('select_tab', 'seatsLink')}", true);
     }
