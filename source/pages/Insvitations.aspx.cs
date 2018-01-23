@@ -35,7 +35,7 @@ public partial class pages_Insvitations : System.Web.UI.Page
                 {
                     //CheckSeatsSelect();
                 }
-                FillDDL(movieID);
+                //FillDDL(movieID);
                 //ddlTheaters.SelectedItem.Equals(selectedList);
                 //ClientScript.RegisterStartupScript(this.GetType(), "Script", "javascript:function(){$('ul.tabs').tabs('select_tab', 'detailsLink')}", true);
             }
@@ -414,17 +414,17 @@ public partial class pages_Insvitations : System.Web.UI.Page
         {
             ClientScript.RegisterStartupScript(GetType(), "hwa", "alertSeats('" + int.Parse(Session["MovieId"].ToString()) + "')", true);
         }
-        else
-            Response.Redirect("Insvitations.aspx?MovieId=" + int.Parse(Session["MovieId"].ToString()) + "#final");
+        //else
+            //Response.Redirect("Insvitations.aspx?MovieId=" + int.Parse(Session["MovieId"].ToString()) + "#final");
     }
 
     protected void btnBackToPanel_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Insvitations.aspx?MovieId=" + int.Parse(Session["MovieId"].ToString()) + "#selectSeats");
+        //Response.Redirect("Insvitations.aspx?MovieId=" + int.Parse(Session["MovieId"].ToString()) + "#selectSeats");
     }
 
     protected void btnBackToCity_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Insvitations.aspx?MovieId=" + int.Parse(Session["MovieId"].ToString()) + "#selectDetails");
+        //Response.Redirect("Insvitations.aspx?MovieId=" + int.Parse(Session["MovieId"].ToString()) + "#selectDetails");
     }
 }

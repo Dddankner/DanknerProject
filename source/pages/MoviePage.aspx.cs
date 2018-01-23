@@ -14,25 +14,25 @@ public partial class pages_MoviePage : System.Web.UI.Page
     {
         //if(Request.QueryString["movieID"] != null && Request.QueryString["movieID"].ToString() != "")
         //{
-            CreateM();
+            //CreateM();
             if(!IsPostBack)
             {
-                imgMovie.ImageUrl = m.MoviePic;
-                tit.InnerText = m.MovieName;
+                //imgMovie.ImageUrl = m.MoviePic;
+                //tit.InnerText = m.MovieName;
             }
         //}
-        else
-        {
-            Response.Redirect("catalog.aspx");
-        }
+        //else
+        //{
+        //    Response.Redirect("catalog.aspx");
+        //}
     }
 
     public void CreateM()
     {
-        DataSet ds = MoviesService.GetMovieDS(int.Parse(Request.QueryString["movieID"].ToString()));
-        m.MovieName = ds.Tables[0].Rows[0]["MovieName"].ToString();
-        m.MoviePic = ds.Tables[0].Rows[0]["MoviePic"].ToString();
-        m.MovieTrailer = ds.Tables[0].Rows[0]["MovieTrailer"].ToString();
-        m.MovieDescription = ds.Tables[0].Rows[0]["MovieDescreption"].ToString();
+        //DataSet ds = MoviesService.GetMovieDS(int.Parse(Request.QueryString["movieID"].ToString()));
+        //m.MovieName = ds.Tables[0].Rows[0]["MovieName"].ToString();
+        //m.MoviePic = ds.Tables[0].Rows[0]["MoviePic"].ToString();
+        //m.MovieTrailer = ds.Tables[0].Rows[0]["MovieTrailer"].ToString();
+        //m.MovieDescription = ds.Tables[0].Rows[0]["MovieDescreption"].ToString();
     }
 }

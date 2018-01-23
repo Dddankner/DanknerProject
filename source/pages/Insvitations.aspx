@@ -18,6 +18,9 @@
             //    $("#btnContinue").click( function () {
             //        $('ul.tabs').tabs('select_tab', 'seatsLink');
             //    });
+            <%--("#ContentPlaceHolder1_ddlTheaters").change(function {
+                <%PanelFill(); %>
+            });--%>
         });
 
         function f(e, args) {
