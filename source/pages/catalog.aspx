@@ -2,9 +2,9 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 
-    <link href="../Content/css/materialize.css" rel="stylesheet" />
+    <%--<link href="../Content/css/materialize.css" rel="stylesheet" />
     <script src="../Content/js/materialize.js"></script>
-    <script src="../JavaScript/jquery-3.2.1.js"></script>
+    <script src="../JavaScript/jquery-3.2.1.js"></script>--%>
     <link href="../Style/Forms.css" rel="stylesheet" />
     <style type="text/css">
         .img {
@@ -28,7 +28,6 @@
     <script type="text/javascript" lang="ja">
         $(document).ready(function () {
             // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
-            $('.modal').modal();
         });
     </script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />

@@ -12,6 +12,7 @@
     <script type="text/javascript" lang="ja">
         $(document).ready(function () {
             $('ul.tabs').tabs();
+            $('.modal').modal();
             $.getJSON("/Content/autocompleteData/GetMovieInfo.ashx?movieID=<%=Request.QueryString["movieID"].ToString()%>", function (data) {
                 $("#lblName").text(data.MovieName);
                 $("#imgMovie").attr("src", data.MoviePic);
@@ -19,12 +20,44 @@
                 $("#trailer").attr("href", data.MovieTrailer)
             });
         });
-</script>
+        var selected = 1;
+        function stars(val) {
+            for (var i = 0; i < 5; i++) {
+                $("#s" + (i + 1)).text("star_border");
+            }
+            for (var i = 0; i < val; i++) {
+                $("#s" + (i + 1)).text("star");
+            }
+        }
+        function out() {
+            for (var i = 0; i < 5; i++) {
+                $("#s" + (i + 1)).text("star_border");
+            }
+            for (var i = 0; i < selected; i++) {
+                $("#s" + (i + 1)).text("star");
+            }
+        }
+        function changeselet(val) {
+            selected = val;
+            $("#<%=txtRate.ClientID %>").val(selected);
+        }
+        $(document).ready(function () {
+            $("#<%=txtRate.ClientID %>").val(selected);
+        });
+    </script>
     <style type="text/css">
         .imgCss {
             border-radius: 50%;
             height: 10vh;
             width: 10vh;
+        }
+
+        input {
+            text-align: right;
+        }
+
+        textarea {
+            text-align: right;
         }
     </style>
 </head>
@@ -60,17 +93,89 @@
                     </div>
                     </div>
                 <div id="comments">
-                    <a>תגובות</a>
+                    <br />
+                    <%if (Session["Member"] != null)
+                        { %>
+                    <div class="row">
+                        <a class="waves-effect waves-light btn modal-trigger" href="#modal1">הוסף תגובה</a>
+                    </div>
+                    <%} %>
+                    <asp:DataList ID="dlComments" runat="server" DataKeyField="CommentID" RepeatColumns="1" OnItemDataBound="dlComments_ItemDataBound">
+                        <ItemTemplate>
+                            <asp:Panel ID="starDiv" runat="server">
+                            <div class="card">
+                                <div class="row" style="color: #ff9800; text-align:center">
+                                    
+                                    <div class="col s12">
+                                        <div style="margin: 0 40px; cursor:pointer">
+                                            <i id="s1" class="material-icons">star</i>
+                                            <i id="s2" class="material-icons">star_border</i>
+                                            <i id="s3" class="material-icons">star_border</i>
+                                            <i id="s4" class="material-icons">star_border</i>
+                                            <i id="s5" class="material-icons">star_border</i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s12" style="text-align:right">
+                                        <label> נושא: <%#Eval("CommentSubject") %> </label>
+                                    </div>
+                                </div>
+                                <div class="row" style="text-align:right">
+                                    <div class="col s12">
+                                        <label> תוכן: <%#Eval("CommentContent") %> </label>
+                                    </div>
+                                </div>
+                            </div>
+                                </asp:Panel>
+                        </ItemTemplate>
+                    </asp:DataList>
                 </div>
             </div>
         <%--<div class="card" style="width:40vh">
             <div class="card-image">
-                <asp:Image ID="imgMovie" runat="server" CssClass="imgCss"></asp:Image>
-                <span class="card-title" id="tit" runat="server"></span>
+
             </div>
-            <a><%#m.MovieTrailer %></a>
-            <iframe width="420" height="315" src='<%#m.MovieTrailer %>'></iframe>
+
         </div>--%>
+            <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>הוספת תגובה</h4>
+        <div class="row" style="color: #ff9800">
+            <div style="margin: 0 40px; cursor:pointer">
+                <i id="s1" class="material-icons" onmouseover="stars(1)"
+                    onmouseout="out()" onclick="changeselet(1)">star</i>
+                <i id="s2" class="material-icons" onmouseover="stars(2)"
+                    onmouseout="out()" onclick="changeselet(2)">star_border</i>
+                <i id="s3" class="material-icons" onmouseover="stars(3)"
+                    onmouseout="out()" onclick="changeselet(3)">star_border</i>
+                <i id="s4" class="material-icons" onmouseover="stars(4)"
+                    onmouseout="out()" onclick="changeselet(4)">star_border</i>
+                <i id="s5" class="material-icons" onmouseover="stars(5)"
+                    onmouseout="out()" onclick="changeselet(5)">star_border</i>
+            </div>
+            <asp:TextBox ID="txtRate" runat="server" Style="display:none"></asp:TextBox>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <asp:TextBox ID="txtCommentSubject" runat="server"></asp:TextBox>
+                <label for='<%#ClientID.Equals("txtCommentSubject") %>'>נושא</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <asp:TextBox ID="txtCommentContent" runat="server" CssClass="materialize-textarea" TextMode="MultiLine" data-length="240"></asp:TextBox>
+                <label for='<%#ClientID.Equals("txtCommentContent") %>'>תוכן</label>
+            </div>
+        </div>
+        <div>
+            <asp:Button ID="btnAddComment" runat="server" OnClick="btnAddComment_Click" Text="הוסף תגובה" CssClass="btn modal-close waves-effect waves-light"></asp:Button>
+        </div>
+    </div>
+    <%--<div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>--%>
+  </div>
             </center>
     </form>
 </body>

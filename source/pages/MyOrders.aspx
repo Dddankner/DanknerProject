@@ -89,7 +89,7 @@
                             <asp:Button runat="server" ID="searchByMovieName" Text="חיפוש" OnClick="searchByMovieName_Click"></asp:Button>
                         </div>
                         <div class="col s10">
-                            <asp:TextBox runat="server" ID="txtByMovieName" CssClass="autocomplete" placeholder="שם הסרט"></asp:TextBox>
+                            <asp:TextBox runat="server" ID="txtByMovieName" CssClass="autocomplete" autocomplete="off" placeholder="שם הסרט"></asp:TextBox>
                         </div>
                     </div>
                     <div class="row">

@@ -10,22 +10,23 @@ using System.Data.OleDb;
 public partial class pages_MoviePage : System.Web.UI.Page
 {
     public Movies m = new Movies();
+    public int rating = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
-        //if(Request.QueryString["movieID"] != null && Request.QueryString["movieID"].ToString() != "")
-        //{
-            //CreateM();
-            if(!IsPostBack)
+        if (Request.QueryString["movieID"] != null && Request.QueryString["movieID"].ToString() != "")
+        {
+
+            if (!IsPostBack)
             {
-                //imgMovie.ImageUrl = m.MoviePic;
-                //tit.InnerText = m.MovieName;
+                FillDataList();
             }
-        //}
-        //else
-        //{
-        //    Response.Redirect("catalog.aspx");
-        //}
+        }
+        else
+        {
+            Response.Redirect("/pages/catalog.aspx");
+        }
     }
+
 
     public void CreateM()
     {
@@ -34,5 +35,47 @@ public partial class pages_MoviePage : System.Web.UI.Page
         //m.MoviePic = ds.Tables[0].Rows[0]["MoviePic"].ToString();
         //m.MovieTrailer = ds.Tables[0].Rows[0]["MovieTrailer"].ToString();
         //m.MovieDescription = ds.Tables[0].Rows[0]["MovieDescreption"].ToString();
+    }
+
+    public void FillDataList()
+    {
+        WebService.WebService ws = new WebService.WebService();
+        DataSet ds = ws.GetCommentsByMovieId(int.Parse(Request.QueryString["movieID"].ToString()));
+        dlComments.DataSource = ds;
+        dlComments.DataBind();
+    }
+
+    protected void btnAddComment_Click(object sender, EventArgs e)
+    {
+        int movieID = int.Parse(Request.QueryString["movieID"].ToString());
+        int memberID = ((Members)Session["Member"]).MemberId;
+        string sub = txtCommentSubject.Text;
+        string content = txtCommentContent.Text;
+        int rating = int.Parse(txtRate.Text);
+        DateTime dt = DateTime.Now;
+        WebService.WebService ws = new WebService.WebService();
+        //ws.InsertComment(memberID, movieID, sub, content, rating, dt);
+        ws.InsertComment(memberID, movieID, sub, content, rating, dt);
+    }
+
+    public int GetRating(int commentID)
+    {
+        WebService.WebService ws = new WebService.WebService();
+        return ws.GetRatinByMovieAndComment(int.Parse(Request.QueryString["movieID"].ToString()), commentID);
+    }
+
+    protected void dlComments_ItemDataBound(object sender, DataListItemEventArgs e)
+    {
+        int rowIndex = int.Parse(e.Item.ItemIndex.ToString());
+        int commentID = int.Parse(dlComments.DataKeys[rowIndex].ToString());
+        int rating = GetRating(commentID);
+        //((Panel)dlComments.FindControl("starDiv")).ToolTip = rating.ToString();
+        //((Panel)dlComments.FindControl("starDiv")).Load += Pages_MoviePage_Load1;
+    }
+
+    private void Pages_MoviePage_Load1(object sender, EventArgs e)
+    {
+        int rating = int.Parse(((Panel)sender).ToolTip);
+        Page.ClientScript.RegisterStartupScript(GetType(), "setStars", "changeselet('" + rating + "')");
     }
 }

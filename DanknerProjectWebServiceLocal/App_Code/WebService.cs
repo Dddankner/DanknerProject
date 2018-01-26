@@ -30,18 +30,20 @@ public class WebService : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public void InsertComment(int MemberID, int MovieID, string commentContent, int commentRating, DateTime dt1)
+    public void InsertComment(int MemberID, int MovieID, string commentSubject, string commentContent, int commentRating, DateTime dt1)
     {
         var path = HttpContext.Current.Server.MapPath("/App_Data/XMLComments.xml");
         DataSet ds = new DataSet();
+        int comID = GetLastId() + 1;
         using (var stream = new FileStream(path, FileMode.Open))
         {
             ds.ReadXml(stream, XmlReadMode.Auto);
             DataTable dt = ds.Tables[0];
             DataRow dr = dt.NewRow();
-            dr["CommentID"] = GetLastId() + 1;
+            dr["CommentID"] = comID;
             dr["MemberID"] = MemberID;
             dr["MovieID"] = MovieID;
+            dr["CommentSubject"] = commentSubject;
             dr["CommentContent"] = commentContent;
             dr["CommentRating"] = commentRating;
             dr["CommentDate"] = dt1;
@@ -55,6 +57,7 @@ public class WebService : System.Web.Services.WebService
         }
     }
 
+    [WebMethod]
     public DataSet GetCommentsByMovieId(int movieID)
     {
         var path = HttpContext.Current.Server.MapPath("/App_Data/XMLComments.xml");
@@ -76,6 +79,7 @@ public class WebService : System.Web.Services.WebService
         return ds;
     }
 
+    [WebMethod]
     public double GetAvgRating(int movieID)
     {
         var path = HttpContext.Current.Server.MapPath("/App_Data/XMLComments.xml");
@@ -99,6 +103,7 @@ public class WebService : System.Web.Services.WebService
         return (double)sum / count;
     }
 
+    [WebMethod]
     public DataSet GetAllMyComments(int memberID)
     {
         var path = HttpContext.Current.Server.MapPath("/App_Data/XMLComments.xml");
@@ -119,6 +124,7 @@ public class WebService : System.Web.Services.WebService
         return ds;
     }
 
+    [WebMethod]
     public int GetLastId()
     {
         var path = HttpContext.Current.Server.MapPath("/App_Data/XMLComments.xml");
@@ -132,5 +138,27 @@ public class WebService : System.Web.Services.WebService
             lID = int.Parse(dr["CommentID"].ToString());
         }
         return lID;
+    }
+
+    [WebMethod]
+    public int GetRatinByMovieAndComment(int movieID, int commentID)
+    {
+        var path = HttpContext.Current.Server.MapPath("/App_Data/XMLComments.xml");
+        DataSet ds = new DataSet();
+        using (var stream = new FileStream(path, FileMode.Open))
+        {
+            ds.ReadXml(stream, XmlReadMode.Auto);
+            DataTable dt = ds.Tables[0];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                DataRow dr = dt.Rows[i];
+                if (int.Parse(dr["MovieID"].ToString()) != movieID && int.Parse(dr["MovieID"].ToString()) != commentID)
+                {
+                    dt.Rows.RemoveAt(i);
+                }
+            }
+            stream.Close();
+        }
+        return int.Parse(ds.Tables[0].Rows[0]["CommentRating"].ToString());
     }
 }

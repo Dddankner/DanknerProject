@@ -17,6 +17,7 @@
           <s:sequence>
             <s:element minOccurs="1" maxOccurs="1" name="MemberID" type="s:int" />
             <s:element minOccurs="1" maxOccurs="1" name="MovieID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="commentSubject" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="commentContent" type="s:string" />
             <s:element minOccurs="1" maxOccurs="1" name="commentRating" type="s:int" />
             <s:element minOccurs="1" maxOccurs="1" name="dt1" type="s:dateTime" />
@@ -25,6 +26,87 @@
       </s:element>
       <s:element name="InsertCommentResponse">
         <s:complexType />
+      </s:element>
+      <s:element name="GetCommentsByMovieId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="movieID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCommentsByMovieIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCommentsByMovieIdResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAvgRating">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="movieID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAvgRatingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetAvgRatingResult" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllMyComments">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="memberID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllMyCommentsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllMyCommentsResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLastId">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetLastIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetLastIdResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetRatinByMovieAndComment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="movieID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="commentID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetRatinByMovieAndCommentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetRatinByMovieAndCommentResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
       </s:element>
     </s:schema>
   </wsdl:types>
@@ -40,6 +122,36 @@
   <wsdl:message name="InsertCommentSoapOut">
     <wsdl:part name="parameters" element="tns:InsertCommentResponse" />
   </wsdl:message>
+  <wsdl:message name="GetCommentsByMovieIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCommentsByMovieId" />
+  </wsdl:message>
+  <wsdl:message name="GetCommentsByMovieIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCommentsByMovieIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAvgRatingSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAvgRating" />
+  </wsdl:message>
+  <wsdl:message name="GetAvgRatingSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAvgRatingResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllMyCommentsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllMyComments" />
+  </wsdl:message>
+  <wsdl:message name="GetAllMyCommentsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllMyCommentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLastIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLastId" />
+  </wsdl:message>
+  <wsdl:message name="GetLastIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLastIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetRatinByMovieAndCommentSoapIn">
+    <wsdl:part name="parameters" element="tns:GetRatinByMovieAndComment" />
+  </wsdl:message>
+  <wsdl:message name="GetRatinByMovieAndCommentSoapOut">
+    <wsdl:part name="parameters" element="tns:GetRatinByMovieAndCommentResponse" />
+  </wsdl:message>
   <wsdl:portType name="WebServiceSoap">
     <wsdl:operation name="HelloWorld">
       <wsdl:input message="tns:HelloWorldSoapIn" />
@@ -48,6 +160,26 @@
     <wsdl:operation name="InsertComment">
       <wsdl:input message="tns:InsertCommentSoapIn" />
       <wsdl:output message="tns:InsertCommentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCommentsByMovieId">
+      <wsdl:input message="tns:GetCommentsByMovieIdSoapIn" />
+      <wsdl:output message="tns:GetCommentsByMovieIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAvgRating">
+      <wsdl:input message="tns:GetAvgRatingSoapIn" />
+      <wsdl:output message="tns:GetAvgRatingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllMyComments">
+      <wsdl:input message="tns:GetAllMyCommentsSoapIn" />
+      <wsdl:output message="tns:GetAllMyCommentsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLastId">
+      <wsdl:input message="tns:GetLastIdSoapIn" />
+      <wsdl:output message="tns:GetLastIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRatinByMovieAndComment">
+      <wsdl:input message="tns:GetRatinByMovieAndCommentSoapIn" />
+      <wsdl:output message="tns:GetRatinByMovieAndCommentSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WebServiceSoap" type="tns:WebServiceSoap">
@@ -70,6 +202,51 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetCommentsByMovieId">
+      <soap:operation soapAction="http://tempuri.org/GetCommentsByMovieId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAvgRating">
+      <soap:operation soapAction="http://tempuri.org/GetAvgRating" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllMyComments">
+      <soap:operation soapAction="http://tempuri.org/GetAllMyComments" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastId">
+      <soap:operation soapAction="http://tempuri.org/GetLastId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRatinByMovieAndComment">
+      <soap:operation soapAction="http://tempuri.org/GetRatinByMovieAndComment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="WebServiceSoap12" type="tns:WebServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -84,6 +261,51 @@
     </wsdl:operation>
     <wsdl:operation name="InsertComment">
       <soap12:operation soapAction="http://tempuri.org/InsertComment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCommentsByMovieId">
+      <soap12:operation soapAction="http://tempuri.org/GetCommentsByMovieId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAvgRating">
+      <soap12:operation soapAction="http://tempuri.org/GetAvgRating" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllMyComments">
+      <soap12:operation soapAction="http://tempuri.org/GetAllMyComments" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastId">
+      <soap12:operation soapAction="http://tempuri.org/GetLastId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRatinByMovieAndComment">
+      <soap12:operation soapAction="http://tempuri.org/GetRatinByMovieAndComment" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

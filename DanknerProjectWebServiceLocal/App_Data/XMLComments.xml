@@ -1,9 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<Comments>
-  <CommentID>0</CommentID>
-  <MemberID>0</MemberID>
-  <MovieID>0</MovieID>
-  <CommentContent> </CommentContent>
-  <CommentRating>0</CommentRating>
-  <CommentDate>0</CommentDate>
-</Comments>
+<NewDataSet>
+  <Comments>
+    <CommentID>0</CommentID>
+    <MemberID>0</MemberID>
+    <MovieID>0</MovieID>
+    <CommentSubject>0</CommentSubject>
+    <CommentContent />
+    <CommentRating>0</CommentRating>
+    <CommentDate>0</CommentDate>
+  </Comments>
+  <Comments>
+    <CommentID>1</CommentID>
+    <MemberID>1</MemberID>
+    <MovieID>4</MovieID>
+    <CommentSubject>אחלה סרט</CommentSubject>
+    <CommentContent>אחלה סרט</CommentContent>
+    <CommentRating>3</CommentRating>
+    <CommentDate>26/01/2018 09:50:28</CommentDate>
+  </Comments>
+  <Comments>
+    <CommentID>2</CommentID>
+    <MemberID>1</MemberID>
+    <MovieID>4</MovieID>
+    <CommentSubject>אחלה סרט</CommentSubject>
+    <CommentContent>אחלה סרט</CommentContent>
+    <CommentRating>3</CommentRating>
+    <CommentDate>26/01/2018 09:56:24</CommentDate>
+  </Comments>
+</NewDataSet>
