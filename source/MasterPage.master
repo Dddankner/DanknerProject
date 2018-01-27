@@ -118,7 +118,7 @@
                     data: JSON.parse(data),
                     limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
                     onAutocomplete: function (val) {
-                        // Callback function when value is autcompleted.
+                        location.href = "/pages/MoviePage.aspx?movieID=" + val + "";
                     },
                     minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
                 });
@@ -211,8 +211,8 @@
                 <ul class="right">
                     <li><a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a></li>
                 </ul>
-        <div class="input-field right" style="width:90vh; text-align:right">
-          <input id="search" type="search" class="autocomplete" style="text-align:right; direction:rtl">
+        <div class="input-field right" style="width:90vh; text-align:right; margin-right:40vh;">
+          <input id="search" type="search" class="autocomplete" autocomplete="off" style="text-align:right; direction:rtl">
           <label class="label-icon" for="search"><i class="material-icons">search</i></label>
         </div>
             </div>

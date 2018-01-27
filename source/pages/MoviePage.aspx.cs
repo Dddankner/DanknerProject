@@ -11,11 +11,19 @@ public partial class pages_MoviePage : System.Web.UI.Page
 {
     public Movies m = new Movies();
     public int rating = 0;
+    public int movieID = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.QueryString["movieID"] != null && Request.QueryString["movieID"].ToString() != "")
         {
-
+            if(int.Parse(Request.QueryString["movieID"].ToString().Substring(0,1)) >= 0 && int.Parse(Request.QueryString["movieID"].ToString().Substring(0, 1)) >= 9)
+            {
+                movieID = int.Parse(Request.QueryString["movieID"].ToString());
+            }
+            else
+            {
+                movieID = MoviesService.GetIDByName(Request.QueryString["movieID"].ToString());
+            }
             if (!IsPostBack)
             {
                 FillDataList();

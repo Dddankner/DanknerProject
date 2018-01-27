@@ -4559,7 +4559,7 @@ nav .input-field {
 
     nav .input-field label {
         top: 0;
-        left: 0;
+        right: 0;
     }
 
         nav .input-field label i {
@@ -6632,7 +6632,7 @@ textarea.materialize-textarea {
     }
 
 .input-field input[type=search] + label {
-    left: 1rem;
+    right: 1rem;
 }
 
 .input-field input[type=search] ~ .mdi-navigation-close,
@@ -6694,7 +6694,8 @@ textarea {
     margin-bottom: 20px;
     display: block;
     opacity: 1;
-    position: static;
+    position: absolute;
+    width:100%;
 }
 
     .autocomplete-content li .highlight {
