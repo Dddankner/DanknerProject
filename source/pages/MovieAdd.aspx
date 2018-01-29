@@ -111,7 +111,14 @@
             $(".backCategory").on("click", function () {
                 $("#addCategory").fadeOut(200);
                 $("#btns").fadeIn(1200);
-            })
+            });
+            $("#ContentPlaceHolder1_ddlTheatersUpdate").change(function () {
+                if ($("#ContentPlaceHolder1_ddlMovies").prop("selectedIndex") != "0")
+                {
+
+                }
+            });
+
         })
         <%--<%--function ValidateHobbies(source, args) {
             var chkListModules = document.getElementById('<%= ddlCity.ClientID %>');
@@ -312,6 +319,15 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col s12">
+                                <asp:DropDownList ID="ddlTheatersUpdate" runat="server">
+                                </asp:DropDownList>
+                                <%--<label>בחר קולנוע</label>--%>
+                                <%--<asp:CheckBoxList ID="ddlTheatersUpdate" runat="server"></asp:CheckBoxList>--%>
+                                <%--<asp:RadioButtonList ID="ddlTheatersUpdate" runat="server"></asp:RadioButtonList>--%>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class=" input-field col s12 right-align" style="text-align:right !important">
                                 <asp:TextBox runat="server" ID="txtMovieNameUpdate"></asp:TextBox>
                                 <label for='<%#ClientID.Equals("txtMovieNameUpdate") %>'>שם סרט</label>
@@ -327,15 +343,6 @@
                             <div class=" input-field col s12 right-align" style="text-align:right !important">
                                 <asp:TextBox runat="server" ID="txtSeatNumUpdate"></asp:TextBox>
                                 <label for='<%#ClientID.Equals("txtSeatNumUpdate") %>'>מספר כיסאות</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col s12">
-                                <%--<asp:DropDownList ID="ddlTheatersUpdate" runat="server" multiple>
-                                </asp:DropDownList>--%>
-                                <label>בחר קולנוע</label>
-                                <%--<asp:CheckBoxList ID="ddlTheatersUpdate" runat="server"></asp:CheckBoxList>--%>
-                                <asp:RadioButtonList ID="ddlTheatersUpdate" runat="server"></asp:RadioButtonList>
                             </div>
                         </div>
                         <div class="row">

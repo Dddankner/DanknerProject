@@ -59,4 +59,10 @@ public class CategoriesService
         string strSql = "DELETE FROM Categories WHERE CategoryId=" + id;
         Connect.InsertUpdateDelete(strSql);
     }
+
+    public static string GetNameById(int id)
+    {
+        string strSql = "SELECT CategoryName FROM Categories WHERE CategoryId=" + id;
+        return Connect.GetDataSet(strSql, "Categories").Tables[0].Rows[0]["CategoryName"].ToString();
+    }
 }

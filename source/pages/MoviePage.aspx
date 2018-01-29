@@ -13,9 +13,10 @@
         $(document).ready(function () {
             $('ul.tabs').tabs();
             $('.modal').modal();
-            $.getJSON("/Content/autocompleteData/GetMovieInfo.ashx?movieID=<%=Request.QueryString["movieID"].ToString()%>", function (data) {
+            $.getJSON("/Content/autocompleteData/GetMovieInfo.ashx?movieID=<%=movieID%>", function (data) {
                 $("#lblName").text(data.MovieName);
                 $("#imgMovie").attr("src", data.MoviePic);
+                $("#lblCategory").text(data.CategoryId);
                 $("#lblDescription").text(data.MovieDescription);
                 $("#trailer").attr("href", data.MovieTrailer)
             });
@@ -63,6 +64,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true"></asp:ScriptManager>
         <div style="position: fixed; right: 0; top: 0;">
             <a href="catalog.aspx"><i class="material-icons" style="font-size: 40px; color: #039be5">arrow_forward</i></a>
         </div>

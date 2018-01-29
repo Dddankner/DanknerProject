@@ -96,7 +96,7 @@ public class MoviesService
 
     public static DataSet GetMovieDS(int id)
     {
-        string strSql = "SELECT * FROM Movies WHERE MovieId=" + id;
+        string strSql = "SELECT * FROM Movies,Categories WHERE MovieId=" + id;
         DataSet ds = Connect.GetDataSet(strSql, "Movies");
         return ds;
     }

@@ -6,23 +6,25 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.OleDb;
+using System.Text.RegularExpressions;
+using System.Web.Services;
 
 public partial class pages_MoviePage : System.Web.UI.Page
 {
     public Movies m = new Movies();
     public int rating = 0;
-    public int movieID = 0;
+    public string movieID = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.QueryString["movieID"] != null && Request.QueryString["movieID"].ToString() != "")
         {
-            if(int.Parse(Request.QueryString["movieID"].ToString().Substring(0,1)) >= 0 && int.Parse(Request.QueryString["movieID"].ToString().Substring(0, 1)) >= 9)
+            if(Regex.IsMatch(Request.QueryString["movieID"].ToString(), @"^\d+$"))
             {
-                movieID = int.Parse(Request.QueryString["movieID"].ToString());
+                movieID = Request.QueryString["movieID"].ToString();
             }
             else
             {
-                movieID = MoviesService.GetIDByName(Request.QueryString["movieID"].ToString());
+                movieID = MoviesService.GetIDByName(Request.QueryString["movieID"].ToString()).ToString();
             }
             if (!IsPostBack)
             {
@@ -48,14 +50,14 @@ public partial class pages_MoviePage : System.Web.UI.Page
     public void FillDataList()
     {
         WebService.WebService ws = new WebService.WebService();
-        DataSet ds = ws.GetCommentsByMovieId(int.Parse(Request.QueryString["movieID"].ToString()));
+        DataSet ds = ws.GetCommentsByMovieId(int.Parse(movieID));
         dlComments.DataSource = ds;
         dlComments.DataBind();
     }
 
     protected void btnAddComment_Click(object sender, EventArgs e)
     {
-        int movieID = int.Parse(Request.QueryString["movieID"].ToString());
+        int movieID1 = int.Parse(movieID);
         int memberID = ((Members)Session["Member"]).MemberId;
         string sub = txtCommentSubject.Text;
         string content = txtCommentContent.Text;
@@ -63,13 +65,13 @@ public partial class pages_MoviePage : System.Web.UI.Page
         DateTime dt = DateTime.Now;
         WebService.WebService ws = new WebService.WebService();
         //ws.InsertComment(memberID, movieID, sub, content, rating, dt);
-        ws.InsertComment(memberID, movieID, sub, content, rating, dt);
+        ws.InsertComment(memberID, movieID1, sub, content, rating, dt);
     }
 
     public int GetRating(int commentID)
     {
         WebService.WebService ws = new WebService.WebService();
-        return ws.GetRatinByMovieAndComment(int.Parse(Request.QueryString["movieID"].ToString()), commentID);
+        return ws.GetRatinByMovieAndComment(int.Parse(movieID), commentID);
     }
 
     protected void dlComments_ItemDataBound(object sender, DataListItemEventArgs e)
@@ -85,5 +87,11 @@ public partial class pages_MoviePage : System.Web.UI.Page
     {
         int rating = int.Parse(((Panel)sender).ToolTip);
         Page.ClientScript.RegisterStartupScript(GetType(), "setStars", "changeselet('" + rating + "')");
+    }
+
+    [WebMethod]
+    public static string GetName(int id)
+    {
+        return CategoriesService.GetNameById(id);
     }
 }
