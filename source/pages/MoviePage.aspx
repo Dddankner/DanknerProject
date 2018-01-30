@@ -16,7 +16,21 @@
             $.getJSON("/Content/autocompleteData/GetMovieInfo.ashx?movieID=<%=movieID%>", function (data) {
                 $("#lblName").text(data.MovieName);
                 $("#imgMovie").attr("src", data.MoviePic);
-                $("#lblCategory").text(data.CategoryId);
+                var txtCat = "";
+                var xhr = new XMLHttpRequest();
+                var q = "?id=" + data.CategoryId;
+                var url = "MoviePage.aspx/GetName" + q;
+                xhr.open("get", url, true);
+                xhr.onreadystatechange = function (response) {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        if (typeof xhr.responseText.text == "undefined") {
+                            txtCat = xhr.responseXML.textContent;
+                            //$("#lblCategory").text(xhr.responseXML.getElementsByTagName("string")[0].textContent);
+                        }
+                    }
+                }
+                xhr.send();
+                $("#lblCategory").text(txtCat);
                 $("#lblDescription").text(data.MovieDescription);
                 $("#trailer").attr("href", data.MovieTrailer)
             });

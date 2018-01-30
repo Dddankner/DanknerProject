@@ -108,6 +108,21 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="GetPow">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="num1" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="num2" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPowResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetPowResult" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="HelloWorldSoapIn">
@@ -152,6 +167,12 @@
   <wsdl:message name="GetRatinByMovieAndCommentSoapOut">
     <wsdl:part name="parameters" element="tns:GetRatinByMovieAndCommentResponse" />
   </wsdl:message>
+  <wsdl:message name="GetPowSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPow" />
+  </wsdl:message>
+  <wsdl:message name="GetPowSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPowResponse" />
+  </wsdl:message>
   <wsdl:portType name="WebServiceSoap">
     <wsdl:operation name="HelloWorld">
       <wsdl:input message="tns:HelloWorldSoapIn" />
@@ -180,6 +201,10 @@
     <wsdl:operation name="GetRatinByMovieAndComment">
       <wsdl:input message="tns:GetRatinByMovieAndCommentSoapIn" />
       <wsdl:output message="tns:GetRatinByMovieAndCommentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPow">
+      <wsdl:input message="tns:GetPowSoapIn" />
+      <wsdl:output message="tns:GetPowSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WebServiceSoap" type="tns:WebServiceSoap">
@@ -247,6 +272,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetPow">
+      <soap:operation soapAction="http://tempuri.org/GetPow" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="WebServiceSoap12" type="tns:WebServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -306,6 +340,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetRatinByMovieAndComment">
       <soap12:operation soapAction="http://tempuri.org/GetRatinByMovieAndComment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPow">
+      <soap12:operation soapAction="http://tempuri.org/GetPow" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

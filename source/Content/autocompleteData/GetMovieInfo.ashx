@@ -9,6 +9,7 @@ public class GetMovieInfo : IHttpHandler {
 
     public void ProcessRequest (HttpContext context) {
         context.Response.ContentType = "text/plain";
+            //int.Parse(context.Request.QueryString["movieID"].ToString())
         DataSet ds = MoviesService.GetMovieDS(int.Parse(context.Request.QueryString["movieID"].ToString()));
         Movies m = new Movies();
         m.MovieDescription = ds.Tables[0].Rows[0]["MovieDescreption"].ToString();

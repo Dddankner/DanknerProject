@@ -90,7 +90,7 @@ public partial class pages_MoviePage : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string GetName(int id)
+    public string GetName(int id)
     {
         return CategoriesService.GetNameById(id);
     }

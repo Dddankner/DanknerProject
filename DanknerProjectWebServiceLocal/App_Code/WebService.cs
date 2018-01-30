@@ -161,4 +161,30 @@ public class WebService : System.Web.Services.WebService
         }
         return int.Parse(ds.Tables[0].Rows[0]["CommentRating"].ToString());
     }
+
+    [WebMethod]
+    public string GetPow(int num1, int num2)
+    {
+        double res = Math.Pow(num1, num2);
+        return res.ToString();
+    }
+
+    [WebMethod]
+    public string GetMembers()
+    {
+        var path = HttpContext.Current.Server.MapPath("/App_Data/XMLComments.xml");
+        DataSet ds = new DataSet();
+        string tb = "<table>";
+        using (var stream = new FileStream(path, FileMode.Open))
+        {
+            ds.ReadXml(stream, XmlReadMode.Auto);
+            DataTable dt = ds.Tables[0];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                tb += "<tr><td>" + dt.Rows[i]["CommentRating"].ToString() + "</td><td>" + dt.Rows[i]["CommentID"].ToString() + "</td></tr>";
+            }
+        }
+        tb += "</table>";
+        return tb;
+    }
 }
