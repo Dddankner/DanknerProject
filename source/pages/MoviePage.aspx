@@ -23,9 +23,17 @@
                 xhr.open("get", url, true);
                 xhr.onreadystatechange = function (response) {
                     if (xhr.readyState == 4 && xhr.status == 200) {
-                        if (typeof xhr.responseText.text == "undefined") {
-                            txtCat = xhr.responseXML.textContent;
-                            //$("#lblCategory").text(xhr.responseXML.getElementsByTagName("string")[0].textContent);
+                        if (xhr.responseText != null)
+                        {
+                            alert(xhr.responseText.text)
+                            if (typeof xhr.responseText.text == "undefined") {
+                                alert(xhr.responseText.getElementsByTagName("string")[0].textContent + "fs")
+                                txtCat = xhr.responseText.getElementsByTagName("string")[0].textContent;
+                                //$("#lblCategory").text(xhr.responseXML.getElementsByTagName("string")[0].textContent);
+                            }
+                        }
+                        else {
+                            alert("xhr.responseXML == null")
                         }
                     }
                 }
