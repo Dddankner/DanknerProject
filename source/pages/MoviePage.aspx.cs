@@ -8,6 +8,8 @@ using System.Data;
 using System.Data.OleDb;
 using System.Text.RegularExpressions;
 using System.Web.Services;
+using System.Web.Script.Services;
+using System.Web.Script.Serialization;
 
 public partial class pages_MoviePage : System.Web.UI.Page
 {
@@ -90,8 +92,21 @@ public partial class pages_MoviePage : System.Web.UI.Page
     }
 
     [WebMethod]
-    public string GetName(int id)
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public static string GetName(int id)
     {
-        return CategoriesService.GetNameById(id);
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        var name1 = new name(CategoriesService.GetNameById(id));
+        return js.Serialize(name1);
+    }
+}
+
+public class name
+{
+    string nameString { get; set; }
+
+    public name(string name1)
+    {
+        this.nameString = name1;
     }
 }

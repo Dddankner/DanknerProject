@@ -16,24 +16,46 @@
             $.getJSON("/Content/autocompleteData/GetMovieInfo.ashx?movieID=<%=movieID%>", function (data) {
                 $("#lblName").text(data.MovieName);
                 $("#imgMovie").attr("src", data.MoviePic);
-                var txtCat = "";
-                var xhr = new XMLHttpRequest();
-                var q = "?id=" + data.CategoryId;
-                var url = "MoviePage.aspx/GetName" + q;
-                xhr.open("get", url, true);
-                xhr.onreadystatechange = function (response) {
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                        if (typeof xhr.responseText.text == "undefined") {
-                            txtCat = xhr.responseXML.textContent;
-                            //$("#lblCategory").text(xhr.responseXML.getElementsByTagName("string")[0].textContent);
-                        }
-                    }
-                }
-                xhr.send();
-                $("#lblCategory").text(txtCat);
+                //var xhr = new XMLHttpRequest();
+                //var q = "?id=" + data.CategoryId;
+                //var url = "MoviePage.aspx/GetName" + q;
+                //xhr.open("GET", url, true);
+                //xhr.onreadystatechange = function (response) {
+                //    if (xhr.readyState == 4 && xhr.status == 200) {
+                //        if (typeof xhr.responseText.text == "undefined") {
+                //            alert(xhr.responseText + ", ddd");
+                //            txtCat = xhr.responseText;
+                //            //$("#lblCategory").text(xhr.responseXML.getElementsByTagName("string")[0].textContent);
+                //        }
+                //        else {
+                //            alert("undefined");
+                //        }
+                //    }
+                //}
+                //xhr.send();
                 $("#lblDescription").text(data.MovieDescription);
-                $("#trailer").attr("href", data.MovieTrailer)
+                $("#trailer").attr("href", data.MovieTrailer);
             });
+            var txtCat = "קטגוריה";
+            var url = "MoviePage.aspx/GetName";
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: "{id:<%# movieID%>}",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                    succes: function (msg) {
+                        alert(url);
+                        alert("succes");
+                        var data = JSON.parse(msg.d);
+                        txtCat = data.nameString;
+                    },
+                    error: function (xhr, msg) {
+                        alert(url + ", " + <%=movieID%>);
+                        alert(msg + ", " + xhr.responseText);
+                    }
+             });
+             $("#lblCategory").text(txtCat);
         });
         var selected = 1;
         function stars(val) {
