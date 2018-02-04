@@ -62,17 +62,26 @@ public class WebService : System.Web.Services.WebService
     {
         var path = HttpContext.Current.Server.MapPath("/App_Data/XMLComments.xml");
         DataSet ds = new DataSet();
+        DataSet newDS = new DataSet();
         using (var stream = new FileStream(path, FileMode.Open))
         {
             ds.ReadXml(stream, XmlReadMode.Auto);
             DataTable dt = ds.Tables[0];
+            DataTable newDT = ds.Tables[0];
+            List<int> iList = new List<int>();
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 DataRow dr = dt.Rows[i];
                 if (int.Parse(dr["MovieID"].ToString()) != movieID)
                 {
-                    dt.Rows.RemoveAt(i);
+                    iList.Add(i);
+                    //newDT.Rows.Add(dt.Rows[i]);
+                    //dt.Rows.RemoveAt(i);
                 }
+            }
+            for (int i = 0; i < iList.Count; i++)
+            {
+                dt.Rows[iList.ElementAt(i)].Delete();
             }
             stream.Close();
         }

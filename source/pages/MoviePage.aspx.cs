@@ -87,8 +87,8 @@ public partial class pages_MoviePage : System.Web.UI.Page
 
     private void Pages_MoviePage_Load1(object sender, EventArgs e)
     {
-        int rating = int.Parse(((Panel)sender).ToolTip);
-        Page.ClientScript.RegisterStartupScript(GetType(), "setStars", "changeselet('" + rating + "')");
+        //int rating = int.Parse(((Panel)sender).ToolTip);
+        //Page.ClientScript.RegisterStartupScript(GetType(), "setStars", "changeselet('" + rating + "')");
     }
 
     [WebMethod]
@@ -100,15 +100,5 @@ public partial class pages_MoviePage : System.Web.UI.Page
         JavaScriptSerializer js = new JavaScriptSerializer();
         string name1 = CategoriesService.GetNameById(categoryID).ToString().Trim();
         return js.Serialize(name1);
-    }
-}
-
-public class name
-{
-    string nameString { get; set; }
-
-    public name(string name1)
-    {
-        this.nameString = name1;
     }
 }

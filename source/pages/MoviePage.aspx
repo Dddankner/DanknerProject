@@ -166,7 +166,7 @@
                         <ItemTemplate>
                             <asp:Panel ID="starDiv" runat="server">
                             <div class="card">
-                                <div class="row" style="color: #ff9800; text-align:center">
+                                <%--<div class="row" style="color: #ff9800; text-align:center">
                                     
                                     <div class="col s12">
                                         <div style="margin: 0 40px; cursor:pointer">
@@ -177,7 +177,7 @@
                                             <i id="s5" class="material-icons">star_border</i>
                                         </div>
                                     </div>
-                                </div>
+                                </div>--%>
                                 <div class="row">
                                     <div class="col s12" style="text-align:right">
                                         <label> נושא: <%#Eval("CommentSubject") %> </label>
