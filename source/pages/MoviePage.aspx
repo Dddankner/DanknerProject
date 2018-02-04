@@ -33,6 +33,29 @@
                 //    }
                 //}
                 //xhr.send();
+                //var txtCat = "";
+                //var xhr = new XMLHttpRequest();
+                //var q = "?id=" + data.CategoryId;
+                //var url = "MoviePage.aspx/GetName" + q;
+                //xhr.open("get", url, true);
+                //xhr.onreadystatechange = function (response) {
+                //    if (xhr.readyState == 4 && xhr.status == 200) {
+                //        if (xhr.responseText != null)
+                //        {
+                //            alert(xhr.responseText.text)
+                //            if (typeof xhr.responseText.text == "undefined") {
+                //                alert(xhr.responseText.getElementsByTagName("string")[0].textContent + "fs")
+                //                txtCat = xhr.responseText.getElementsByTagName("string")[0].textContent;
+                //                //$("#lblCategory").text(xhr.responseXML.getElementsByTagName("string")[0].textContent);
+                //            }
+                //        }
+                //        else {
+                //            alert("xhr.responseXML == null")
+                //        }
+                //    }
+                //}
+                //xhr.send();
+                $("#lblCategory").text(txtCat);
                 $("#lblDescription").text(data.MovieDescription);
                 $("#trailer").attr("href", data.MovieTrailer);
             });
@@ -41,21 +64,22 @@
             $.ajax({
                 type: "POST",
                 url: url,
-                data: "{id:<%# movieID%>}",
-                dataType: "json",
+                data: "{ id: <%=movieID%> }",
+                dataType: "JSON",
                 contentType: "application/json; charset=utf-8",
-                    succes: function (msg) {
-                        alert(url);
-                        alert("succes");
+                    success: function (msg) {
+                        //alert(url);
+                        //alert("succes");
                         var data = JSON.parse(msg.d);
-                        txtCat = data.nameString;
+                        //txtCat = data;
+                        $("#lblCategory").text(data);
                     },
                     error: function (xhr, msg) {
-                        alert(url + ", " + <%=movieID%>);
-                        alert(msg + ", " + xhr.responseText);
+                        <%--alert(url + ", " + <%=movieID%>);
+                        alert(msg + ", " + xhr.responseText);--%>
                     }
              });
-             $("#lblCategory").text(txtCat);
+             //$("#lblCategory").text(txtCat);
         });
         var selected = 1;
         function stars(val) {

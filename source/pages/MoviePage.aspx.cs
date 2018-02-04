@@ -95,8 +95,10 @@ public partial class pages_MoviePage : System.Web.UI.Page
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public static string GetName(int id)
     {
+        DataSet ds = MoviesService.GetMovieDS(id);
+        int categoryID = int.Parse(ds.Tables[0].Rows[0]["CategoryId"].ToString());
         JavaScriptSerializer js = new JavaScriptSerializer();
-        var name1 = new name(CategoriesService.GetNameById(id));
+        string name1 = CategoriesService.GetNameById(categoryID).ToString().Trim();
         return js.Serialize(name1);
     }
 }

@@ -65,4 +65,10 @@ public class CategoriesService
         string strSql = "SELECT CategoryName FROM Categories WHERE CategoryId=" + id;
         return Connect.GetDataSet(strSql, "Categories").Tables[0].Rows[0]["CategoryName"].ToString();
     }
+
+    public static string GetMovieCategory(int id)
+    {
+        string strSql = "SELECT CategoryName FROM Categories WHERE MovieId=" + id;
+        return Connect.GetDataSet(strSql, "Categories").Tables[0].Rows[0]["CategoryName"].ToString();
+    }
 }
