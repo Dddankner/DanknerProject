@@ -64,9 +64,9 @@
             $.ajax({
                 type: "POST",
                 url: url,
-                data: "{ id: <%=movieID%> }",
+                data: "{ id:<%=movieID%> }",
                 dataType: "JSON",
-                contentType: "application/json; charset=utf-8",
+                contentType: "application/JSON; charset=utf-8",
                     success: function (msg) {
                         //alert(url);
                         //alert("succes");
@@ -75,8 +75,8 @@
                         $("#lblCategory").text(data);
                     },
                     error: function (xhr, msg) {
-                        <%--alert(url + ", " + <%=movieID%>);
-                        alert(msg + ", " + xhr.responseText);--%>
+                        alert(url + ", " + <%=movieID%>);
+                        alert(msg + ", " + xhr.responseText);
                     }
              });
              //$("#lblCategory").text(txtCat);
@@ -156,12 +156,11 @@
                     </div>
                 <div id="comments">
                     <br />
-                    <%if (Session["Member"] != null)
-                        { %>
                     <div class="row">
                         <a class="waves-effect waves-light btn modal-trigger" href="#modal1">הוסף תגובה</a>
                     </div>
-                    <%} %>
+                    <br /><br />
+                    <asp:Label ID="lblNoDL" runat="server"></asp:Label>
                     <asp:DataList ID="dlComments" runat="server" DataKeyField="CommentID" RepeatColumns="1" OnItemDataBound="dlComments_ItemDataBound">
                         <ItemTemplate>
                             <asp:Panel ID="starDiv" runat="server">
@@ -202,6 +201,8 @@
         </div>--%>
             <div id="modal1" class="modal">
     <div class="modal-content">
+        <%if (Session["Member"] != null)
+            { %>
       <h4>הוספת תגובה</h4>
         <div class="row" style="color: #ff9800">
             <div style="margin: 0 40px; cursor:pointer">
@@ -233,10 +234,12 @@
         <div>
             <asp:Button ID="btnAddComment" runat="server" OnClick="btnAddComment_Click" Text="הוסף תגובה" CssClass="btn modal-close waves-effect waves-light"></asp:Button>
         </div>
+        <%}
+    else
+    { %>
+        <h3> בשביל להוסיף תגובה עליך להתחבר </h3>
+        <%} %>
     </div>
-    <%--<div class="modal-footer">
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-    </div>--%>
   </div>
             </center>
     </form>

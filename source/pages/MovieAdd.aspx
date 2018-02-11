@@ -115,7 +115,22 @@
             $("#ContentPlaceHolder1_ddlTheatersUpdate").change(function () {
                 if ($("#ContentPlaceHolder1_ddlMovies").prop("selectedIndex") != "0")
                 {
-
+                    //var movieIdVal = $("#ContentPlaceHolder1_ddlMovies").prop("selectedValue");
+                    $.ajax({
+                        url: "MovieAdd.aspx/GetMovieDetails",
+                        type: "POST",
+                        data: "movieID: <%# ddlMovies.SelectedValue%>",
+                        dataType: 'JSON',
+                        contentType: "application/json; charset=utf-8",
+                        success: function (msg) {
+                            var data = JSON.parse(msg.d);
+                            $("#<%# txtMovieNameUpdate.ClientID %>").val(data.MovieName);
+                        },
+                        error: function (msg, xhr) {
+                            //alert(JSON.parse(msg.d));
+                            alert(msg + ", " + xhr.responseText);
+                        }
+                    });
                 }
             });
 

@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Web.Services;
 using System.Web.Script.Services;
 using System.Web.Script.Serialization;
+using System.Threading;
 
 public partial class pages_MoviePage : System.Web.UI.Page
 {
@@ -52,9 +53,12 @@ public partial class pages_MoviePage : System.Web.UI.Page
     public void FillDataList()
     {
         WebService.WebService ws = new WebService.WebService();
-        DataSet ds = ws.GetCommentsByMovieId(int.Parse(movieID));
-        dlComments.DataSource = ds;
-        dlComments.DataBind();
+        if (ws.IsExist(int.Parse(movieID)))
+        {
+            DataSet ds = ws.GetCommentsByMovieId(int.Parse(movieID));
+            dlComments.DataSource = ds;
+            dlComments.DataBind();
+        }
     }
 
     protected void btnAddComment_Click(object sender, EventArgs e)
@@ -73,7 +77,8 @@ public partial class pages_MoviePage : System.Web.UI.Page
     public int GetRating(int commentID)
     {
         WebService.WebService ws = new WebService.WebService();
-        return ws.GetRatinByMovieAndComment(int.Parse(movieID), commentID);
+        //return ws.GetRatinByMovieAndComment(int.Parse(movieID), commentID);
+        return 0;
     }
 
     protected void dlComments_ItemDataBound(object sender, DataListItemEventArgs e)
@@ -96,6 +101,7 @@ public partial class pages_MoviePage : System.Web.UI.Page
     public static string GetName(int id)
     {
         DataSet ds = MoviesService.GetMovieDS(id);
+        Thread.Sleep(50);
         int categoryID = int.Parse(ds.Tables[0].Rows[0]["CategoryId"].ToString());
         JavaScriptSerializer js = new JavaScriptSerializer();
         string name1 = CategoriesService.GetNameById(categoryID).ToString().Trim();

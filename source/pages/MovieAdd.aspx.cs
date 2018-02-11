@@ -6,6 +6,9 @@ using System.Data;
 using System.Data.OleDb;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Services;
+using System.Web.Script.Services;
+using System.Web.Script.Serialization;
 
 public partial class pages_MovieAdd : System.Web.UI.Page
 {
@@ -357,5 +360,22 @@ public partial class pages_MovieAdd : System.Web.UI.Page
     protected void theaterGrd_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
 
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public static string GetMovieDetails(int MovieID)
+    {
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        DataSet ds = MoviesService.GetMovieDS(MovieID);
+        Movies m = new Movies();
+        m.MovieDescription = ds.Tables[0].Rows[0]["MovieDescreption"].ToString();
+        m.MovieName = ds.Tables[0].Rows[0]["MovieName"].ToString();
+        m.MovieId = int.Parse(ds.Tables[0].Rows[0]["MovieId"].ToString());
+        m.MoviePic = ds.Tables[0].Rows[0]["MoviePic"].ToString();
+        m.MovieTrailer = ds.Tables[0].Rows[0]["MovieTrailer"].ToString();
+        m.CategoryId = int.Parse(ds.Tables[0].Rows[0]["CategoryId"].ToString());
+        m.MovieSeatPrice = int.Parse(ds.Tables[0].Rows[0]["MovieSeatPrice"].ToString());
+        return js.Serialize(m);
     }
 }

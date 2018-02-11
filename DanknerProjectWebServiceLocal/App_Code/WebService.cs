@@ -179,6 +179,31 @@ public class WebService : System.Web.Services.WebService
     }
 
     [WebMethod]
+    public bool IsExist(int id)
+    {
+        bool isEx = false;
+        var path = HttpContext.Current.Server.MapPath("/App_Data/XMLComments.xml");
+        DataSet ds = new DataSet();
+        using (var stream = new FileStream(path, FileMode.Open))
+        {
+            ds.ReadXml(stream, XmlReadMode.Auto);
+            int i = 0;
+            while(i < ds.Tables[0].Rows.Count && !isEx)
+            {
+                if(int.Parse(ds.Tables[0].Rows[i]["MovieID"].ToString()) == id)
+                {
+                    isEx = true;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+        }
+        return isEx;
+    }
+
+    [WebMethod]
     public string GetMembers()
     {
         var path = HttpContext.Current.Server.MapPath("/App_Data/XMLComments.xml");

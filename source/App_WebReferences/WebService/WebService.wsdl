@@ -123,6 +123,20 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="IsExist">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsExistResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="IsExistResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="GetMembers">
         <s:complexType />
       </s:element>
@@ -144,6 +158,7 @@
       </s:element>
       <s:element name="double" type="s:double" />
       <s:element name="int" type="s:int" />
+      <s:element name="boolean" type="s:boolean" />
     </s:schema>
   </wsdl:types>
   <wsdl:message name="HelloWorldSoapIn">
@@ -193,6 +208,12 @@
   </wsdl:message>
   <wsdl:message name="GetPowSoapOut">
     <wsdl:part name="parameters" element="tns:GetPowResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsExistSoapIn">
+    <wsdl:part name="parameters" element="tns:IsExist" />
+  </wsdl:message>
+  <wsdl:message name="IsExistSoapOut">
+    <wsdl:part name="parameters" element="tns:IsExistResponse" />
   </wsdl:message>
   <wsdl:message name="GetMembersSoapIn">
     <wsdl:part name="parameters" element="tns:GetMembers" />
@@ -249,6 +270,12 @@
   <wsdl:message name="GetPowHttpGetOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
+  <wsdl:message name="IsExistHttpGetIn">
+    <wsdl:part name="id" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="IsExistHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
   <wsdl:message name="GetMembersHttpGetIn" />
   <wsdl:message name="GetMembersHttpGetOut">
     <wsdl:part name="Body" element="tns:string" />
@@ -302,6 +329,12 @@
   <wsdl:message name="GetPowHttpPostOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
+  <wsdl:message name="IsExistHttpPostIn">
+    <wsdl:part name="id" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="IsExistHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
   <wsdl:message name="GetMembersHttpPostIn" />
   <wsdl:message name="GetMembersHttpPostOut">
     <wsdl:part name="Body" element="tns:string" />
@@ -338,6 +371,10 @@
     <wsdl:operation name="GetPow">
       <wsdl:input message="tns:GetPowSoapIn" />
       <wsdl:output message="tns:GetPowSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IsExist">
+      <wsdl:input message="tns:IsExistSoapIn" />
+      <wsdl:output message="tns:IsExistSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="GetMembers">
       <wsdl:input message="tns:GetMembersSoapIn" />
@@ -377,6 +414,10 @@
       <wsdl:input message="tns:GetPowHttpGetIn" />
       <wsdl:output message="tns:GetPowHttpGetOut" />
     </wsdl:operation>
+    <wsdl:operation name="IsExist">
+      <wsdl:input message="tns:IsExistHttpGetIn" />
+      <wsdl:output message="tns:IsExistHttpGetOut" />
+    </wsdl:operation>
     <wsdl:operation name="GetMembers">
       <wsdl:input message="tns:GetMembersHttpGetIn" />
       <wsdl:output message="tns:GetMembersHttpGetOut" />
@@ -414,6 +455,10 @@
     <wsdl:operation name="GetPow">
       <wsdl:input message="tns:GetPowHttpPostIn" />
       <wsdl:output message="tns:GetPowHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IsExist">
+      <wsdl:input message="tns:IsExistHttpPostIn" />
+      <wsdl:output message="tns:IsExistHttpPostOut" />
     </wsdl:operation>
     <wsdl:operation name="GetMembers">
       <wsdl:input message="tns:GetMembersHttpPostIn" />
@@ -487,6 +532,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetPow">
       <soap:operation soapAction="http://tempuri.org/GetPow" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsExist">
+      <soap:operation soapAction="http://tempuri.org/IsExist" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -578,6 +632,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="IsExist">
+      <soap12:operation soapAction="http://tempuri.org/IsExist" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetMembers">
       <soap12:operation soapAction="http://tempuri.org/GetMembers" style="document" />
       <wsdl:input>
@@ -660,6 +723,15 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="IsExist">
+      <http:operation location="/IsExist" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetMembers">
       <http:operation location="/GetMembers" />
       <wsdl:input>
@@ -735,6 +807,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetPow">
       <http:operation location="/GetPow" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsExist">
+      <http:operation location="/IsExist" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>
