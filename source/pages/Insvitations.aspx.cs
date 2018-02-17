@@ -6,6 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.OleDb;
+using System.Web.Services;
+using System.Web.Script.Services;
 
 public partial class pages_Insvitations : System.Web.UI.Page
 {
@@ -426,5 +428,12 @@ public partial class pages_Insvitations : System.Web.UI.Page
     protected void btnBackToCity_Click(object sender, EventArgs e)
     {
         //Response.Redirect("Insvitations.aspx?MovieId=" + int.Parse(Session["MovieId"].ToString()) + "#selectDetails");
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public static string GetSeats(int id)
+    {
+        return "jhdsa";
     }
 }

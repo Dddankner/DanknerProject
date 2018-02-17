@@ -17,4 +17,22 @@
     <CommentRating>3</CommentRating>
     <CommentDate>26/01/2018 09:56:24</CommentDate>
   </Comments>
+  <Comments>
+    <CommentID>3</CommentID>
+    <MemberID>1</MemberID>
+    <MovieID>2</MovieID>
+    <CommentSubject>לא אהבתי</CommentSubject>
+    <CommentContent>סרט נחמד, לא יותר</CommentContent>
+    <CommentRating>4</CommentRating>
+    <CommentDate>16/02/2018 9:14:21</CommentDate>
+  </Comments>
+  <Comments>
+    <CommentID>5</CommentID>
+    <MemberID>1</MemberID>
+    <MovieID>4</MovieID>
+    <CommentSubject>חרא</CommentSubject>
+    <CommentContent>מעפן</CommentContent>
+    <CommentRating>3</CommentRating>
+    <CommentDate>16/02/2018 9:28:27</CommentDate>
+  </Comments>
 </NewDataSet>

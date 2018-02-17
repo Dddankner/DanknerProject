@@ -21,6 +21,11 @@
             <%--("#ContentPlaceHolder1_ddlTheaters").change(function {
                 <%PanelFill(); %>
             });--%>
+            $("#conToSeats").click(function () {
+                $.ajax({
+
+                });
+            })
         });
 
         function f(e, args) {
@@ -95,7 +100,8 @@
                 </div>
                 <div class="row">
                     <div class="col s12">
-                        <asp:Button ID="btnNext" runat="server" Text="המשך" ValidationGroup="cityVal" CssClass="btn waves-effect waves-light" OnClick="btnNext_Click"></asp:Button>
+                        <%--<asp:Button ID="btnNext" runat="server" Text="המשך" ValidationGroup="cityVal" CssClass="btn waves-effect waves-light"></asp:Button>--%>
+                        <a id="conToSeats" class="btn waves-effect waves-light">המשך</a>
                     </div>
                 </div>
             </div>

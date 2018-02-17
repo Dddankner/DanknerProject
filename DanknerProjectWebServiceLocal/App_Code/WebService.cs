@@ -18,7 +18,6 @@ public class WebService : System.Web.Services.WebService
 
     public WebService()
     {
-
         //Uncomment the following line if using designed components 
         //InitializeComponent(); 
     }
@@ -71,18 +70,17 @@ public class WebService : System.Web.Services.WebService
             List<int> iList = new List<int>();
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                DataRow dr = dt.Rows[i];
-                if (int.Parse(dr["MovieID"].ToString()) != movieID)
+                if (int.Parse(dt.Rows[i]["MovieID"].ToString()) != movieID)
                 {
-                    iList.Add(i);
+                    dt.Rows[i].Delete();
                     //newDT.Rows.Add(dt.Rows[i]);
                     //dt.Rows.RemoveAt(i);
                 }
             }
-            for (int i = 0; i < iList.Count; i++)
-            {
-                dt.Rows[iList.ElementAt(i)].Delete();
-            }
+            //for (int i = 0; i < iList.Count; i++)
+            //{
+            //    dt.Rows[iList.ElementAt(i)].Delete();
+            //}
             stream.Close();
         }
         return ds;

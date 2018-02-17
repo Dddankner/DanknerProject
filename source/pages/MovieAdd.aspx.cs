@@ -364,10 +364,10 @@ public partial class pages_MovieAdd : System.Web.UI.Page
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public static string GetMovieDetails(int MovieID)
+    public static string GetMovieDetails(int movieID)
     {
         JavaScriptSerializer js = new JavaScriptSerializer();
-        DataSet ds = MoviesService.GetMovieDS(MovieID);
+        DataSet ds = MoviesService.GetMovieDS(movieID);
         Movies m = new Movies();
         m.MovieDescription = ds.Tables[0].Rows[0]["MovieDescreption"].ToString();
         m.MovieName = ds.Tables[0].Rows[0]["MovieName"].ToString();
@@ -377,5 +377,16 @@ public partial class pages_MovieAdd : System.Web.UI.Page
         m.CategoryId = int.Parse(ds.Tables[0].Rows[0]["CategoryId"].ToString());
         m.MovieSeatPrice = int.Parse(ds.Tables[0].Rows[0]["MovieSeatPrice"].ToString());
         return js.Serialize(m);
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public static string GetSeatNum(int movieID, int theaID)
+    {
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        string num = "0";
+        if (TheaterMoviesService.IsExist(theaID, movieID))
+            num = TheaterMoviesService.GetSeatNum(theaID, movieID).ToString();
+        return js.Serialize(num);
     }
 }

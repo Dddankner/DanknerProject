@@ -59,6 +59,8 @@ public partial class pages_MoviePage : System.Web.UI.Page
             dlComments.DataSource = ds;
             dlComments.DataBind();
         }
+        else
+            noComments.InnerHtml = "אין תגובות";
     }
 
     protected void btnAddComment_Click(object sender, EventArgs e)

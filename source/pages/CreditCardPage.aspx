@@ -14,6 +14,30 @@
             display: block;
         }
     </style>
+    <script lang="ja" type="text/javascript">
+        $(document).ready(function () {
+            var url = "CreditCardPage.aspx/GetCardInfo";
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: "{ cardID : 4 }",
+                dataType: "JSON",
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    alert("success");
+                    var data = JSON.parse(msg.d);
+                    $("#ContentPlaceHolder1_txtCardNumUp").val(data.CreditCardNum);
+                    $("#ContentPlaceHolder1_txtCardCVVUp").val(data.CreditCardCVV);
+                    $("#ContentPlaceHolder1_txtMonthUp").val(data.CreditCardExpiery.GetMonth());
+                    $("#ContentPlaceHolder1_txtYearUp").val(data.CreditCardExpiery.GetYear());
+                    Materialize.updateTextFields();
+                },
+                error: function (msg, xhr) {
+                    alert(msg + ", " + xhr.responseText);
+                }
+            });
+        });
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <center>

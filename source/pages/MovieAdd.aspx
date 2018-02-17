@@ -115,26 +115,71 @@
             $("#ContentPlaceHolder1_ddlTheatersUpdate").change(function () {
                 if ($("#ContentPlaceHolder1_ddlMovies").prop("selectedIndex") != "0")
                 {
-                    //var movieIdVal = $("#ContentPlaceHolder1_ddlMovies").prop("selectedValue");
+                    var url = "MovieAdd.aspx/GetMovieDetails";
+                    var movieID = $("#ContentPlaceHolder1_ddlMovies").val();
+                    var theaID = $("#ContentPlaceHolder1_ddlTheatersUpdate").val();
                     $.ajax({
-                        url: "MovieAdd.aspx/GetMovieDetails",
+                        url: url,
                         type: "POST",
-                        data: "movieID: <%# ddlMovies.SelectedValue%>",
+                        data: "{ movieID: " + movieID + " }",
                         dataType: 'JSON',
-                        contentType: "application/json; charset=utf-8",
+                        contentType: "application/JSON; charset=utf-8",
                         success: function (msg) {
+                            //alert("success");
                             var data = JSON.parse(msg.d);
-                            $("#<%# txtMovieNameUpdate.ClientID %>").val(data.MovieName);
+                            $("#ContentPlaceHolder1_txtMovieNameUpdate").val(data.MovieName);
+                            $("#ContentPlaceHolder1_txtSeatPriceUpdate").val(data.MovieSeatPrice);
+                            $("#ContentPlaceHolder1_ddlCategoruUpdate").val(data.CategoryId);
+                            $("#ContentPlaceHolder1_txtTrailerUpdate").val(data.MovieTrailer);
+                            $("#ContentPlaceHolder1_txtSumUpdate").val(data.MovieDescription);
+                            $('select').material_select();
+                            $.ajax({
+                                url: "MovieAdd.aspx/GetSeatNum",
+                                type: "POST",
+                                data: "{ movieID: " + movieID + ", theaID: " + theaID + " }",
+                                dataType: 'JSON',
+                                contentType: "application/JSON; charset=utf-8",
+                                success: function (msg) {
+                                    var data = JSON.parse(msg.d);
+                                    if (data != "0") {
+                                        //alert("seatNum success, " + data);
+                                        $("#ContentPlaceHolder1_txtSeatNumUpdate").val(data);
+                                        Materialize.updateTextFields();
+                                    }
+                                    else {
+                                        $("#ContentPlaceHolder1_txtSeatNumUpdate").val("");
+                                        Materialize.updateTextFields();
+                                        alert("הסרט לא נמצא בקולנוע שבחרת. עליך להוסיף ידנית מספר כיסאות או לבחור קולנוע אחר");
+                                    }
+                                },
+                                error: function (msg, xhr) {
+                                    alert("seatNum fail, " + theaID + movieID);
+                                }
+                            });
+                            Materialize.updateTextFields();
                         },
                         error: function (msg, xhr) {
                             //alert(JSON.parse(msg.d));
+                            alert(url + ", " + movieID)
                             alert(msg + ", " + xhr.responseText);
                         }
                     });
                 }
             });
 
+            $("#ContentPlaceHolder1_ddlUpdateCategory").change(function () {
+                var name = $('#ContentPlaceHolder1_ddlUpdateCategory :selected').text();
+                $("#ContentPlaceHolder1_txtCategoryNameUpdate").val(name);
+                Materialize.updateTextFields();
+            });
+
         })
+
+        function OpenMovieModal(movieID)
+        {
+            alert(id);
+        }
+
         <%--<%--function ValidateHobbies(source, args) {
             var chkListModules = document.getElementById('<%= ddlCity.ClientID %>');
             var chkListinputs = chkListModules.getElementsByTagName("input");
@@ -312,7 +357,7 @@
                     <asp:CustomValidator ID="validatePic" ControlToValidate="fuPic" runat="server" ValidationGroup="MovieAdd" ClientValidationFunction="CheckPhoto" ErrorMessage="חובה להכניס קובץ מסוג תמונה">&nbsp</asp:CustomValidator>
                     <asp:RequiredFieldValidator ID="sumReqAdd" runat="server" ControlToValidate="txtSum" ValidationGroup="MovieAdd" ErrorMessage="חובה למלא תקציר"></asp:RequiredFieldValidator>
                     <div id="showMovie">
-                        <asp:GridView runat="server" ID="MoviesGrd" AutoGenerateColumns="False" DataKeyNames="MovieId" CssClass="grdView1 highlight white">
+                        <asp:GridView runat="server" ID="MoviesGrd" AutoGenerateColumns="False" CssClass="grdView1 highlight white">
                 <Columns>
                     <%--<asp:TemplateField HeaderText="תמונה">
                 <ItemTemplate>
@@ -322,7 +367,12 @@
                     <asp:BoundField DataField="MovieName" HeaderText="שם סרט" />
                     <asp:BoundField DataField="CategoryName" HeaderText="קטגוריה" />
                     <%--<asp:BoundField DataField="MovieSeatNum" HeaderText="מספר כיסאות" />--%>
-                    <asp:BoundField DataField="MovieSeatPrice" HeaderText="מחיר לכיסא" />
+                    <%--<asp:BoundField DataField="MovieSeatPrice" HeaderText="מחיר לכיסא" />--%>
+                    <asp:TemplateField>
+                        <ItemTemplate>
+                            <a onclick="OpenMovieModal(<%# Eval("MovieId") %>)"> הוסף סרט </a>
+                        </ItemTemplate>
+                    </asp:TemplateField>
                     <asp:BoundField />
                 </Columns>
             </asp:GridView>

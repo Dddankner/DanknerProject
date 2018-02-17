@@ -68,7 +68,7 @@
                 dataType: "JSON",
                 contentType: "application/JSON; charset=utf-8",
                     success: function (msg) {
-                        //alert(url);
+                        //alert(<%=movieID%>);
                         //alert("succes");
                         var data = JSON.parse(msg.d);
                         //txtCat = data;
@@ -115,10 +115,12 @@
 
         input {
             text-align: right;
+            direction:rtl;
         }
 
         textarea {
             text-align: right;
+            direction:rtl;
         }
     </style>
 </head>
@@ -159,8 +161,7 @@
                     <div class="row">
                         <a class="waves-effect waves-light btn modal-trigger" href="#modal1">הוסף תגובה</a>
                     </div>
-                    <br /><br />
-                    <asp:Label ID="lblNoDL" runat="server"></asp:Label>
+                    <h4 id="noComments" runat="server"></h4>
                     <asp:DataList ID="dlComments" runat="server" DataKeyField="CommentID" RepeatColumns="1" OnItemDataBound="dlComments_ItemDataBound">
                         <ItemTemplate>
                             <asp:Panel ID="starDiv" runat="server">
@@ -179,7 +180,7 @@
                                 </div>--%>
                                 <div class="row">
                                     <div class="col s12" style="text-align:right">
-                                        <label> נושא: <%#Eval("CommentSubject") %> </label>
+                                        <label> נושא: <%#Eval("commentsubject") %> </label>
                                     </div>
                                 </div>
                                 <div class="row" style="text-align:right">
@@ -191,6 +192,7 @@
                                 </asp:Panel>
                         </ItemTemplate>
                     </asp:DataList>
+                    <br />
                 </div>
             </div>
         <%--<div class="card" style="width:40vh">

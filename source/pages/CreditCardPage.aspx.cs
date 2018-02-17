@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using System.Web.Services;
+using System.Web.Script.Services;
+using System.Web.Script.Serialization;
 
 public partial class pages_CreditCardPage : System.Web.UI.Page
 {
@@ -82,5 +85,20 @@ public partial class pages_CreditCardPage : System.Web.UI.Page
         }
         else
             Response.Write("<script language='javascript'>alert('הכרטיס לא בתוקף')</script>");
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public static string GetCardInfo(int cardID)
+    {
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        DataSet ds = CreditCardService.GetCreditCardDetails(cardID);
+        CreditCard cd = new CreditCard();
+        cd.CreditCardId = int.Parse(ds.Tables[0].Rows[0]["CreditCardId"].ToString());
+        cd.MemberId = int.Parse(ds.Tables[0].Rows[0]["MemberId"].ToString());
+        cd.CreditCardCVV = ds.Tables[0].Rows[0]["CreditCardCVV"].ToString();
+        cd.CreditCardNum = ds.Tables[0].Rows[0]["CreditCardNum"].ToString();
+        cd.CreditCardExpiery = DateTime.Parse(ds.Tables[0].Rows[0]["CreditCardExpiery"].ToString());
+        return js.Serialize("skdjskcmsjxndjfk");
     }
 }

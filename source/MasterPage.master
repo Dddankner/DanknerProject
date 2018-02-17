@@ -207,13 +207,13 @@
   </nav>--%>
         <%--</div>--%>
         <div class="navbar-fixed">
-            <nav style="height:6vh !important;">
+            <nav>
             <div class="nav-wrapper" style="text-align:center">
                 <ul class="right">
                     <li><a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a></li>
                 </ul>
         <div class="input-field right" style="width:90vh; text-align:right; margin-right:40vh;">
-          <input id="search" type="search" class="autocomplete" autocomplete="off" style="text-align:right; direction:rtl; height:6vh !important"/>
+          <input id="search" type="search" class="autocomplete" autocomplete="off" style="text-align:right; direction:rtl;"/>
           <label class="label-icon" for="search"><i class="material-icons">search</i></label>
         </div>
             </div>

@@ -51,7 +51,7 @@
     <%} %>
     </div>
     <div class="card-action" style="direction:rtl;">
-        <asp:HyperLink ID="hlMoviePage" runat="server" ToolTip='<%#Eval("MovieId") %>'>HyperLink</asp:HyperLink>
+        <asp:HyperLink ID="hlMoviePage" runat="server" ToolTip='<%#Eval("MovieId") %>'>עוד פרטים</asp:HyperLink>
     </div>
     <div class="card-reveal" style="direction:rtl;">
       <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i><%#Eval("MovieName") %></span>
