@@ -124,7 +124,7 @@ public class WebService : System.Web.Services.WebService
                 DataRow dr = dt.Rows[i];
                 if (int.Parse(dr["MemberID"].ToString()) != memberID)
                 {
-                    dt.Rows.RemoveAt(i);
+                    dt.Rows[i].Delete();
                 }
             }
         }

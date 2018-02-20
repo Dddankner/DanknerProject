@@ -99,6 +99,6 @@ public partial class pages_CreditCardPage : System.Web.UI.Page
         cd.CreditCardCVV = ds.Tables[0].Rows[0]["CreditCardCVV"].ToString();
         cd.CreditCardNum = ds.Tables[0].Rows[0]["CreditCardNum"].ToString();
         cd.CreditCardExpiery = DateTime.Parse(ds.Tables[0].Rows[0]["CreditCardExpiery"].ToString());
-        return js.Serialize("skdjskcmsjxndjfk");
+        return js.Serialize(cd);
     }
 }

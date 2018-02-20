@@ -20,16 +20,23 @@
             $.ajax({
                 url: url,
                 type: "POST",
-                data: "{ cardID : 4 }",
+                data: "{ cardID : 1 }",
                 dataType: "JSON",
-                contentType: "application/json; charset=utf-8",
+                contentType: "application/JSON; charset=utf-8",
                 success: function (msg) {
-                    alert("success");
                     var data = JSON.parse(msg.d);
+                    //var expired = new Date(Date.parse(data.CreditCardExpiery));
+                    var date = new Date(parseInt(data.CreditCardExpiery.substr(6)));
+                    //var date = new Date(displayDate);
+                    //expired = data.CreditCardExpiery;
+                    alert(date);
                     $("#ContentPlaceHolder1_txtCardNumUp").val(data.CreditCardNum);
+                    Materialize.updateTextFields();
                     $("#ContentPlaceHolder1_txtCardCVVUp").val(data.CreditCardCVV);
-                    $("#ContentPlaceHolder1_txtMonthUp").val(data.CreditCardExpiery.GetMonth());
-                    $("#ContentPlaceHolder1_txtYearUp").val(data.CreditCardExpiery.GetYear());
+                    Materialize.updateTextFields();
+                    $("#ContentPlaceHolder1_txtMonthUp").val(date.getMonth() + 1);
+                    Materialize.updateTextFields();
+                    $("#ContentPlaceHolder1_txtYearUp").val(date.getFullYear().toString().substr(2));
                     Materialize.updateTextFields();
                 },
                 error: function (msg, xhr) {
