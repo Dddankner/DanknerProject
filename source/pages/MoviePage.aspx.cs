@@ -16,12 +16,14 @@ public partial class pages_MoviePage : System.Web.UI.Page
 {
     public Movies m = new Movies();
     public int rating = 0;
+    public WebService.WebService wsPublic;
     public string movieID = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.QueryString["movieID"] != null && Request.QueryString["movieID"].ToString() != "")
         {
-            if(Regex.IsMatch(Request.QueryString["movieID"].ToString(), @"^\d+$"))
+            wsPublic = new WebService.WebService();
+            if (Regex.IsMatch(Request.QueryString["movieID"].ToString(), @"^\d+$"))
             {
                 movieID = Request.QueryString["movieID"].ToString();
             }
@@ -108,5 +110,31 @@ public partial class pages_MoviePage : System.Web.UI.Page
         JavaScriptSerializer js = new JavaScriptSerializer();
         string name1 = CategoriesService.GetNameById(categoryID).ToString().Trim();
         return js.Serialize(name1);
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public static string GetCommentDetails(int movieID, int memberID)
+    {
+        WebService.WebService ws = new WebService.WebService();
+        WebService.wsComments ws_C = ws.GetCommentForMember(movieID, memberID);
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        return js.Serialize(ws_C);
+    }
+
+    protected void btnUpdateComment_Click(object sender, EventArgs e)
+    {
+        WebService.wsComments ws_C = new WebService.wsComments();
+        ws_C.commentContent = txtCommentContentUp.Text;
+        ws_C.commentRating = int.Parse(txtRateUp.Text);
+        ws_C.commentSubject = txtCommentSubjectUp.Text;
+        ws_C.MemberID = ((Members)Session["Member"]).MemberId;
+        ws_C.movieID = int.Parse(movieID);
+        wsPublic.UpdateComment(ws_C);
+    }
+
+    protected void btnDeleteComment_Click(object sender, EventArgs e)
+    {
+        wsPublic.DeleteComment(int.Parse(movieID), ((Members)Session["Member"]).MemberId);
     }
 }

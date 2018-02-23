@@ -28,20 +28,61 @@
                 data: "{ id:<%=movieID%> }",
                 dataType: "JSON",
                 contentType: "application/JSON; charset=utf-8",
-                    success: function (msg) {
+                success: function (msg) {
                         //alert(<%=movieID%>);
-                        //alert("succes");
+                    //alert("succes");
+                    var data = JSON.parse(msg.d);
+                    //txtCat = data;
+                    $("#lblCategory").text(data);
+                },
+                error: function (xhr, msg) {
+                    alert(url + ", " + <%=movieID%>);
+                    alert(msg + ", " + xhr.responseText);
+                }
+            });
+            //$("#lblCategory").text(txtCat);
+            $("#updateTrigger").click(function () {
+                var url = "MoviePage.aspx/GetCommentDetails";
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: "{movieID : <%=int.Parse(movieID)%>, memberID : <%=((Members)Session["Member"]).MemberId%>}",
+                    dataType: "JSON",
+                    contentType: "application/JSON; charset=utf-8",
+                    success: function (msg) {
+                        //alert("success");
                         var data = JSON.parse(msg.d);
-                        //txtCat = data;
-                        $("#lblCategory").text(data);
-                    },
-                    error: function (xhr, msg) {
-                        alert(url + ", " + <%=movieID%>);
-                        alert(msg + ", " + xhr.responseText);
-                    }
-             });
-             //$("#lblCategory").text(txtCat);
+                        $("#<%=txtCommentSubjectUp.ClientID%>").val(data.commentSubject);
+                        Materialize.updateTextFields();
+                        $("#<%=txtCommentContentUp.ClientID%>").val(data.commentContent);
+                        Materialize.updateTextFields();
+                },
+                error: function (msg, xhr) {
+                    alert(msg + ", " + xhr.responseText);
+                }
+                });
+            });
         });
+
+        function fillUpdate() {
+            var url = "MoviePage.aspx/GetCommentDetails";
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: "{movieID : <%=int.Parse(movieID)%>, memberID : <%=((Members)Session["Member"]).MemberId%>",
+                dataType: "JSON",
+                contentType: "application/JSON; charset=utf-8",
+                success: function (msg) {
+                    alert("success");
+                    var data = JSON.parse(msg.d);
+                    $("#<%=txtCommentSubjectUp.ClientID%>").val(data.commentSubject);
+                    $("<%=txtCommentContentUp.ClientID%>").val(data.commentContent);
+                },
+                error: function (msg, xhr) {
+                    alert(msg + ", " + xhr.responseText);
+                }
+            });
+        }
         var selected = 1;
         function stars(val) {
             for (var i = 0; i < 5; i++) {
@@ -66,6 +107,31 @@
         $(document).ready(function () {
             $("#<%=txtRate.ClientID %>").val(selected);
         });
+
+        var selectedUp = 1;
+        function starsUp(val) {
+            for (var i = 0; i < 5; i++) {
+                $("#s" + (i + 1) + "UP").text("star_border");
+            }
+            for (var i = 0; i < val; i++) {
+                $("#s" + (i + 1) + "UP").text("star");
+            }
+        }
+        function outUp() {
+            for (var i = 0; i < 5; i++) {
+                $("#s" + (i + 1) + "UP").text("star_border");
+            }
+            for (var i = 0; i < selectedUp; i++) {
+                $("#s" + (i + 1) + "UP").text("star");
+            }
+        }
+        function changeseletUp(val) {
+            selectedUp = val;
+            $("#<%=txtRateUp.ClientID %>").val(selectedUp);
+        }
+        $(document).ready(function () {
+            $("#<%=txtRateUp.ClientID %>").val(selectedUp);
+        });
     </script>
     <style type="text/css">
         .imgCss {
@@ -76,12 +142,12 @@
 
         input {
             text-align: right;
-            direction:rtl;
+            direction: rtl;
         }
 
         textarea {
             text-align: right;
-            direction:rtl;
+            direction: rtl;
         }
     </style>
 </head>
@@ -120,25 +186,32 @@
                 <div id="comments">
                     <br />
                     <div class="row">
+                        <%if (!wsPublic.IsCommented(int.Parse(movieID), ((Members)Session["Member"]).MemberId))
+                            { %>
                         <a class="waves-effect waves-light btn modal-trigger" href="#modal1">הוסף תגובה</a>
+                        <%}
+                            else
+                            { %>
+                        <a class="waves-effect waves-light btn modal-trigger" id="updateTrigger" href="#modalEdit">ערוך תגובה</a>
+                        <%} %>
                     </div>
                     <h4 id="noComments" runat="server"></h4>
                     <asp:DataList ID="dlComments" runat="server" DataKeyField="CommentID" RepeatColumns="1" OnItemDataBound="dlComments_ItemDataBound">
                         <ItemTemplate>
                             <asp:Panel ID="starDiv" runat="server">
                             <div class="card">
-                                <%--<div class="row" style="color: #ff9800; text-align:center">
+                                <div class="row" style="color: #ff9800; text-align:center">
                                     
                                     <div class="col s12">
                                         <div style="margin: 0 40px; cursor:pointer">
-                                            <i id="s1" class="material-icons">star</i>
-                                            <i id="s2" class="material-icons">star_border</i>
-                                            <i id="s3" class="material-icons">star_border</i>
-                                            <i id="s4" class="material-icons">star_border</i>
-                                            <i id="s5" class="material-icons">star_border</i>
+                                            <i id="s1Show" class="material-icons">star</i>
+                                            <i id="s2Show" class="material-icons">star_border</i>
+                                            <i id="s3Show" class="material-icons">star_border</i>
+                                            <i id="s4Show" class="material-icons">star_border</i>
+                                            <i id="s5Show" class="material-icons">star_border</i>
                                         </div>
                                     </div>
-                                </div>--%>
+                                </div>
                                 <div class="row">
                                     <div class="col s12" style="text-align:right">
                                         <label> נושא: <%#Eval("commentsubject") %> </label>
@@ -162,6 +235,47 @@
             </div>
 
         </div>--%>
+            <div id="modalEdit" class="modal">
+                <h4> ערוך תגובה </h4>
+                <div class="row" style="color: #ff9800">
+                    <div style="margin: 0 40px; cursor:pointer">
+                <i id="s1UP" class="material-icons" onmouseover="starsUp(1)"
+                    onmouseout="outUp()" onclick="changeseletUp(1)">star</i>
+                <i id="s2UP" class="material-icons" onmouseover="starsUp(2)"
+                    onmouseout="outUp()" onclick="changeseletUp(2)">star_border</i>
+                <i id="s3UP" class="material-icons" onmouseover="starsUp(3)"
+                    onmouseout="outUp()" onclick="changeseletUp(3)">star_border</i>
+                <i id="s4UP" class="material-icons" onmouseover="starsUp(4)"
+                    onmouseout="outUp()" onclick="changeseletUp(4)">star_border</i>
+                <i id="s5UP" class="material-icons" onmouseover="starsUp(5)"
+                    onmouseout="outUp()" onclick="changeseletUp(5)">star_border</i>
+            </div>
+                    <asp:TextBox ID="txtRateUp" runat="server" Style="display:none"></asp:TextBox>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <asp:TextBox ID="txtCommentSubjectUp" runat="server"></asp:TextBox>
+                        <label for='<%#ClientID.Equals("txtCommentSubjectUp") %>'>נושא</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <asp:TextBox ID="txtCommentContentUp" runat="server" CssClass="materialize-textarea" TextMode="MultiLine" data-length="240"></asp:TextBox>
+                        <label for='<%#ClientID.Equals("txtCommentContentUp") %>'>תוכן</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s6">
+                        <asp:Button ID="btnUpdateComment" runat="server" Text="עדכן" 
+                            OnClick="btnUpdateComment_Click" CssClass="btn modal-close waves-effect waves-light"></asp:Button>
+                    </div>
+                    <div class="col s6">
+                        <asp:Button ID="btnDeleteComment" runat="server" Text="מחק"
+                            CssClass="btn red modal-close waves-effect waves-light" 
+                            OnClientClick="return confirm('אתה בטוח שברצונך למחוק תגובה זו?')" OnClick="btnDeleteComment_Click"></asp:Button>
+                    </div>
+                </div>
+            </div>
             <div id="modal1" class="modal">
     <div class="modal-content">
         <%if (Session["Member"] != null)
@@ -198,8 +312,8 @@
             <asp:Button ID="btnAddComment" runat="server" OnClick="btnAddComment_Click" Text="הוסף תגובה" CssClass="btn modal-close waves-effect waves-light"></asp:Button>
         </div>
         <%}
-    else
-    { %>
+            else
+            { %>
         <h3> בשביל להוסיף תגובה עליך להתחבר </h3>
         <%} %>
     </div>

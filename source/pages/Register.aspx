@@ -83,6 +83,10 @@
                 args.IsValid = true;
         }
 
+        function showDate() {
+            alert($(".datepicker").datepicker('getDate').toString());
+        }
+
         function conDet(id) {
             $('#detailsTab').removeClass("disabled");
             $('ul.tabs').tabs('select_tab', id);
@@ -201,6 +205,11 @@
                         <div class="input-field col s12">
                             <asp:TextBox ID="txtDate" runat="server" CssClass="datepicker tooltipped" data-delay="50" data-tooltip="חובה להיות מעל גיל 13"></asp:TextBox>
                             <label for='<%#ClientID.Equals("txtDate") %>'>תאריך</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <a class="btn" onclick="showDate"> סיים </a>
                         </div>
                     </div>
                 </div>

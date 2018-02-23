@@ -17,10 +17,11 @@
     <script lang="ja" type="text/javascript">
         $(document).ready(function () {
             var url = "CreditCardPage.aspx/GetCardInfo";
+            var cID = <%=CreditCardService.GetID(((Members)Session["Member"]).MemberId)%>;
             $.ajax({
                 url: url,
                 type: "POST",
-                data: "{ cardID : 1 }",
+                data: "{ cardID : " + cID + " }",
                 dataType: "JSON",
                 contentType: "application/JSON; charset=utf-8",
                 success: function (msg) {
@@ -29,7 +30,7 @@
                     var date = new Date(parseInt(data.CreditCardExpiery.substr(6)));
                     //var date = new Date(displayDate);
                     //expired = data.CreditCardExpiery;
-                    alert(date);
+                    //alert(date);
                     $("#ContentPlaceHolder1_txtCardNumUp").val(data.CreditCardNum);
                     Materialize.updateTextFields();
                     $("#ContentPlaceHolder1_txtCardCVVUp").val(data.CreditCardCVV);

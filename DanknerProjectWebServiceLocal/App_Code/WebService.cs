@@ -127,6 +127,7 @@ public class WebService : System.Web.Services.WebService
                     dt.Rows[i].Delete();
                 }
             }
+            stream.Close();
         }
         return ds;
     }
@@ -143,6 +144,7 @@ public class WebService : System.Web.Services.WebService
             DataTable dt = ds.Tables[0];
             DataRow dr = dt.Rows[dt.Rows.Count - 1];
             lID = int.Parse(dr["CommentID"].ToString());
+            stream.Close();
         }
         return lID;
     }
@@ -197,6 +199,7 @@ public class WebService : System.Web.Services.WebService
                     i++;
                 }
             }
+            stream.Close();
         }
         return isEx;
     }
@@ -218,5 +221,111 @@ public class WebService : System.Web.Services.WebService
         }
         tb += "</table>";
         return tb;
+    }
+
+    [WebMethod]
+    public bool IsCommented(int movieID, int memberID)
+    {
+        bool commented = false;
+        var path = HttpContext.Current.Server.MapPath("/App_Data/XMLComments.xml");
+        DataSet ds = new DataSet();
+        using (var stream = new FileStream(path, FileMode.Open))
+        {
+            ds.ReadXml(stream, XmlReadMode.Auto);
+            DataTable dt = ds.Tables[0];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                int memberId = int.Parse(dt.Rows[i]["MemberID"].ToString());
+                int movieId = int.Parse(dt.Rows[i]["MovieID"].ToString());
+                if (movieID == movieId && memberID == memberId)
+                    commented = true;
+            }
+            stream.Close();
+        }
+        return commented;
+    }
+
+    [WebMethod]
+    public wsComments GetCommentForMember(int movieID, int memberID)
+    {
+        var path = HttpContext.Current.Server.MapPath("/App_Data/XMLComments.xml");
+        DataSet ds = new DataSet();
+        wsComments c = new wsComments();
+        using (var stream = new FileStream(path, FileMode.Open))
+        {
+            ds.ReadXml(stream, XmlReadMode.Auto);
+            DataTable dt = ds.Tables[0];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                int memberId = int.Parse(dt.Rows[i]["MemberID"].ToString());
+                int movieId = int.Parse(dt.Rows[i]["MovieID"].ToString());
+                if (movieID == movieId && memberID == memberId)
+                {
+                    c.movieID = movieID;
+                    c.MemberID = memberId;
+                    c.commentID = int.Parse(dt.Rows[i]["CommentRating"].ToString());
+                    c.commentSubject = dt.Rows[i]["CommentSubject"].ToString();
+                    c.commentContent = dt.Rows[i]["CommentContent"].ToString();
+                }
+                stream.Close();
+            }
+            return c;
+        }
+    }
+
+    [WebMethod]
+    public void UpdateComment(wsComments ws_C)
+    {
+        var path = HttpContext.Current.Server.MapPath("/App_Data/XMLComments.xml");
+        DataSet ds = new DataSet();
+        using (var stream = new FileStream(path, FileMode.Open))
+        {
+            ds.ReadXml(stream, XmlReadMode.Auto);
+            DataTable dt = ds.Tables[0];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                int movieID = int.Parse(dt.Rows[i]["MovieID"].ToString());
+                int memberID = int.Parse(dt.Rows[i]["MemberID"].ToString());
+                if(ws_C.movieID == movieID && ws_C.MemberID == memberID)
+                {
+                    dt.Rows[i]["CommentSubject"] = ws_C.commentSubject;
+                    dt.Rows[i]["CommentContent"] = ws_C.commentContent;
+                    dt.Rows[i]["CommentRating"] = ws_C.commentRating;
+                }
+            }
+            stream.Close();
+        }
+        using (var stream = new FileStream(path, FileMode.Open))
+        {
+            ds.WriteXml(stream, XmlWriteMode.IgnoreSchema);
+            stream.Close();
+        }
+    }
+
+    [WebMethod]
+    public void DeleteComment(int movieID, int memberID)
+    {
+        var path = HttpContext.Current.Server.MapPath("/App_Data/XMLComments.xml");
+        DataSet ds = new DataSet();
+        using (var stream = new FileStream(path, FileMode.Open))
+        {
+            ds.ReadXml(stream, XmlReadMode.Auto);
+            DataTable dt = ds.Tables[0];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                int movieId = int.Parse(dt.Rows[i]["MovieID"].ToString());
+                int memberId = int.Parse(dt.Rows[i]["MemberID"].ToString());
+                if(movieID == movieId && memberId == memberID)
+                {
+                    dt.Rows[i].Delete();
+                }
+            }
+            stream.Close();
+        }
+        using (var stream = new FileStream(path, FileMode.Open))
+        {
+            ds.WriteXml(stream, XmlWriteMode.IgnoreSchema);
+            stream.Close();
+        }
     }
 }

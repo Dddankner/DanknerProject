@@ -147,6 +147,67 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="IsCommented">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="movieID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="memberID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsCommentedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="IsCommentedResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCommentForMember">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="movieID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="memberID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCommentForMemberResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCommentForMemberResult" type="tns:wsComments" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="wsComments">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="commentRating" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="commentID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MemberID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="movieID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="commentSubject" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="commentContent" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UpdateComment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ws_C" type="tns:wsComments" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateCommentResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeleteComment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="movieID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="memberID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteCommentResponse">
+        <s:complexType />
+      </s:element>
       <s:element name="string" nillable="true" type="s:string" />
       <s:element name="DataSet" nillable="true">
         <s:complexType>
@@ -159,6 +220,7 @@
       <s:element name="double" type="s:double" />
       <s:element name="int" type="s:int" />
       <s:element name="boolean" type="s:boolean" />
+      <s:element name="wsComments" nillable="true" type="tns:wsComments" />
     </s:schema>
   </wsdl:types>
   <wsdl:message name="HelloWorldSoapIn">
@@ -221,6 +283,30 @@
   <wsdl:message name="GetMembersSoapOut">
     <wsdl:part name="parameters" element="tns:GetMembersResponse" />
   </wsdl:message>
+  <wsdl:message name="IsCommentedSoapIn">
+    <wsdl:part name="parameters" element="tns:IsCommented" />
+  </wsdl:message>
+  <wsdl:message name="IsCommentedSoapOut">
+    <wsdl:part name="parameters" element="tns:IsCommentedResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCommentForMemberSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCommentForMember" />
+  </wsdl:message>
+  <wsdl:message name="GetCommentForMemberSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCommentForMemberResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCommentSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateComment" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCommentSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateCommentResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCommentSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteComment" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCommentSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteCommentResponse" />
+  </wsdl:message>
   <wsdl:message name="HelloWorldHttpGetIn" />
   <wsdl:message name="HelloWorldHttpGetOut">
     <wsdl:part name="Body" element="tns:string" />
@@ -280,6 +366,25 @@
   <wsdl:message name="GetMembersHttpGetOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
+  <wsdl:message name="IsCommentedHttpGetIn">
+    <wsdl:part name="movieID" type="s:string" />
+    <wsdl:part name="memberID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="IsCommentedHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="GetCommentForMemberHttpGetIn">
+    <wsdl:part name="movieID" type="s:string" />
+    <wsdl:part name="memberID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCommentForMemberHttpGetOut">
+    <wsdl:part name="Body" element="tns:wsComments" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCommentHttpGetIn">
+    <wsdl:part name="movieID" type="s:string" />
+    <wsdl:part name="memberID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCommentHttpGetOut" />
   <wsdl:message name="HelloWorldHttpPostIn" />
   <wsdl:message name="HelloWorldHttpPostOut">
     <wsdl:part name="Body" element="tns:string" />
@@ -339,6 +444,25 @@
   <wsdl:message name="GetMembersHttpPostOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
+  <wsdl:message name="IsCommentedHttpPostIn">
+    <wsdl:part name="movieID" type="s:string" />
+    <wsdl:part name="memberID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="IsCommentedHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="GetCommentForMemberHttpPostIn">
+    <wsdl:part name="movieID" type="s:string" />
+    <wsdl:part name="memberID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCommentForMemberHttpPostOut">
+    <wsdl:part name="Body" element="tns:wsComments" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCommentHttpPostIn">
+    <wsdl:part name="movieID" type="s:string" />
+    <wsdl:part name="memberID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCommentHttpPostOut" />
   <wsdl:portType name="WebServiceSoap">
     <wsdl:operation name="HelloWorld">
       <wsdl:input message="tns:HelloWorldSoapIn" />
@@ -379,6 +503,22 @@
     <wsdl:operation name="GetMembers">
       <wsdl:input message="tns:GetMembersSoapIn" />
       <wsdl:output message="tns:GetMembersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IsCommented">
+      <wsdl:input message="tns:IsCommentedSoapIn" />
+      <wsdl:output message="tns:IsCommentedSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCommentForMember">
+      <wsdl:input message="tns:GetCommentForMemberSoapIn" />
+      <wsdl:output message="tns:GetCommentForMemberSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateComment">
+      <wsdl:input message="tns:UpdateCommentSoapIn" />
+      <wsdl:output message="tns:UpdateCommentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteComment">
+      <wsdl:input message="tns:DeleteCommentSoapIn" />
+      <wsdl:output message="tns:DeleteCommentSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="WebServiceHttpGet">
@@ -422,6 +562,18 @@
       <wsdl:input message="tns:GetMembersHttpGetIn" />
       <wsdl:output message="tns:GetMembersHttpGetOut" />
     </wsdl:operation>
+    <wsdl:operation name="IsCommented">
+      <wsdl:input message="tns:IsCommentedHttpGetIn" />
+      <wsdl:output message="tns:IsCommentedHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCommentForMember">
+      <wsdl:input message="tns:GetCommentForMemberHttpGetIn" />
+      <wsdl:output message="tns:GetCommentForMemberHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteComment">
+      <wsdl:input message="tns:DeleteCommentHttpGetIn" />
+      <wsdl:output message="tns:DeleteCommentHttpGetOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="WebServiceHttpPost">
     <wsdl:operation name="HelloWorld">
@@ -463,6 +615,18 @@
     <wsdl:operation name="GetMembers">
       <wsdl:input message="tns:GetMembersHttpPostIn" />
       <wsdl:output message="tns:GetMembersHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="IsCommented">
+      <wsdl:input message="tns:IsCommentedHttpPostIn" />
+      <wsdl:output message="tns:IsCommentedHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCommentForMember">
+      <wsdl:input message="tns:GetCommentForMemberHttpPostIn" />
+      <wsdl:output message="tns:GetCommentForMemberHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteComment">
+      <wsdl:input message="tns:DeleteCommentHttpPostIn" />
+      <wsdl:output message="tns:DeleteCommentHttpPostOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WebServiceSoap" type="tns:WebServiceSoap">
@@ -550,6 +714,42 @@
     </wsdl:operation>
     <wsdl:operation name="GetMembers">
       <soap:operation soapAction="http://tempuri.org/GetMembers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsCommented">
+      <soap:operation soapAction="http://tempuri.org/IsCommented" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCommentForMember">
+      <soap:operation soapAction="http://tempuri.org/GetCommentForMember" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateComment">
+      <soap:operation soapAction="http://tempuri.org/UpdateComment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteComment">
+      <soap:operation soapAction="http://tempuri.org/DeleteComment" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -650,6 +850,42 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="IsCommented">
+      <soap12:operation soapAction="http://tempuri.org/IsCommented" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCommentForMember">
+      <soap12:operation soapAction="http://tempuri.org/GetCommentForMember" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateComment">
+      <soap12:operation soapAction="http://tempuri.org/UpdateComment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteComment">
+      <soap12:operation soapAction="http://tempuri.org/DeleteComment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="WebServiceHttpGet" type="tns:WebServiceHttpGet">
     <http:binding verb="GET" />
@@ -741,6 +977,31 @@
         <mime:mimeXml part="Body" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="IsCommented">
+      <http:operation location="/IsCommented" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCommentForMember">
+      <http:operation location="/GetCommentForMember" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteComment">
+      <http:operation location="/DeleteComment" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="WebServiceHttpPost" type="tns:WebServiceHttpPost">
     <http:binding verb="POST" />
@@ -831,6 +1092,31 @@
       <wsdl:output>
         <mime:mimeXml part="Body" />
       </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsCommented">
+      <http:operation location="/IsCommented" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCommentForMember">
+      <http:operation location="/GetCommentForMember" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteComment">
+      <http:operation location="/DeleteComment" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="WebService">
