@@ -13,11 +13,11 @@
         }
 
         table {
-            margin-left: 10vh;
+            width:70% !important;
         }
 
-        .pad td{
-            
+        td{
+            width:30vh;
         }
 
         .marg {
@@ -36,7 +36,7 @@
 
     <center>
         <div style="width:95%">
-    <asp:DataList ID="DataList1" runat="server" CssClass="pad" DataKeyField="MovieId" RepeatColumns="3" OnItemDataBound="DataList1_ItemDataBound">
+    <asp:DataList ID="DataList1" runat="server" DataKeyField="MovieId" RepeatColumns="3" OnItemDataBound="DataList1_ItemDataBound">
         <ItemTemplate>
             <div class="card sticky-action" style="width:25vh !important;" >
     <div class="card-image waves-effect waves-block waves-light" style="width:100% !important">

@@ -17,10 +17,10 @@ public partial class pages_Messages : System.Web.UI.Page
         if (!IsPostBack)
         {
             m1 = (Members)Session["Member"];
-            if (m1.memberManager)
-                FillddlMembers();
-            else
-                lblManager.Text = "שולח למנהל";
+            //if (m1.memberManager)
+            //    FillddlMembers();
+            //else
+            //    lblManager.Text = "שולח למנהל";
         }
         //FillddlManagers();
         //FillddlMembers();

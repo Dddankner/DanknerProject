@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Messages.aspx.cs" Inherits="pages_Messages" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <link href="../Style/Forms.css" rel="stylesheet" />
-    <link href="../Style/Modal.css" rel="stylesheet" />
+    <%--<link href="../Style/Forms.css" rel="stylesheet" />
+    <link href="../Style/Modal.css" rel="stylesheet" />--%>
     <script type="text/javascript" lang="ja">
         $(document).ready(function () {
             // Click function for show the Modal
@@ -17,7 +17,7 @@
                 $(".mask").removeClass("active");
                 var cbx = document.getElementById("ddlMembers")
                 //for (var i = 0; i < ; i++) {
-                    
+
                 //}
             });
         });
@@ -74,12 +74,12 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <center>
-    <table class="tablePopUp">
+   <%-- <table class="tablePopUp">
         <tr>
             <td><%--<asp:DropDownList ID="ddlMembers" runat="server"></asp:DropDownList>--%>
                 <%--<select runat="server" multiple="true" id="ddlMembers" ></select>--%>
                 
-                <%if (m1.memberManager)
+                <%--<%if (m1.memberManager)
                     { %>
                 <a class="show" aria-haspopup="true">בחר משתמשים</a>
 
@@ -91,12 +91,12 @@
             <br /><br /><br />
                 <asp:CheckBox runat="server" ID="SelectAll" Text="בחר את כולם" AutoPostBack="true" OnCheckedChanged="SelectAll_CheckedChanged" />
             <asp:CheckBoxList ID="ddlMembers" runat="server" ></asp:CheckBoxList>
-            <button id=""></button>
-            </div><%} %>
+            <button id=""></button>--%>
+            <%--</div><%} %>
                 <asp:Label runat="server" ID="lblManager"></asp:Label>
         
                 <%--<asp:CheckBoxList ID="ddlMembers" runat="server" ></asp:CheckBoxList>--%>
-            </td>
+            <%--</td>
             <td> שלח אל </td>
             <td rowspan="3"> <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="notes" DisplayMode="List"></asp:ValidationSummary> </td>
         </tr>
@@ -116,7 +116,63 @@
         <tr>
             <td colspan="2"> <asp:Button ID="btnSend" runat="server" Text="שלח" OnClick="btnSend_Click"></asp:Button> </td>
         </tr>
-    </table>
+    </table>--%>
+        <div class="card" style="width:50vw">
+            <div class="card-content">
+                <%if (((Members)Session["Member"]).memberManager)
+                    { %>
+                <div class="row">
+                    <div class="col s12">
+                        <a class="waves-effect waves-light btn modal-trigger" href="#modal1">בחר נמענים</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <asp:Label runat="server" ID="ReciverNames"></asp:Label>
+                    </div>
+                </div>
+                <%}
+                else
+                { %>
+                <div class="row">
+                    <div class="col s12">
+                        <label> שולח למנהלים </label>
+                    </div>
+                </div>
+                <%} %>
+                <div class="row">
+                    <div class="col s12">
+                        <asp:TextBox ID="MessageSub" runat="server"></asp:TextBox>
+                        <label for='<%# ClientID.Equals("MessageSub") %>'>נושא ההודעה</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <asp:TextBox ID="MessageContent" runat="server" CssClass="materialize-textarea" TextMode="MultiLine" data-length="240"> </asp:TextBox>
+                        <label for='<%# ClientID.Equals("MessageContent") %>'>תוכן ההודעה</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <asp:Button ID="btnSend" runat="server" Text="שלח" OnClick="btnSend_Click" CssClass="btn waves-effect waves-light"></asp:Button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="notes" DisplayMode="List"></asp:ValidationSummary>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="modal1">
+            <h4> בחר נמענים </h4>
+            <div class="row">
+                <div class="col s12">
+                    <asp:CheckBox runat="server" ID="SelectAll" Text="בחר את כולם" AutoPostBack="true" OnCheckedChanged="SelectAll_CheckedChanged" />
+                    <asp:CheckBoxList ID="ddlMembers" runat="server" ></asp:CheckBoxList>
+                </div>
+            </div>
+        </div>
         <%if (m1.memberManager)
             { %>
         <asp:CustomValidator runat="server" id="checkReciverCbx" ErrorMessage="חובה לבחור נמענים" ClientValidationFunction="ValidateRecivers">&nbsp</asp:CustomValidator>
