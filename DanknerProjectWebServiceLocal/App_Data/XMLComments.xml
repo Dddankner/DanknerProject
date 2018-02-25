@@ -1,14 +1,5 @@
-<NewDataSet>
-  <Comments>
-    <CommentID>1</CommentID>
-    <MemberID>1</MemberID>
-    <MovieID>2</MovieID>
-    <CommentSubject>אחלה סרט</CommentSubject>
-    <CommentContent>111אחלה סרט</CommentContent>
-    <CommentRating>3</CommentRating>
-    <CommentDate>26/01/2018 09:50:28</CommentDate>
-  </Comments>
-  <Comments>
+<comments>
+  <Comment>
     <CommentID>3</CommentID>
     <MemberID>3</MemberID>
     <MovieID>2</MovieID>
@@ -16,8 +7,8 @@
     <CommentContent>סרט נחמד, לא יותר</CommentContent>
     <CommentRating>4</CommentRating>
     <CommentDate>16/02/2018 9:14:21</CommentDate>
-  </Comments>
-  <Comments>
+  </Comment>
+  <Comment>
     <CommentID>5</CommentID>
     <MemberID>2</MemberID>
     <MovieID>4</MovieID>
@@ -25,14 +16,14 @@
     <CommentContent>מעפן</CommentContent>
     <CommentRating>3</CommentRating>
     <CommentDate>16/02/2018 9:28:27</CommentDate>
-  </Comments>
-<Comments>
-  <CommentID>5</CommentID>
-  <MemberID>2</MemberID>
-  <MovieID>4</MovieID>
-  <CommentSubject>חרא</CommentSubject>
-  <CommentContent>מעפן</CommentContent>
-  <CommentRating>3</CommentRating>
-  <CommentDate>16/02/2018 9:28:27</CommentDate>
-</Comments>
-</NewDataSet>
+  </Comment>
+  <Comment>
+    <CommentID>6</CommentID>
+    <MemberID>1</MemberID>
+    <MovieID>4</MovieID>
+    <CommentSubject>נחמד</CommentSubject>
+    <CommentContent>סרט מעניין, עשוי טוב.</CommentContent>
+    <CommentRating>3</CommentRating>
+    <CommentDate>23/02/2018 19:37:14</CommentDate>
+  </Comment>
+</comments>

@@ -15,7 +15,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <center>
-        <div class="card" style="width:50vh">
+        <div class="card" style="width:37vw">
             <div class="card-panel">
                 <div class="card-title">
                     <h3> התחברות </h3>
