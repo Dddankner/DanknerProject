@@ -23,12 +23,6 @@ public class WebService : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public string HelloWorld()
-    {
-        return "Hello World";
-    }
-
-    [WebMethod]
     public void InsertComment(int MemberID, int MovieID, string commentSubject, string commentContent, int commentRating, DateTime dt1)
     {
         var path = HttpContext.Current.Server.MapPath("/App_Data/XMLComments.xml");
@@ -70,7 +64,7 @@ public class WebService : System.Web.Services.WebService
             List<int> iList = new List<int>();
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                if (int.Parse(dt.Rows[i]["MovieID"].ToString()) != movieID)
+                if (dt.Rows[i]["MovieID"].ToString().Equals(movieID.ToString()))
                 {
                     dt.Rows[i].Delete();
                     //newDT.Rows.Add(dt.Rows[i]);
@@ -317,7 +311,7 @@ public class WebService : System.Web.Services.WebService
                 int memberId = int.Parse(dt.Rows[i]["MemberID"].ToString());
                 if(movieID == movieId && memberId == memberID)
                 {
-                    dt.Rows[i].Delete();
+                    dt.Rows.RemoveAt(i);
                 }
             }
             stream.Close();

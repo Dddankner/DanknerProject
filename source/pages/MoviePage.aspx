@@ -29,7 +29,7 @@
                 dataType: "JSON",
                 contentType: "application/JSON; charset=utf-8",
                 success: function (msg) {
-                        //alert(<%=movieID%>);
+                    //alert(<%=movieID%>);
                     //alert("succes");
                     var data = JSON.parse(msg.d);
                     //txtCat = data;
@@ -46,7 +46,7 @@
                 $.ajax({
                     url: url,
                     type: "POST",
-                    data: "{movieID : <%=int.Parse(movieID)%>, memberID : <%=((Members)Session["Member"]).MemberId%>}",
+                    data: "{movieID : <%=int.Parse(movieID)%>, memberID : <%=memberID%>}",
                     dataType: "JSON",
                     contentType: "application/JSON; charset=utf-8",
                     success: function (msg) {
@@ -56,10 +56,10 @@
                         Materialize.updateTextFields();
                         $("#<%=txtCommentContentUp.ClientID%>").val(data.commentContent);
                         Materialize.updateTextFields();
-                },
-                error: function (msg, xhr) {
-                    alert(msg + ", " + xhr.responseText);
-                }
+                    },
+                    error: function (msg, xhr) {
+                        alert(msg + ", " + xhr.responseText);
+                    }
                 });
             });
         });
@@ -69,7 +69,7 @@
             $.ajax({
                 url: url,
                 type: "POST",
-                data: "{movieID : <%=int.Parse(movieID)%>, memberID : <%=((Members)Session["Member"]).MemberId%>",
+                data: "{movieID : <%=int.Parse(movieID)%>, memberID : <%=memberID%>",
                 dataType: "JSON",
                 contentType: "application/JSON; charset=utf-8",
                 success: function (msg) {
@@ -133,6 +133,7 @@
             $("#<%=txtRateUp.ClientID %>").val(selectedUp);
         });
     </script>
+
     <style type="text/css">
         .imgCss {
             border-radius: 50%;
@@ -186,6 +187,8 @@
                 <div id="comments">
                     <br />
                     <div class="row">
+                        <%if (Session["Member"] != null && Session["Member"].ToString() != "")
+                            { %>
                         <%if (!wsPublic.IsCommented(int.Parse(movieID), ((Members)Session["Member"]).MemberId))
                             { %>
                         <a class="waves-effect waves-light btn modal-trigger" href="#modal1">הוסף תגובה</a>
@@ -193,7 +196,11 @@
                             else
                             { %>
                         <a class="waves-effect waves-light btn modal-trigger" id="updateTrigger" href="#modalEdit">ערוך תגובה</a>
-                        <%} %>
+                        <%}
+                            }
+                            else
+                            { %>
+                        <a class="waves-effect waves-light btn modal-trigger" href="#modal1">הוסף תגובה</a><%} %>
                     </div>
                     <h4 id="noComments" runat="server"></h4>
                     <asp:DataList ID="dlComments" runat="server" DataKeyField="CommentID" RepeatColumns="1" OnItemDataBound="dlComments_ItemDataBound">

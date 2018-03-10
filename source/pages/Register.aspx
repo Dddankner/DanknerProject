@@ -27,6 +27,10 @@
         input[type=text]{
             text-align:right;
         }
+        .imgCss{
+            width:5vw;
+            height:5vh;
+        }
         .notes {
             background-color: none;
             color: red;
@@ -36,6 +40,16 @@
         .redC {
             color: red;
         }
+        .Calendar
+{
+    background-color: black;
+    color: white;
+    font-family: Courier New;
+    font-size: 17px;
+    font-weight: bold;
+    position:absolute;
+    margin-right:6vw;
+}
     </style>
     <link href="../Style/Forms.css" rel="stylesheet" />
 
@@ -60,7 +74,7 @@
         });
 
         function ValidateHobbies(source, args) {
-            <%--var chkListModules = document.getElementById('<%= cbxHobbies.ClientID %>');
+            var chkListModules = document.getElementById('<%= cbxHobbies.ClientID %>');
             var chkListinputs = chkListModules.getElementsByTagName("input");
             for (var i = 0; i < chkListinputs.length; i++) {
                 if (chkListinputs[i].checked) {
@@ -69,7 +83,7 @@
                 }
             }
 
-            args.IsValid = false;--%>
+            args.IsValid = false;
         }
         function CheckPhoto(source, args) {
             if (document.getElementById("uploadBox").value != "") {
@@ -104,7 +118,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <center>
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-        <div class="card" style="width:50vh">
+        <%--<div class="card" style="width:50vh">
             <div class="card-title">
                 <h3>הרשמה</h3>
             </div>
@@ -186,17 +200,17 @@
                     <div class="row">
                         <div class="input-field col s12">
                             <%--<i class="material-icons prefix">account_circle</i>--%>
-                            <asp:TextBox runat="server" ID="txtfName"></asp:TextBox>
+                            <%--<asp:TextBox runat="server" ID="txtfName"></asp:TextBox>
                             <label for='<%#ClientID.Equals("txtFname") %>'>שם פרטי</label>
                         </div>
-                    </div>
-                    <div class="row">
+                    </div>--%>
+                    <%--<%--<div class="row">
                         <div class="input-field col s12">
                             <asp:TextBox runat="server" ID="txtlName"></asp:TextBox>
                             <label for='<%#ClientID.Equals("txtLname") %>'>שם משפחה</label>
                         </div>
-                    </div>
-                    <div class="row">
+                    </div>--%>
+                    <%--<div class="row">
                         <div class="input-field col s12">
                             <asp:DropDownList runat="server" ID="cities"></asp:DropDownList>
                         </div>
@@ -205,8 +219,8 @@
                         <div class="input-field col s12">
                             <asp:TextBox ID="txtDate" runat="server" CssClass="datepicker tooltipped" data-delay="50" data-tooltip="חובה להיות מעל גיל 13"></asp:TextBox>
                             <label for='<%#ClientID.Equals("txtDate") %>'>תאריך</label>
-                        </div>
-                    </div>
+                        </div>--%>
+                    <%--</div>
                     <div class="row">
                         <div class="col s12">
                             <a class="btn" onclick="showDate"> סיים </a>
@@ -216,8 +230,8 @@
                 <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="notes" DisplayMode="List"/>
                     <asp:label ID="lblEror" CssClass="redC" runat="server"></asp:label>
             </div>
-        </div>
-    <%--<table class="tablePopUp">
+        </div>--%>
+    <table class="tablePopUp" style="width:50vw">
 
             <tr>
                 <td>
@@ -271,13 +285,14 @@
                     <asp:Label runat="server" ID="lblPhone"  Text="טלפון" ></asp:Label>
                 </td>
             </tr>--%>
-            <%--<tr>
-                <td>--%>
-                    <%--<asp:TextBox runat="server" placeholder="תאריך לידה" ID="txtDate" CssClass="txtBox"></asp:TextBox>--%>
+            <tr>
+                <td>
+                    <asp:TextBox runat="server" placeholder="תאריך לידה" ID="txtDate" CssClass="txtBox"></asp:TextBox>
                     
-                    <%--<ocv1:CalendarExtender id="Cal" runat="server" TargetControlID="txtDate" PopupButtonID="btnDate" Format="dd/MM/yyyy"></ocv1:CalendarExtender>
-                    <asp:TextBox ID="txtDate" runat="server"></asp:TextBox>
-                    <asp:ImageButton ID="btnDate" ImageUrl="~/img/Calicon.png" runat="server" CausesValidation="false"></asp:ImageButton>
+                    <ocv1:CalendarExtender id="Cal" runat="server" TargetControlID="txtDate" PopupButtonID="btnDate" Format="dd/MM/yyyy"
+                          CssClass="Calendar"></ocv1:CalendarExtender>
+                    <%--<asp:TextBox ID="txtDate" runat="server"></asp:TextBox>--%>
+                    <asp:ImageButton ID="btnDate" CssClass="imgCss" ImageUrl="~/img/Calicon.png" runat="server" CausesValidation="false"></asp:ImageButton>
                 </td>
                 <td>
                     <asp:Label runat="server" ID="lblDate" Text="תאריך לידה"></asp:Label>
@@ -331,8 +346,8 @@
                     <asp:Button runat="server" ID="btnSend" Text="שלח" OnClick="btnSend_Click" />
                 </td>
             </tr>
-        </table>--%>
-        <%--<asp:RequiredFieldValidator ID="validateFname" ControlToValidate="txtfName" runat="server" ErrorMessage="חובה למלא שם פרטי">&nbsp</asp:RequiredFieldValidator>
+        </table>
+        <asp:RequiredFieldValidator ID="validateFname" ControlToValidate="txtfName" runat="server" ErrorMessage="חובה למלא שם פרטי">&nbsp</asp:RequiredFieldValidator>
         <asp:RegularExpressionValidator ID="validateValidFname" ControlToValidate="txtfName" runat="server" ErrorMessage="שם פרטי לא תקין" ValidationExpression="[א-ת]{2,8}">&nbsp</asp:RegularExpressionValidator>
         <asp:RequiredFieldValidator ID="validatelName" ControlToValidate="txtlName" runat="server" ErrorMessage="חובה למלא שם משפחה">&nbsp</asp:RequiredFieldValidator>
         <asp:RegularExpressionValidator ID="validateVlidLname" ControlToValidate="txtlName" runat="server" ErrorMessage="שם משפחה לא תקין" ValidationExpression="[א-ת]{2,8}">&nbsp</asp:RegularExpressionValidator>
@@ -348,7 +363,7 @@
         <asp:CustomValidator runat="server" id="CustomHobbies" ErrorMessage="חובה למלא תחביב" ClientValidationFunction="ValidateHobbies">&nbsp</asp:CustomValidator>
         <asp:RequiredFieldValidator runat="server" ID="validateCiies" ControlToValidate="cities" InitialValue="-בחר עיר-" ErrorMessage="עיר לא מולאה">&nbsp</asp:RequiredFieldValidator>
         <%--<asp:CompareValidator ID="CheckDateValid" ControlToValidate="txtDate" runat="server" Operator="LessThanEqual" Type="Date" ErrorMessage="תאריך צריך להיות dd/mm/yyyy">&nbsp</asp:CompareValidator>--%>
-        <%--<asp:RegularExpressionValidator ID="PhotoCheck" ControlToValidate="photoUpload" ValidationExpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))+(.gif|.GIF|.jpg|.JPG|.jpeg|.JPEG|.jfif)$" runat="server" ErrorMessage="חייב להעלות תמונה">&nbsp</asp:RegularExpressionValidator>--%>
+        <asp:RegularExpressionValidator ID="PhotoCheck" ControlToValidate="photoUpload" ValidationExpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))+(.gif|.GIF|.jpg|.JPG|.jpeg|.JPEG|.jfif)$" runat="server" ErrorMessage="חייב להעלות תמונה">&nbsp</asp:RegularExpressionValidator>
     </center>
     \
     <div id="div1" runat="server">

@@ -7,38 +7,24 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.OleDb;
 
-public partial class pages_Messages : System.Web.UI.Page
+public partial class pages_Messages2 : System.Web.UI.Page
 {
     public static Members m1;
     public static string recivers = "";
     protected void Page_Load(object sender, EventArgs e)
     {
-
         if (!IsPostBack)
         {
             m1 = (Members)Session["Member"];
-            //if (m1.memberManager)
-            //    FillddlMembers();
+            if (m1.memberManager)
+                FillddlMembers();
             //else
             //    lblManager.Text = "שולח למנהל";
         }
-        //FillddlManagers();
-        //FillddlMembers();
-        //DataSet ds = MessagesService.GetInbox(m1.MemberId);
-        //Inbox.DataSource = ds;
-        //Inbox.DataBind();
-        //Inbox.Attributes.Add("style", "direction:rtl");
-        //DataSet ds1 = MessagesService.GetOutbox(m1.MemberId);
-        //Outbox.DataSource = ds1;
-        //Outbox.DataBind();
-        //Outbox.Attributes.Add("style", "direction:rtl");
         FillInbox();
         FillOutbox();
         InsertLblRecText();
-        //messageContentDiv.InnerText = "";
-        //OutboxDiv.InnerText = "";
     }
-
     public void FillInbox()
     {
         DataSet ds = MessagesService.GetInbox(m1.MemberId);
@@ -131,7 +117,7 @@ public partial class pages_Messages : System.Web.UI.Page
             m.MessageContent = MessageContent.Text;
             m.MessageSubject = MessageSub.Text;
             MessagesService.sendMessage(m);
-        }        
+        }
         //Response.Write(ddlMembers.SelectedValue);
         MessageContent.Text = "";
         MessageSub.Text = "";
@@ -178,7 +164,7 @@ public partial class pages_Messages : System.Web.UI.Page
             tblMessage.Attributes.Add("style", "display:normal");
             FillInbox();
         }
-        if(e.CommandName.ToString() == "delete")
+        if (e.CommandName.ToString() == "delete")
         {
             MessagesService.DeleteMessage(MessageID, m1.MemberId);
         }
@@ -208,8 +194,8 @@ public partial class pages_Messages : System.Web.UI.Page
         if (e.CommandName.ToString() == "Read")
         {
             DataSet ds = MessagesService.GetMessage(MessageID);
-            lblMesSender.Text = ds.Tables[0].Rows[0]["MassegeSender"].ToString();
-            lblMesReciver.Text = ds.Tables[0].Rows[0]["MessageReciver"].ToString();
+            lblMesSender.Text = ds.Tables[0].Rows[0]["SenderName"].ToString();
+            lblMesReciver.Text = ds.Tables[0].Rows[0]["ReciverName"].ToString();
             lblMesSubject.Text = ds.Tables[0].Rows[0]["MessageSubject"].ToString();
             lblMesContent.Text = ds.Tables[0].Rows[0]["MessageContent"].ToString();
             tblMessage.Attributes.Add("style", "display:normal");
@@ -222,7 +208,7 @@ public partial class pages_Messages : System.Web.UI.Page
 
     protected void SelectAll_CheckedChanged(object sender, EventArgs e)
     {
-        if(SelectAll.Checked)
+        if (SelectAll.Checked)
         {
             for (int i = 0; i < ddlMembers.Items.Count; i++)
             {
@@ -255,7 +241,7 @@ public partial class pages_Messages : System.Web.UI.Page
         recivers = "";
         for (int i = 0; i < ddlMembers.Items.Count; i++)
         {
-            if(ddlMembers.Items[i].Selected)
+            if (ddlMembers.Items[i].Selected)
             {
                 recivers += ", " + ddlMembers.Items[i].Text;
             }

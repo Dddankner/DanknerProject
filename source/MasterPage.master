@@ -162,7 +162,7 @@
             else
             { %>
             <li><a href="../pages/CreditCardPage.aspx">כרטיס אשראי<i class="material-icons right">credit_card</i></a></li>
-            <li><a href="../pages/Messages.aspx">הודעות<i class="material-icons right">inbox</i></a></li>
+            <li><a href="../pages/Messages2.aspx">הודעות<i class="material-icons right">inbox</i></a></li>
             <%if (m.memberManager)
                 { %>
             <li><a href="../pages/MyOrders.aspx">הזמנות<i class="material-icons right">storage</i></a></li>

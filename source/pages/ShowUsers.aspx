@@ -52,15 +52,15 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="עדכן">
                 <ItemTemplate>
-                    <i class="material-icons imgCss" id="ImageUpdate" runat="server">mode_edit</i>
-                    <%--<asp:Image ID="ImageUpdate" runat="server" CssClass="imgCss"></asp:Image>--%>
+                    <%--<i class="material-icons imgCss" id="ImageUpdate" runat="server">mode_edit</i>--%>
+                    <asp:Image ID="ImageUpdate" runat="server" CssClass="imgCss" ImageUrl="~/img/UpdatePic.png"></asp:Image>
                     <%--<asp:Image ID="UpdateBtn" runat="server" ImageUrl="~/img/UpdatePic.png" OnClick="UpdateBtn_Click" Height="35px" Width="35px" />--%>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="מחק">
                 <ItemTemplate>
-                    <i class="material-icons imgCss" id="DeleteBtn" runat="server">delete</i>
-                    <%--<asp:Image ID="DeleteBtn" runat="server" ImageUrl="~/img/deletePic.png" CssClass="imgCss" />--%>
+                    <%--<i class="material-icons imgCss" id="DeleteBtn" runat="server">delete</i>--%>
+                    <asp:Image ID="DeleteBtn" runat="server" ImageUrl="~/img/deletePic.png" CssClass="imgCss" />
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:BoundField DataField="MemberStatus" HeaderText="סטטוס" />

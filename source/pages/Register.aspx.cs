@@ -14,7 +14,7 @@ public partial class Register : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            FillCBX();
+            //FillCBX();
             FillDBCities();
             DataSet ds = new DataSet();
             ds = CitiesServer.GetCityList();
@@ -23,12 +23,12 @@ public partial class Register : System.Web.UI.Page
             cities.DataValueField = "CityId";
             cities.DataBind();
             cities.Items.Insert(0, new ListItem("-בחר עיר-"));
-            //    string dateNow = DateTime.Today.ToShortDateString();
-            //    //CheckDateValid.ValueToCompare = dateNow;
-            //    Cal.EndDate = DateTime.Now.AddYears(-15);
-            //    Cal.Enabled = true;
+            string dateNow = DateTime.Today.ToShortDateString();
+            //CheckDateValid.ValueToCompare = dateNow = DateTime.Now.AddYears(-15);
+            Cal.EndDate = DateTime.Now.AddYears(-15);
+            Cal.Enabled = true;
 
-            //    txtDate.Attributes.Add("readonly", "true");
+            txtDate.Attributes.Add("readonly", "true");
             //}
             //btnDate.Attributes.Add("style", "height:25px; width:25px");
         }
@@ -101,11 +101,11 @@ public partial class Register : System.Web.UI.Page
     //    }
     public void FillCBX()
     {
-        DataSet ds = CategoriesService.GetCategories();
-        cbxCategories.DataSource = ds;
-        cbxCategories.DataTextField = "CategoryName";
-        cbxCategories.DataValueField = "CategoryId";
-        cbxCategories.DataBind();
+        //DataSet ds = CategoriesService.GetCategories();
+        //cbxCategories.DataSource = ds;
+        //cbxCategories.DataTextField = "CategoryName";
+        //cbxCategories.DataValueField = "CategoryId";
+        //cbxCategories.DataBind();
     }
 
     public void FillDBCities()

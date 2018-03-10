@@ -50,7 +50,8 @@ public class MessagesService
 
     public static DataSet GetOutbox(int id)
     {
-        string strSql = "SELECT m1.MessageId, m1.MessageSubject, m1.MessageContent, m1.MassageStatus, m1.MessageSentTime, m1.MessageDeletedBy," +
+        string strSql = "SELECT m1.MessageId, m1.MessageSubject, m1.MessageContent, m1.MassageStatus, " +
+            "m1.MessageSentTime, m1.MessageDeletedBy," +
             "(sen.MemberFname & ' ' & sen.MemberLname) AS SenderName, " +
             "(rec.MemberFname & ' ' & rec.MemberLname) AS ReciverName " +
             "FROM Messages AS m1, " +
@@ -102,7 +103,7 @@ public class MessagesService
             DataRow dr = messages.NewRow();
             dr["MassegeSender"] = msgs[i].MessageSender;
             dr["MessageReciver"] = msgs[i].MessageReciver;
-            dr["MessageSubject"] = msgs[i].MessageReciver;
+            dr["MessageSubject"] = msgs[i].MessageSubject;
             dr["MessageContent"] = msgs[i].MessageContent;
             dr["MassageStatus"] = false;
             dr["MessageSentTime"] = DateTime.Now;
@@ -167,7 +168,13 @@ public class MessagesService
 
     public static DataSet GetMessage(int id)
     {
-        string strSql = "SELECT * FROM Messages WHERE MessageId=" + id;
+        string strSql = "SELECT m1.MessageContent, m1.MessageSubject," +
+            " (sen.MemberFname & ' ' & sen.MemberLname) AS SenderName," +
+            " (rec.MemberFname & ' ' & rec.MemberLname) AS ReciverName" +
+            " FROM Messages AS m1," +
+            " Members AS rec, Members AS sen" +
+            " WHERE m1.MessageId=" + id + "" +
+            " AND m1.MessageReciver=rec.MemberId AND m1.MassegeSender=sen.MemberId";
         DataSet ds = Connect.GetDataSet(strSql, "Messages");
         return ds;
     }

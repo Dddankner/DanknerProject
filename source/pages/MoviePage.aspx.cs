@@ -18,6 +18,7 @@ public partial class pages_MoviePage : System.Web.UI.Page
     public int rating = 0;
     public WebService.WebService wsPublic;
     public string movieID = "";
+    public int memberID = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.QueryString["movieID"] != null && Request.QueryString["movieID"].ToString() != "")
@@ -26,10 +27,14 @@ public partial class pages_MoviePage : System.Web.UI.Page
             if (Regex.IsMatch(Request.QueryString["movieID"].ToString(), @"^\d+$"))
             {
                 movieID = Request.QueryString["movieID"].ToString();
+                if (Session["Member"] != null && Session["Member"].ToString() != "")
+                    memberID = ((Members)Session["Member"]).MemberId;
             }
             else
             {
                 movieID = MoviesService.GetIDByName(Request.QueryString["movieID"].ToString()).ToString();
+                if (Session["Member"] != null && Session["Member"].ToString() != "")
+                    memberID = ((Members)Session["Member"]).MemberId;
             }
             if (!IsPostBack)
             {
@@ -76,6 +81,7 @@ public partial class pages_MoviePage : System.Web.UI.Page
         WebService.WebService ws = new WebService.WebService();
         //ws.InsertComment(memberID, movieID, sub, content, rating, dt);
         ws.InsertComment(memberID, movieID1, sub, content, rating, dt);
+        FillDataList();
     }
 
     public int GetRating(int commentID)

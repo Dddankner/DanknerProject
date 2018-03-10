@@ -1,19 +1,21 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Messages.aspx.cs" Inherits="pages_Messages" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Messages2.aspx.cs" Inherits="pages_Messages2" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <%--<link href="../Style/Forms.css" rel="stylesheet" />
-    <link href="../Style/Modal.css" rel="stylesheet" />--%>
-    <link href="../Content/css/materialize.css" rel="stylesheet" />
-    <script src="../Content/js/materialize.js"></script>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link href="../Style/Forms.css" rel="stylesheet" />
+    <link href="../Style/Modal.css" rel="stylesheet" />
     <script src="../JavaScript/jquery-3.2.1.js"></script>
     <script type="text/javascript" lang="ja">
         $(document).ready(function () {
             //$('.modal').modal();
             // Click function for show the Modal
 
-            //$(".show").click(function () {
-            //    $(".mask").addClass("active");
-            //});
+            $(".show").click(function () {
+                $(".mask").addClass("active");
+            });
 
             //// Call the closeModal function on the clicks/keyboard
 
@@ -75,15 +77,20 @@
             display: block;
         }
     </style>
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <center>
-   <%-- <table class="tablePopUp">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div style="position: fixed; right: 0; top: 0;">
+            <a href="Main.aspx"><i class="material-icons" style="font-size: 40px; color: #039be5">home</i></a>
+        </div>
+        <center>
+            <table class="tablePopUp">
         <tr>
             <td><%--<asp:DropDownList ID="ddlMembers" runat="server"></asp:DropDownList>--%>
                 <%--<select runat="server" multiple="true" id="ddlMembers" ></select>--%>
                 
-                <%--<%if (m1.memberManager)
+                <%if (m1.memberManager)
                     { %>
                 <a class="show" aria-haspopup="true">בחר משתמשים</a>
 
@@ -95,12 +102,12 @@
             <br /><br /><br />
                 <asp:CheckBox runat="server" ID="SelectAll" Text="בחר את כולם" AutoPostBack="true" OnCheckedChanged="SelectAll_CheckedChanged" />
             <asp:CheckBoxList ID="ddlMembers" runat="server" ></asp:CheckBoxList>
-            <button id=""></button>--%>
-            <%--</div><%} %>
+            <button id=""></button>
+            </div><%} %>
                 <asp:Label runat="server" ID="lblManager"></asp:Label>
         
                 <%--<asp:CheckBoxList ID="ddlMembers" runat="server" ></asp:CheckBoxList>--%>
-            <%--</td>
+            </td>
             <td> שלח אל </td>
             <td rowspan="3"> <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="notes" DisplayMode="List"></asp:ValidationSummary> </td>
         </tr>
@@ -120,64 +127,8 @@
         <tr>
             <td colspan="2"> <asp:Button ID="btnSend" runat="server" Text="שלח" OnClick="btnSend_Click"></asp:Button> </td>
         </tr>
-    </table>--%>
-        <div class="card" style="width:50vw">
-            <div class="card-content">
-                <%if (((Members)Session["Member"]).memberManager)
-                    { %>
-                <div class="row">
-                    <div class="col s12">
-                        <a class="waves-effect waves-light btn modal-trigger" href="#modal1">בחר נמענים</a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s12">
-                        <asp:Label runat="server" ID="ReciverNames"></asp:Label>
-                    </div>
-                </div>
-                <%}
-                else
-                { %>
-                <div class="row">
-                    <div class="col s12">
-                        <label> שולח למנהלים </label>
-                    </div>
-                </div>
-                <%} %>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <asp:TextBox ID="MessageSub" runat="server"></asp:TextBox>
-                        <label for='<%# ClientID.Equals("MessageSub") %>'>נושא ההודעה</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <asp:TextBox ID="MessageContent" runat="server" CssClass="materialize-textarea" TextMode="MultiLine" data-length="240"> </asp:TextBox>
-                        <label for='<%# ClientID.Equals("MessageContent") %>'>תוכן ההודעה</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s12">
-                        <asp:Button ID="btnSend" runat="server" Text="שלח" OnClick="btnSend_Click" CssClass="btn waves-effect waves-light"></asp:Button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col s12">
-                        <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="notes" DisplayMode="List"></asp:ValidationSummary>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal" id="modal1">
-            <h4> בחר נמענים </h4>
-            <div class="row">
-                <div class="col s12">
-                    <asp:CheckBox runat="server" ID="SelectAll" Text="בחר את כולם" AutoPostBack="true" OnCheckedChanged="SelectAll_CheckedChanged" />
-                    <asp:CheckBoxList ID="ddlMembers" runat="server" ></asp:CheckBoxList>
-                </div>
-            </div>
-        </div>
-        <%if (m1.memberManager)
+    </table>
+            <%if (m1.memberManager)
             { %>
         <asp:CustomValidator runat="server" id="checkReciverCbx" ErrorMessage="חובה לבחור נמענים" ClientValidationFunction="ValidateRecivers">&nbsp</asp:CustomValidator>
         <%--<asp:CustomValidator ID="checkReciverCbxv" runat="server" ClientValidationFunction="ValidateReciversn" ControlToValidate="ddlMembers" ErrorMessage="חובה לבחור נמענים">&nbsp</asp:CustomValidator>--%>
@@ -244,6 +195,6 @@
             </tr>
         </table>
         </center>
-
-</asp:Content>
-
+    </form>
+</body>
+</html>

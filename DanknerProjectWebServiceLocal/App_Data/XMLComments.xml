@@ -1,29 +1,39 @@
 <comments>
   <Comment>
-    <CommentID>3</CommentID>
-    <MemberID>3</MemberID>
-    <MovieID>2</MovieID>
-    <CommentSubject>לא אהבתי</CommentSubject>
-    <CommentContent>סרט נחמד, לא יותר</CommentContent>
-    <CommentRating>4</CommentRating>
-    <CommentDate>16/02/2018 9:14:21</CommentDate>
+    <CommentID>0</CommentID>
+    <MemberID>0</MemberID>
+    <MovieID>0</MovieID>
+    <CommentSubject>0</CommentSubject>
+    <CommentContent>0</CommentContent>
+    <CommentRating>0</CommentRating>
+    <CommentDate>0</CommentDate>
   </Comment>
   <Comment>
-    <CommentID>5</CommentID>
-    <MemberID>2</MemberID>
-    <MovieID>4</MovieID>
-    <CommentSubject>חרא</CommentSubject>
-    <CommentContent>מעפן</CommentContent>
-    <CommentRating>3</CommentRating>
-    <CommentDate>16/02/2018 9:28:27</CommentDate>
-  </Comment>
-  <Comment>
-    <CommentID>6</CommentID>
+    <CommentID>1</CommentID>
     <MemberID>1</MemberID>
-    <MovieID>4</MovieID>
-    <CommentSubject>נחמד</CommentSubject>
-    <CommentContent>סרט מעניין, עשוי טוב.</CommentContent>
-    <CommentRating>3</CommentRating>
-    <CommentDate>23/02/2018 19:37:14</CommentDate>
+    <MovieID>6</MovieID>
+    <CommentSubject>מעפן</CommentSubject>
+    <CommentContent>סרט רע!!!!!!</CommentContent>
+    <CommentRating>2</CommentRating>
+    <CommentDate>28/02/2018 12:51:50</CommentDate>
+  </Comment>
+  <Comment>
+    <CommentID>3</CommentID>
+    <MemberID>1</MemberID>
+    <MovieID>2</MovieID>
+    <CommentSubject>רע</CommentSubject>
+    <CommentContent>מאוד אפילו</CommentContent>
+    <CommentRating>1</CommentRating>
+    <CommentDate>28/02/2018 12:53:45</CommentDate>
+  </Comment>
+</comments>nt>
+  <Comment>
+    <CommentID>3</CommentID>
+    <MemberID>1</MemberID>
+    <MovieID>2</MovieID>
+    <CommentSubject>רע</CommentSubject>
+    <CommentContent>מאוד אפילו</CommentContent>
+    <CommentRating>1</CommentRating>
+    <CommentDate>28/02/2018 12:53:45</CommentDate>
   </Comment>
 </comments>

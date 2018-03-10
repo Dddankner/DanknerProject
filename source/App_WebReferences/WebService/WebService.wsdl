@@ -2,16 +2,6 @@
 <wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
-      <s:element name="HelloWorld">
-        <s:complexType />
-      </s:element>
-      <s:element name="HelloWorldResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
       <s:element name="InsertComment">
         <s:complexType>
           <s:sequence>
@@ -208,7 +198,6 @@
       <s:element name="DeleteCommentResponse">
         <s:complexType />
       </s:element>
-      <s:element name="string" nillable="true" type="s:string" />
       <s:element name="DataSet" nillable="true">
         <s:complexType>
           <s:sequence>
@@ -219,16 +208,11 @@
       </s:element>
       <s:element name="double" type="s:double" />
       <s:element name="int" type="s:int" />
+      <s:element name="string" nillable="true" type="s:string" />
       <s:element name="boolean" type="s:boolean" />
       <s:element name="wsComments" nillable="true" type="tns:wsComments" />
     </s:schema>
   </wsdl:types>
-  <wsdl:message name="HelloWorldSoapIn">
-    <wsdl:part name="parameters" element="tns:HelloWorld" />
-  </wsdl:message>
-  <wsdl:message name="HelloWorldSoapOut">
-    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
-  </wsdl:message>
   <wsdl:message name="InsertCommentSoapIn">
     <wsdl:part name="parameters" element="tns:InsertComment" />
   </wsdl:message>
@@ -307,10 +291,6 @@
   <wsdl:message name="DeleteCommentSoapOut">
     <wsdl:part name="parameters" element="tns:DeleteCommentResponse" />
   </wsdl:message>
-  <wsdl:message name="HelloWorldHttpGetIn" />
-  <wsdl:message name="HelloWorldHttpGetOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
   <wsdl:message name="InsertCommentHttpGetIn">
     <wsdl:part name="MemberID" type="s:string" />
     <wsdl:part name="MovieID" type="s:string" />
@@ -385,10 +365,6 @@
     <wsdl:part name="memberID" type="s:string" />
   </wsdl:message>
   <wsdl:message name="DeleteCommentHttpGetOut" />
-  <wsdl:message name="HelloWorldHttpPostIn" />
-  <wsdl:message name="HelloWorldHttpPostOut">
-    <wsdl:part name="Body" element="tns:string" />
-  </wsdl:message>
   <wsdl:message name="InsertCommentHttpPostIn">
     <wsdl:part name="MemberID" type="s:string" />
     <wsdl:part name="MovieID" type="s:string" />
@@ -464,10 +440,6 @@
   </wsdl:message>
   <wsdl:message name="DeleteCommentHttpPostOut" />
   <wsdl:portType name="WebServiceSoap">
-    <wsdl:operation name="HelloWorld">
-      <wsdl:input message="tns:HelloWorldSoapIn" />
-      <wsdl:output message="tns:HelloWorldSoapOut" />
-    </wsdl:operation>
     <wsdl:operation name="InsertComment">
       <wsdl:input message="tns:InsertCommentSoapIn" />
       <wsdl:output message="tns:InsertCommentSoapOut" />
@@ -522,10 +494,6 @@
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="WebServiceHttpGet">
-    <wsdl:operation name="HelloWorld">
-      <wsdl:input message="tns:HelloWorldHttpGetIn" />
-      <wsdl:output message="tns:HelloWorldHttpGetOut" />
-    </wsdl:operation>
     <wsdl:operation name="InsertComment">
       <wsdl:input message="tns:InsertCommentHttpGetIn" />
       <wsdl:output message="tns:InsertCommentHttpGetOut" />
@@ -576,10 +544,6 @@
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="WebServiceHttpPost">
-    <wsdl:operation name="HelloWorld">
-      <wsdl:input message="tns:HelloWorldHttpPostIn" />
-      <wsdl:output message="tns:HelloWorldHttpPostOut" />
-    </wsdl:operation>
     <wsdl:operation name="InsertComment">
       <wsdl:input message="tns:InsertCommentHttpPostIn" />
       <wsdl:output message="tns:InsertCommentHttpPostOut" />
@@ -631,15 +595,6 @@
   </wsdl:portType>
   <wsdl:binding name="WebServiceSoap" type="tns:WebServiceSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="HelloWorld">
-      <soap:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="InsertComment">
       <soap:operation soapAction="http://tempuri.org/InsertComment" style="document" />
       <wsdl:input>
@@ -760,15 +715,6 @@
   </wsdl:binding>
   <wsdl:binding name="WebServiceSoap12" type="tns:WebServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="HelloWorld">
-      <soap12:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="InsertComment">
       <soap12:operation soapAction="http://tempuri.org/InsertComment" style="document" />
       <wsdl:input>
@@ -889,15 +835,6 @@
   </wsdl:binding>
   <wsdl:binding name="WebServiceHttpGet" type="tns:WebServiceHttpGet">
     <http:binding verb="GET" />
-    <wsdl:operation name="HelloWorld">
-      <http:operation location="/HelloWorld" />
-      <wsdl:input>
-        <http:urlEncoded />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="InsertComment">
       <http:operation location="/InsertComment" />
       <wsdl:input>
@@ -1005,15 +942,6 @@
   </wsdl:binding>
   <wsdl:binding name="WebServiceHttpPost" type="tns:WebServiceHttpPost">
     <http:binding verb="POST" />
-    <wsdl:operation name="HelloWorld">
-      <http:operation location="/HelloWorld" />
-      <wsdl:input>
-        <mime:content type="application/x-www-form-urlencoded" />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:mimeXml part="Body" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="InsertComment">
       <http:operation location="/InsertComment" />
       <wsdl:input>
