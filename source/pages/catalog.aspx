@@ -29,6 +29,7 @@
         $(document).ready(function () {
             // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
         });
+
     </script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 </asp:Content>

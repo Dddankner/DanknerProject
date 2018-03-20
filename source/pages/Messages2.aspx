@@ -103,9 +103,11 @@
                 <asp:CheckBox runat="server" ID="SelectAll" Text="בחר את כולם" AutoPostBack="true" OnCheckedChanged="SelectAll_CheckedChanged" />
             <asp:CheckBoxList ID="ddlMembers" runat="server" ></asp:CheckBoxList>
             <button id=""></button>
-            </div><%} %>
-                <asp:Label runat="server" ID="lblManager"></asp:Label>
-        
+            </div><%}
+    else
+    { %>
+                <asp:Label runat="server" ID="lblManager" Text="שולח למנהל"></asp:Label>
+        <%} %>
                 <%--<asp:CheckBoxList ID="ddlMembers" runat="server" ></asp:CheckBoxList>--%>
             </td>
             <td> שלח אל </td>
